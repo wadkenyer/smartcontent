@@ -1,0 +1,46 @@
+smartcontent-pi/
+├── README.md
+├── .gitignore
+├── apps/
+│  ├── web/
+│  │  ├── package.json
+│  │  ├── next.config.mjs
+│  │  ├── postcss.config.js
+│  │  ├── tailwind.config.ts
+│  │  ├── tsconfig.json
+│  │  ├── .env.example
+│  │  └── app/
+│  │     ├── layout.tsx
+│  │     ├── globals.css
+│  │     ├── page.tsx
+│  │     ├── login/page.tsx
+│  │     ├── editor/page.tsx
+│  │     └── components/
+│  │        ├── Editor.tsx
+│  │        ├── AISidebar.tsx
+│  │        └── Header.tsx
+│  └── api/
+│     ├── package.json
+│     ├── tsconfig.json
+│     ├── .env.example
+│     ├── src/
+│     │  ├── index.ts
+│     │  ├── prisma.ts
+│     │  ├── routes/
+│     │  │  ├── auth.ts
+│     │  │  ├── content.ts
+│     │  │  ├── storage.ts
+│     │  │  └── market.ts
+│     │  └── services/
+│     │     ├── ai.ts
+│     │     ├── ipfs.ts
+│     │     ├── plagiarism.ts
+│     │     ├── seo.ts
+│     │     └── escrow.ts
+│     └── prisma/
+│        └── schema.prisma
+└── packages/
+   └── sdk-pi/
+      ├── package.json
+      ├── tsconfig.json
+      └── src/index.ts
