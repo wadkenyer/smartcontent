@@ -1,0 +1,13 @@
+# SmartContent Pi (Pi Network)
+
+Monorepo-lite with **Next.js 14** (frontend) + **Express 5** (backend) + **Prisma/PostgreSQL** + **Pi SDK** + **IPFS** + basic **AI** services.
+
+## Quick Start
+
+### 1) Backend
+```bash
+cd apps/api
+cp .env.example .env # fill keys
+npm i
+npm run db:migrate
+npm run dev
