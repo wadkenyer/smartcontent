@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SmartContent – Editor</title>
+  <style>
+    body{margin:0;font-family:system-ui,Arial;background:#f7f7fb}
+    .wrap{max-width:980px;margin:auto;padding:16px}
+    a{color:#6c4df6;text-decoration:none}
+    .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+    .btn{background:#fff;border:1px solid #e7e8ee;border-radius:10px;padding:8px 12px}
+    textarea{width:100%;min-height:55vh;border:1px solid #e7e8ee;border-radius:12px;padding:14px;font-size:16px;outline:none;background:#fff}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <p><a href="./index.html">← Back</a></p>
+    <h2>📝 Editor</h2>
+    <div class="toolbar">
+      <button class="btn" onclick="document.execCommand('bold')">Bold</button>
+      <button class="btn" onclick="document.execCommand('italic')">Italic</button>
+      <button class="btn" onclick="save()">Save Draft</button>
+    </div>
+    <textarea id="doc" placeholder="Start writing…"></textarea>
+    <p id="status" style="color:#667085"></p>
+  </div>
+  <script>
+    const key='sc_draft_v1';
+    const doc=document.getElementById('doc');
+    const st=document.getElementById('status');
+    doc.value=localStorage.getItem(key)||'';
+    function save(){ localStorage.setItem(key, doc.value); st.textContent='Draft saved locally.'; }
+  </script>
+</body>
+</html>
