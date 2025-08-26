@@ -1,42 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SmartContent</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SmartContent – Dashboard</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f6fa;
-      text-align: center;
-      padding: 50px;
-    }
-    h1 {
-      color: #2d3436;
-    }
-    p {
-      font-size: 18px;
-      color: #636e72;
-    }
-    .btn {
-      margin-top: 20px;
-      padding: 12px 25px;
-      background: #0984e3;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      text-decoration: none;
-    }
-    .btn:hover {
-      background: #74b9ff;
-    }
+    :root { --purple:#6c4df6; --ink:#1f1f1f; --muted:#667085; --bg:#f7f7fb; }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+    header{position:sticky;top:0;background:#fff;border-bottom:1px solid #eee;z-index:10}
+    .wrap{max-width:980px;margin:auto;padding:16px}
+    .brand{display:flex;align-items:center;gap:10px}
+    .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#7b5cff,#5ad0ff);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+    nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    nav a{padding:10px 14px;border:1px solid #e7e8ee;border-radius:12px;background:#fff;text-decoration:none;color:var(--ink);font-weight:600}
+    nav a.primary{background:var(--purple);border-color:var(--purple);color:#fff}
+    h1{font-size:28px;margin:24px 0 8px}
+    p.lead{color:var(--muted);margin:0 0 18px}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    @media (max-width:640px){.grid{grid-template-columns:1fr}}
+    .card{background:#fff;border:1px solid #e7e8ee;border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:10px}
+    .card h3{margin:0;font-size:18px}
+    .card p{margin:0;color:var(--muted);font-size:14px}
+    .card a.btn{margin-top:auto;display:inline-block;padding:10px 12px;border-radius:12px;background:var(--purple);color:#fff;text-decoration:none;font-weight:600;text-align:center}
+    footer{margin:24px 0 60px;color:var(--muted);font-size:13px}
+    footer a{color:var(--purple);text-decoration:none}
+    .badges{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
+    .badge{background:#fff;border:1px solid #e7e8ee;border-radius:999px;padding:6px 10px;font-size:12px;color:#5a5f73}
   </style>
 </head>
 <body>
-  <h1>🚀 Welcome to SmartContent</h1>
-  <p>This is a test demo page for SmartContent on Pi Network.</p>
-  <a href="#" class="btn">Explore More</a>
+  <header>
+    <div class="wrap">
+      <div class="brand">
+        <div class="logo">⚡</div>
+        <div>
+          <strong>SmartContent</strong><br/>
+          <small style="color:#667085">Web3 Creator Suite • Pi Network</small>
+        </div>
+      </div>
+      <nav>
+        <a class="primary" href="./index.html">Home</a>
+        <a href="./editor.html">Editor</a>
+        <a href="./ai.html">AI</a>
+        <a href="./design.html">Design</a>
+        <a href="./video.html">Video</a>
+        <a href="./settings.html">Settings</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <h1>Welcome back, Creator! 🚀</h1>
+    <p class="lead">Your AI-powered Web3 content suite on the Pi Network. Create, verify, and monetize content securely.</p>
+
+    <div class="badges">
+      <span class="badge">Pi SDK Ready</span>
+      <span class="badge">Pi Payments</span>
+      <span class="badge">Privacy-first</span>
+    </div>
+
+    <div style="height:12px"></div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>📝 Editor</h3>
+        <p>Distraction-free writing with autosave and version history.</p>
+        <a class="btn" href="./editor.html">Open Editor</a>
+      </div>
+
+      <div class="card">
+        <h3>🤖 AI Tools</h3>
+        <p>Generate posts, scripts, and summaries. Plagiarism checks included.</p>
+        <a class="btn" href="./ai.html">Try AI</a>
+      </div>
+
+      <div class="card">
+        <h3>🎨 Design</h3>
+        <p>Quick thumbnails and banners optimized for social platforms.</p>
+        <a class="btn" href="./design.html">Open Design</a>
+      </div>
+
+      <div class="card">
+        <h3>🎥 Video</h3>
+        <p>Record, caption, and publish short videos with TTS/voice-over.</p>
+        <a class="btn" href="./video.html">Open Video Studio</a>
+      </div>
+    </div>
+
+    <footer>
+      <div style="margin-top:22px">
+        Need help? Email us at <a href="mailto:ahmedheebo@gmail.com">ahmedheebo@gmail.com</a>.
+        <br/>
+        <a href="https://wadkenyer.github.io/smartcontent/privacy.html">Privacy Policy</a> ·
+        <a href="https://wadkenyer.github.io/smartcontent/terms.html">Terms of Service</a>
+      </div>
+    </footer>
+  </main>
 </body>
 </html>
