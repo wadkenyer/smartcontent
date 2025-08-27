@@ -144,3 +144,20 @@ footer{
   text-align:center
 }
 footer a{color:#d2dcff}
+
+/* Primary button style */
+button.primary {
+  background: linear-gradient(90deg, var(--brand), var(--brand2));
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+button.primary:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
