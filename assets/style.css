@@ -1,3 +1,43 @@
+/* ===== Theme variables ===== */
+:root {
+  /* Light theme (افتراضي) */
+  --bg: #f7f7fb;
+  --card: #ffffff;
+  --text: #111425;
+  --muted: #667085;
+  --brand: #6f4af7;
+  --brand2: #8a5cff;
+  --chip: #e6e8f0;
+  --accent: #2c3a99;
+}
+
+/* Dark theme overrides */
+:root[data-theme="dark"] {
+  --bg: #0b0b10;
+  --card: #111425;
+  --text: #e8ebf5;
+  --muted: #aab0c0;
+  --brand: #6f4af7;
+  --brand2: #8a5cff;
+  --chip: #23233a;
+  --accent: #23c3a9;
+}
+
+/* استخدم المتغيرات في عناصر الصفحة */
+html, body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(180deg, var(--bg), var(--card));
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+/* مثال عام لبقية العناصر */
+.card { background: var(--card); }
+a { color: var(--accent); text-decoration: none; }
+button.primary { color: #fff; background: linear-gradient(90deg, var(--brand), var(--brand2)); }
+
+
 /* ========== SmartContent – Global Theme ========== */
 :root{
   --bg:#0b0b10;        --card:#111425;
