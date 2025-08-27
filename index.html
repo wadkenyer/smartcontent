@@ -2,50 +2,49 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SmartContent • Web3 Creator Suite</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="assets/styles.css" />
-  <!-- Pi SDK (سيتم تجاهله تلقائيًا إن لم يتوفر) -->
-  <script src="https://sdk.minepi.com/pi.js" defer></script>
-  <script src="assets/config.js" defer></script>
-  <script src="assets/app.js" defer></script>
+  <link rel="stylesheet" href="assets/styles.css"/>
+  <script defer src="assets/config.js"></script>
+  <script defer src="assets/app.js"></script>
 </head>
 <body>
-  <header class="appbar">
+  <header class="topbar">
     <div class="brand">
       <span class="logo">⚡</span>
       <div>
-        <div class="title">SmartContent</div>
-        <div class="subtitle">Web3 Creator Suite · Pi Network</div>
+        <h1>SmartContent</h1>
+        <p>Web3 Creator Suite · Pi Network</p>
       </div>
     </div>
-    <nav class="tabs">
-      <button data-route="home" class="tab active">Home</button>
-      <button data-route="editor" class="tab">Editor</button>
-      <button data-route="ai" class="tab">AI</button>
-      <button data-route="design" class="tab">Design</button>
-      <button data-route="video" class="tab">Video</button>
-      <span class="spacer"></span>
-      <button data-route="seo" class="pill">SEO</button>
-      <button data-route="cms" class="pill">CMS</button>
-      <button data-route="web" class="pill">Web</button>
-      <button data-route="analytics" class="pill">Analytics</button>
-      <button data-route="settings" class="pill">Settings</button>
+    <nav class="tabs" id="navTabs">
+      <button data-tab="home" class="active">Home</button>
+      <button data-tab="editor">Editor</button>
+      <button data-tab="ai">AI</button>
+      <button data-tab="design">Design</button>
+      <button data-tab="video">Video</button>
+      <button data-tab="seo">SEO</button>
+      <button data-tab="cms">CMS</button>
+      <button data-tab="web">Web</button>
+      <button data-tab="analytics">Analytics</button>
+      <button data-tab="settings">Settings</button>
     </nav>
   </header>
 
-  <!-- شريط يوضح وضع Limited Mode -->
-  <div id="limitedBanner" class="banner hidden">
-    You are in <b>Limited Mode</b>. Some features require permissions.
-    <button id="enablePermsBtn" class="link">Enable now</button>
-  </div>
+  <!-- Limited mode banner (shown if permissions not enabled) -->
+  <section class="banner hidden" id="limitedBanner">
+    <strong>You are in Limited Mode.</strong> Some features require permissions.
+    <button id="enableNowBtn">Enable now</button>
+  </section>
 
-  <main id="router">
-
-    <!-- HOME -->
-    <section data-screen="home" class="screen active">
-      <h1>Welcome back, <span class="rocket">🚀</span> Creator!</h1>
-      <p>Your AI-powered Web3 content suite on the Pi Network. Create, verify, and monetize content securely.</p>
+  <main class="container">
+    <!-- Home -->
+    <section class="tab-pane active" id="home">
+      <h2>Welcome back, <span class="wave">🚀</span> Creator!</h2>
+      <p class="lead">
+        Your AI-powered Web3 content suite on the Pi Network. Create, verify,
+        and monetize content securely.
+      </p>
 
       <div class="chips">
         <span class="chip">Pi SDK Ready</span>
@@ -53,559 +52,133 @@
         <span class="chip">Privacy-first</span>
       </div>
 
-      <div class="grid cards">
-        <article class="card">
-          <div class="card-title">Editor</div>
+      <div class="cards">
+        <div class="card">
+          <div class="card-head">📝 Editor</div>
           <p>Distraction-free writing with autosave and version history.</p>
-          <button class="btn primary" data-action="open-editor">Open Editor</button>
-        </article>
+          <button class="primary" data-link="#editor">Open Editor</button>
+        </div>
 
-        <article class="card">
-          <div class="card-title">AI Tools</div>
+        <div class="card">
+          <div class="card-head">🤖 AI Tools</div>
           <p>Generate posts, scripts, and summaries. Plagiarism checks included.</p>
-          <button class="btn primary" data-action="try-ai">Try AI</button>
-        </article>
+          <button class="primary" data-link="#ai">Try AI</button>
+        </div>
 
-        <article class="card">
-          <div class="card-title">Design</div>
+        <div class="card">
+          <div class="card-head">🎨 Design</div>
           <p>Quick thumbnails and banners optimized for social platforms.</p>
-          <button class="btn primary" data-action="open-design">Open Design</button>
-        </article>
-
-        <article class="card">
-          <div class="card-title">Video</div>
-          <p>Record, caption, and publish short videos with TTS/voice-over.</p>
-          <button class="btn primary" data-action="open-video">Open Video Studio</button>
-        </article>
-      </div>
-
-      <h2 class="mt">Quick Actions</h2>
-      <div class="grid quick">
-        <button class="qa" data-action="new-post">✍️ New Post</button>
-        <button class="qa" data-action="scan-plagiarism">🧪 Plagiarism Check</button>
-        <button class="qa" data-action="make-thumbnail">🖼️ Quick Thumbnail</button>
-      </div>
-
-      <footer class="footer">
-        <div>
-          Need help? Email us at
-          <a href="mailto:ahmedheebo@gmail.com">ahmedheebo@gmail.com</a>.
+          <button class="primary" data-link="#design">Open Design</button>
         </div>
-        <div class="links">
-          <a href="https://wadkenyer.github.io/smartcontent/privacy.html" target="_blank">Privacy Policy</a> ·
-          <a href="https://wadkenyer.github.io/smartcontent/terms.html" target="_blank">Terms of Service</a>
+
+        <div class="card">
+          <div class="card-head">🎬 Video</div>
+          <p>Record, caption, and publish shorts with TTS/voice-over.</p>
+          <button class="primary" data-link="#video">Open Video Studio</button>
         </div>
-      </footer>
-    </section>
-
-    <!-- SEO -->
-    <section data-screen="seo" class="screen">
-      <h1>🔎 SEO Optimization</h1>
-      <p>Optimize your content for search engines.</p>
-
-      <div class="card">
-        <h3>Keyword Research</h3>
-        <input id="kwInput" class="input" placeholder="Enter your topic or keyword..." />
-        <button class="btn" id="analyzeKwBtn">Analyze Keywords</button>
-        <pre class="pre" id="kwResult"></pre>
-      </div>
-
-      <div class="card">
-        <h3>Content Analysis</h3>
-        <textarea id="seoText" class="textarea" placeholder="Paste your content here for SEO analysis..."></textarea>
-        <button class="btn" id="analyzeSeoBtn">Analyze Content</button>
-        <pre class="pre" id="seoResult"></pre>
       </div>
     </section>
 
-    <!-- CMS (Placeholder) -->
-    <section data-screen="cms" class="screen">
-      <h1>📁 CMS</h1>
-      <p>Manage drafts, published items, and media (coming soon).</p>
+    <!-- Empty stubs for the rest of tabs (avoid white screens) -->
+    <section class="tab-pane" id="editor"><h3>Editor</h3><p>Coming soon.</p></section>
+    <section class="tab-pane" id="ai"><h3>AI Tools</h3><p>Coming soon.</p></section>
+    <section class="tab-pane" id="design">
+      <h3>Design</h3>
+      <div class="grid">
+        <div class="mini-card"><div class="tag">1080×1080</div><div class="title">Social Media Post</div></div>
+        <div class="mini-card"><div class="tag">920×1080</div><div class="title">YouTube Thumbnail</div></div>
+        <div class="mini-card"><div class="tag">1200×628</div><div class="title">Blog Header</div></div>
+        <div class="mini-card"><div class="tag">Custom</div><div class="title">Custom Size</div></div>
+      </div>
+      <div class="hint muted">Enable Storage to save your designs locally.</div>
     </section>
-
-    <!-- WEB -->
-    <section data-screen="web" class="screen">
-      <h1>🌐 Web Publishing</h1>
-      <div class="card">
-        <p>Web publishing and deployment tools coming soon!</p>
+    <section class="tab-pane" id="video"><h3>Video</h3><p>Camera & microphone access required.</p></section>
+    <section class="tab-pane" id="seo"><h3>SEO Optimization</h3><p>Analyze keywords and content.</p></section>
+    <section class="tab-pane" id="cms"><h3>CMS</h3><p>Manage drafts & assets.</p></section>
+    <section class="tab-pane" id="web"><h3>Web Publishing</h3><p>Publishing & deployment tools coming soon.</p></section>
+    <section class="tab-pane" id="analytics">
+      <h3>Analytics Dashboard</h3>
+      <div class="stats">
+        <div class="stat"><div class="kpi">12.4K</div><div class="label">Total Views</div></div>
+        <div class="stat"><div class="kpi">2,847π</div><div class="label">Total Earned</div></div>
+        <div class="stat"><div class="kpi">89</div><div class="label">Comments</div></div>
+        <div class="stat"><div class="kpi">23</div><div class="label">Saved Drafts</div></div>
       </div>
     </section>
 
-    <!-- ANALYTICS -->
-    <section data-screen="analytics" class="screen">
-      <h1>📊 Analytics Dashboard</h1>
-      <p>Track your content performance and earnings.</p>
-      <div class="grid stats">
-        <div class="stat"><div class="kpi">12.4K</div><div>Total Views</div></div>
-        <div class="stat"><div class="kpi">2,847π</div><div>Total Earned</div></div>
-        <div class="stat"><div class="kpi">89</div><div>Comments</div></div>
-        <div class="stat"><div class="kpi">23</div><div>Saved Drafts</div></div>
-      </div>
-    </section>
+    <section class="tab-pane" id="settings">
+      <h3>Settings</h3>
 
-    <!-- SETTINGS -->
-    <section data-screen="settings" class="screen">
-      <h1>⚙️ Settings</h1>
-
-      <div class="card">
-        <h3>Profile Settings</h3>
-        <div class="row">
-          <input id="profileName" class="input" placeholder="John Doe" />
-          <input id="profileEmail" class="input" placeholder="john@example.com" />
+      <div class="group">
+        <h4>Profile Settings</h4>
+        <div class="form">
+          <input type="text" placeholder="John Doe"/>
+          <input type="email" placeholder="john@example.com"/>
+          <textarea rows="3" placeholder="Bio: Tell others about yourself…"></textarea>
+          <button>Update Profile</button>
         </div>
-        <textarea id="profileBio" class="textarea" placeholder="Bio: Tell others about yourself..."></textarea>
-        <button class="btn" id="updateProfileBtn">Update Profile</button>
       </div>
 
-      <div class="card">
-        <h3>App Preferences</h3>
-        <label class="switch">
-          <input type="checkbox" id="pushToggle" /> <span>Push Notifications</span>
-        </label>
-        <label class="switch">
-          <input type="checkbox" id="autosaveToggle" /> <span>Auto-save Drafts</span>
-        </label>
-        <label class="switch">
-          <input type="checkbox" id="darkToggle" /> <span>Dark Mode</span>
-        </label>
-
-        <label class="select">
-          Default Language
-          <select id="langSelect">
-            <option value="ar">العربية (Arabic)</option>
-            <option value="en" selected>English</option>
+      <div class="group">
+        <h4>App Preferences</h4>
+        <label class="switch"><input type="checkbox"/><span></span> Push Notifications</label>
+        <label class="switch"><input type="checkbox"/><span></span> Auto-save Drafts</label>
+        <label class="switch"><input type="checkbox" checked/><span></span> Dark Mode</label>
+        <div class="select">
+          <label>Default Language</label>
+          <select>
+            <option>العربية (Arabic)</option>
+            <option>English</option>
           </select>
-        </label>
-      </div>
-
-      <div class="card">
-        <h3>Pi Network Settings</h3>
-        <label>Wallet Address</label>
-        <div class="row">
-          <input id="wallet" class="input" placeholder="0x..." />
-          <button class="btn" id="copyWallet">Copy</button>
-        </div>
-        <label class="switch">
-          <input type="checkbox" id="autoMintToggle" /> <span>Auto-mint NFTs</span>
-        </label>
-        <label class="switch">
-          <input type="checkbox" id="scNotifyToggle" /> <span>Smart Contract Notifications</span>
-        </label>
-      </div>
-
-      <div class="card">
-        <h3>Security & Privacy</h3>
-        <div class="list">
-          <button class="list-item">Change Password</button>
-          <button class="list-item">Two-Factor Authentication</button>
-          <button class="list-item">Data Export</button>
-          <button class="list-item danger" id="deleteAccountBtn">Delete Account</button>
         </div>
       </div>
 
-      <div class="card">
-        <h3>Support & Help</h3>
+      <div class="group">
+        <h4>Pi Network Settings</h4>
+        <div class="wallet">
+          <label>Wallet Address</label>
+          <input type="text" readonly value="0x1a2b3c4d5e6f7g8h9i0j…"/>
+          <button title="Copy">📋</button>
+        </div>
+        <label class="switch"><input type="checkbox"/><span></span> Auto-mint NFTs</label>
+        <label class="switch"><input type="checkbox"/><span></span> Smart Contract Notifications</label>
+      </div>
+
+      <div class="group">
+        <h4>Security & Privacy</h4>
         <div class="list">
-          <a class="list-item" href="#" target="_blank">Help Center</a>
-          <a class="list-item" href="mailto:ahmedheebo@gmail.com">Contact Support</a>
-          <a class="list-item" href="https://wadkenyer.github.io/smartcontent/terms.html" target="_blank">Terms of Use</a>
-          <a class="list-item" href="https://wadkenyer.github.io/smartcontent/privacy.html" target="_blank">Privacy Policy</a>
+          <button>Change Password</button>
+          <button>Two-Factor Authentication</button>
+          <button>Data Export</button>
+          <button>Delete Account</button>
+        </div>
+      </div>
+
+      <div class="group">
+        <h4>Support & Help</h4>
+        <div class="list">
+          <a href="#" target="_blank">Help Center</a>
+          <a id="contactLink" href="#">Contact Support</a>
+          <a id="termsLink" href="#" target="_blank">Terms of Use</a>
+          <a id="privacyLink" href="#" target="_blank">Privacy Policy</a>
         </div>
       </div>
 
       <div class="about">
         <div>SmartContent</div>
-        <div>Version 2.1.0</div>
-        <div>Built with ❤️ for Pi Network creators</div>
+        <small>Version 2.1.0</small>
+        <small>Built with ❤️ for Pi Network creators</small>
       </div>
     </section>
-
   </main>
 
-  <!-- مودال الأذونات + Skip for Now -->
-  <dialog id="permDialog">
-    <h3>Permission Needed</h3>
-    <p>Some features need access (camera, microphone, or storage) to work properly.</p>
-    <div class="row right">
-      <button class="btn" id="skipForNowBtn">Skip for Now</button>
-      <button class="btn primary" id="enableNowBtn">Enable Now</button>
+  <footer class="footer">
+    <div class="links">
+      <a id="footerPrivacy" href="#" target="_blank">Privacy Policy</a>
+      <span>·</span>
+      <a id="footerTerms" href="#" target="_blank">Terms of Service</a>
     </div>
-  </dialog>
-
-  <!-- تلميح: إن أردت PWA -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('assets/sw.js').catch(()=>{});
-    }
-  </script>
-</body>
-</html>        <pre class="pre" id="seoResult"></pre>
-      </div>
-    </section>
-
-    <!-- CMS (Placeholder) -->
-    <section data-screen="cms" class="screen">
-      <h1>📁 CMS</h1>
-      <p>Manage drafts, published items, and media (coming soon).</p>
-    </section>
-
-    <!-- WEB -->
-    <section data-screen="web" class="screen">
-      <h1>🌐 Web Publishing</h1>
-      <div class="card">
-        <p>Web publishing and deployment tools coming soon!</p>
-      </div>
-    </section>
-
-    <!-- ANALYTICS -->
-    <section data-screen="analytics" class="screen">
-      <h1>📊 Analytics Dashboard</h1>
-      <p>Track your content performance and earnings.</p>
-      <div class="grid stats">
-        <div class="stat"><div class="kpi">12.4K</div><div>Total Views</div></div>
-        <div class="stat"><div class="kpi">2,847π</div><div>Total Earned</div></div>
-        <div class="stat"><div class="kpi">89</div><div>Comments</div></div>
-        <div class="stat"><div class="kpi">23</div><div>Saved Drafts</div></div>
-      </div>
-    </section>
-
-    <!-- SETTINGS -->
-    <section data-screen="settings" class="screen">
-      <h1>⚙️ Settings</h1>
-
-      <div class="card">
-        <h3>Profile Settings</h3>
-        <div class="row">
-          <input id="profileName" class="input" placeholder="John Doe" />
-          <input id="profileEmail" class="input" placeholder="john@example.com" />
-        </div>
-        <textarea id="profileBio" class="textarea" placeholder="Bio: Tell others about yourself..."></textarea>
-        <button class="btn" id="updateProfileBtn">Update Profile</button>
-      </div>
-
-      <div class="card">
-        <h3>App Preferences</h3>
-        <label class="switch">
-          <input type="checkbox" id="pushToggle" /> <span>Push Notifications</span>
-        </label>
-        <label class="switch">
-          <input type="checkbox" id="autosaveToggle" /> <span>Auto-save Drafts</span>
-        </label>
-        <label class="switch">
-          <input type="checkbox" id="darkToggle" /> <span>Dark Mode</span>
-        </label>
-
-        <label class="select">
-          Default Language
-          <select id="langSelect">
-            <option value="ar">العربية (Arabic)</option>
-            <option value="en" selected>English</option>
-          </select>
-        </label>
-      </div>
-
-      <div class="card">
-        <h3>Pi Network Settings</h3>
-        <label>Wallet Address</label>
-        <div class="row">
-          <input id="wallet" class="input" placeholder="0x..." />
-          <button class="btn" id="copyWallet">Copy</button>
-        </div>
-        <label class="switch">
-          <input type="checkbox" id="autoMintToggle" /> <span>Auto-mint NFTs</span>
-        </label>
-        <label class="switch">
-          <input type="checkbox" id="scNotifyToggle" /> <span>Smart Contract Notifications</span>
-        </label>
-      </div>
-
-      <div class="card">
-        <h3>Security & Privacy</h3>
-        <div class="list">
-          <button class="list-item">Change Password</button>
-          <button class="list-item">Two-Factor Authentication</button>
-          <button class="list-item">Data Export</button>
-          <button class="list-item danger" id="deleteAccountBtn">Delete Account</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>Support & Help</h3>
-        <div class="list">
-          <a class="list-item" href="#" target="_blank">Help Center</a>
-          <a class="list-item" href="mailto:ahmedheebo@gmail.com">Contact Support</a>
-          <a class="list-item" href="https://wadkenyer.github.io/smartcontent/terms.html" target="_blank">Terms of Use</a>
-          <a class="list-item" href="https://wadkenyer.github.io/smartcontent/privacy.html" target="_blank">Privacy Policy</a>
-        </div>
-      </div>
-
-      <div class="about">
-        <div>SmartContent</div>
-        <div>Version 2.1.0</div>
-        <div>Built with ❤️ for Pi Network creators</div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- مودال الأذونات + Skip for Now -->
-  <dialog id="permDialog">
-    <h3>Permission Needed</h3>
-    <p>Some features need access (camera, microphone, or storage) to work properly.</p>
-    <div class="row right">
-      <button class="btn" id="skipForNowBtn">Skip for Now</button>
-      <button class="btn primary" id="enableNowBtn">Enable Now</button>
-    </div>
-  </dialog>
-
-  <!-- تلميح: إن أردت PWA -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('assets/sw.js').catch(()=>{});
-    }
-  </script>
-</body>
-            </html><!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>SmartContent • Web3 Creator Suite</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="assets/styles.css" />
-  <!-- Pi SDK (سيتم تجاهله تلقائيًا إن لم يتوفر) -->
-  <script src="https://sdk.minepi.com/pi.js" defer></script>
-  <script src="assets/config.js" defer></script>
-  <script src="assets/app.js" defer></script>
-</head>
-<body>
-  <header class="appbar">
-    <div class="brand">
-      <span class="logo">⚡</span>
-      <div>
-        <div class="title">SmartContent</div>
-        <div class="subtitle">Web3 Creator Suite · Pi Network</div>
-      </div>
-    </div>
-    <nav class="tabs">
-      <button data-route="home" class="tab active">Home</button>
-      <button data-route="editor" class="tab">Editor</button>
-      <button data-route="ai" class="tab">AI</button>
-      <button data-route="design" class="tab">Design</button>
-      <button data-route="video" class="tab">Video</button>
-      <span class="spacer"></span>
-      <button data-route="seo" class="pill">SEO</button>
-      <button data-route="cms" class="pill">CMS</button>
-      <button data-route="web" class="pill">Web</button>
-      <button data-route="analytics" class="pill">Analytics</button>
-      <button data-route="settings" class="pill">Settings</button>
-    </nav>
-  </header>
-
-  <!-- شريط يوضح وضع Limited Mode -->
-  <div id="limitedBanner" class="banner hidden">
-    You are in <b>Limited Mode</b>. Some features require permissions.
-    <button id="enablePermsBtn" class="link">Enable now</button>
-  </div>
-
-  <main id="router">
-
-    <!-- HOME -->
-    <section data-screen="home" class="screen active">
-      <h1>Welcome back, <span class="rocket">🚀</span> Creator!</h1>
-      <p>Your AI-powered Web3 content suite on the Pi Network. Create, verify, and monetize content securely.</p>
-
-      <div class="chips">
-        <span class="chip">Pi SDK Ready</span>
-        <span class="chip">Pi Payments</span>
-        <span class="chip">Privacy-first</span>
-      </div>
-
-      <div class="grid cards">
-        <article class="card">
-          <div class="card-title">Editor</div>
-          <p>Distraction-free writing with autosave and version history.</p>
-          <button class="btn primary" data-action="open-editor">Open Editor</button>
-        </article>
-
-        <article class="card">
-          <div class="card-title">AI Tools</div>
-          <p>Generate posts, scripts, and summaries. Plagiarism checks included.</p>
-          <button class="btn primary" data-action="try-ai">Try AI</button>
-        </article>
-
-        <article class="card">
-          <div class="card-title">Design</div>
-          <p>Quick thumbnails and banners optimized for social platforms.</p>
-          <button class="btn primary" data-action="open-design">Open Design</button>
-        </article>
-
-        <article class="card">
-          <div class="card-title">Video</div>
-          <p>Record, caption, and publish short videos with TTS/voice-over.</p>
-          <button class="btn primary" data-action="open-video">Open Video Studio</button>
-        </article>
-      </div>
-
-      <h2 class="mt">Quick Actions</h2>
-      <div class="grid quick">
-        <button class="qa" data-action="new-post">✍️ New Post</button>
-        <button class="qa" data-action="scan-plagiarism">🧪 Plagiarism Check</button>
-        <button class="qa" data-action="make-thumbnail">🖼️ Quick Thumbnail</button>
-      </div>
-
-      <footer class="footer">
-        <div>
-          Need help? Email us at
-          <a href="mailto:ahmedheebo@gmail.com">ahmedheebo@gmail.com</a>.
-        </div>
-        <div class="links">
-          <a href="https://wadkenyer.github.io/smartcontent/privacy.html" target="_blank">Privacy Policy</a> ·
-          <a href="https://wadkenyer.github.io/smartcontent/terms.html" target="_blank">Terms of Service</a>
-        </div>
-      </footer>
-    </section>
-
-    <!-- SEO -->
-    <section data-screen="seo" class="screen">
-      <h1>🔎 SEO Optimization</h1>
-      <p>Optimize your content for search engines.</p>
-
-      <div class="card">
-        <h3>Keyword Research</h3>
-        <input id="kwInput" class="input" placeholder="Enter your topic or keyword..." />
-        <button class="btn" id="analyzeKwBtn">Analyze Keywords</button>
-        <pre class="pre" id="kwResult"></pre>
-      </div>
-
-      <div class="card">
-        <h3>Content Analysis</h3>
-        <textarea id="seoText" class="textarea" placeholder="Paste your content here for SEO analysis..."></textarea>
-        <button class="btn" id="analyzeSeoBtn">Analyze Content</button>
-        <pre class="pre" id="seoResult"></pre>
-      </div>
-    </section>
-
-    <!-- CMS (Placeholder) -->
-    <section data-screen="cms" class="screen">
-      <h1>📁 CMS</h1>
-      <p>Manage drafts, published items, and media (coming soon).</p>
-    </section>
-
-    <!-- WEB -->
-    <section data-screen="web" class="screen">
-      <h1>🌐 Web Publishing</h1>
-      <div class="card">
-        <p>Web publishing and deployment tools coming soon!</p>
-      </div>
-    </section>
-
-    <!-- ANALYTICS -->
-    <section data-screen="analytics" class="screen">
-      <h1>📊 Analytics Dashboard</h1>
-      <p>Track your content performance and earnings.</p>
-      <div class="grid stats">
-        <div class="stat"><div class="kpi">12.4K</div><div>Total Views</div></div>
-        <div class="stat"><div class="kpi">2,847π</div><div>Total Earned</div></div>
-        <div class="stat"><div class="kpi">89</div><div>Comments</div></div>
-        <div class="stat"><div class="kpi">23</div><div>Saved Drafts</div></div>
-      </div>
-    </section>
-
-    <!-- SETTINGS -->
-    <section data-screen="settings" class="screen">
-      <h1>⚙️ Settings</h1>
-
-      <div class="card">
-        <h3>Profile Settings</h3>
-        <div class="row">
-          <input id="profileName" class="input" placeholder="John Doe" />
-          <input id="profileEmail" class="input" placeholder="john@example.com" />
-        </div>
-        <textarea id="profileBio" class="textarea" placeholder="Bio: Tell others about yourself..."></textarea>
-        <button class="btn" id="updateProfileBtn">Update Profile</button>
-      </div>
-
-      <div class="card">
-        <h3>App Preferences</h3>
-        <label class="switch">
-          <input type="checkbox" id="pushToggle" /> <span>Push Notifications</span>
-        </label>
-        <label class="switch">
-          <input type="checkbox" id="autosaveToggle" /> <span>Auto-save Drafts</span>
-        </label>
-        <label class="switch">
-          <input type="checkbox" id="darkToggle" /> <span>Dark Mode</span>
-        </label>
-
-        <label class="select">
-          Default Language
-          <select id="langSelect">
-            <option value="ar">العربية (Arabic)</option>
-            <option value="en" selected>English</option>
-          </select>
-        </label>
-      </div>
-
-      <div class="card">
-        <h3>Pi Network Settings</h3>
-        <label>Wallet Address</label>
-        <div class="row">
-          <input id="wallet" class="input" placeholder="0x..." />
-          <button class="btn" id="copyWallet">Copy</button>
-        </div>
-        <label class="switch">
-          <input type="checkbox" id="autoMintToggle" /> <span>Auto-mint NFTs</span>
-        </label>
-        <label class="switch">
-          <input type="checkbox" id="scNotifyToggle" /> <span>Smart Contract Notifications</span>
-        </label>
-      </div>
-
-      <div class="card">
-        <h3>Security & Privacy</h3>
-        <div class="list">
-          <button class="list-item">Change Password</button>
-          <button class="list-item">Two-Factor Authentication</button>
-          <button class="list-item">Data Export</button>
-          <button class="list-item danger" id="deleteAccountBtn">Delete Account</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>Support & Help</h3>
-        <div class="list">
-          <a class="list-item" href="#" target="_blank">Help Center</a>
-          <a class="list-item" href="mailto:ahmedheebo@gmail.com">Contact Support</a>
-          <a class="list-item" href="https://wadkenyer.github.io/smartcontent/terms.html" target="_blank">Terms of Use</a>
-          <a class="list-item" href="https://wadkenyer.github.io/smartcontent/privacy.html" target="_blank">Privacy Policy</a>
-        </div>
-      </div>
-
-      <div class="about">
-        <div>SmartContent</div>
-        <div>Version 2.1.0</div>
-        <div>Built with ❤️ for Pi Network creators</div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- مودال الأذونات + Skip for Now -->
-  <dialog id="permDialog">
-    <h3>Permission Needed</h3>
-    <p>Some features need access (camera, microphone, or storage) to work properly.</p>
-    <div class="row right">
-      <button class="btn" id="skipForNowBtn">Skip for Now</button>
-      <button class="btn primary" id="enableNowBtn">Enable Now</button>
-    </div>
-  </dialog>
-
-  <!-- تلميح: إن أردت PWA -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('assets/sw.js').catch(()=>{});
-    }
-  </script>
+    <div class="contact">Need help? Email us at <a id="footerEmail" href="#">ahmedheebo@gmail.com</a>.</div>
+  </footer>
 </body>
 </html>
