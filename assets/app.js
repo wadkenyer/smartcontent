@@ -50,6 +50,32 @@ function limitedModeBanner() {
     banner.classList.add("hidden");
   });
 }
+// Dark Mode Toggle
+function setupDarkModeToggle() {
+  const toggle = document.getElementById("darkModeToggle");
+  if (!toggle) return;
+
+  // تحقق من الوضع المخزن مسبقاً (localStorage)
+  const currentMode = localStorage.getItem("theme");
+  if (currentMode === "light") {
+    document.body.classList.add("light-mode");
+    toggle.checked = false;
+  } else {
+    document.body.classList.remove("light-mode");
+    toggle.checked = true;
+  }
+
+  // عند التغيير
+  toggle.addEventListener("change", () => {
+    if (toggle.checked) {
+      document.body.classList.remove("light-mode");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.body.classList.add("light-mode");
+      localStorage.setItem("theme", "light");
+    }
+  });
+        }
 
 document.addEventListener("DOMContentLoaded", () => {
   wireNav();
