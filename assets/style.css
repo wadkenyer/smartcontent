@@ -1,0 +1,146 @@
+/* ========== SmartContent – Global Theme ========== */
+:root{
+  --bg:#0b0b10;        --card:#111425;
+  --muted:#aab0c0;     --text:#e8ebf5;
+  --brand:#6f4af7;     --brand2:#8a5cff;
+  --chip:#23233a;      --accent:#23c3a9;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:linear-gradient(180deg,#0b0b10,#111425);
+  color:var(--text);
+  font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  line-height:1.6;
+}
+
+/* Links */
+a{color:var(--accent);text-decoration:none}
+a:hover{opacity:.9}
+
+/* Top bar */
+.topbar{
+  position:sticky; top:0;
+  background:rgba(17,20,37,.85);
+  backdrop-filter:blur(10px);
+  z-index:1000; border-bottom:1px solid #1f2740;
+}
+.brand{display:flex;align-items:center;padding:14px 18px}
+.brand .logo{font-size:28px}
+.brand .name{font-size:22px;letter-spacing:.2px;margin-inline-start:8px}
+.brand p{color:var(--muted);font-size:12px;margin:2px 0 0}
+
+/* Tabs (top navigation) */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;padding:10px 14px}
+.tabs button{
+  background:#141a2b;border:1px solid #232d44;color:var(--text);
+  padding:9px 12px;border-radius:10px;cursor:pointer
+}
+.tabs button.active{
+  background:linear-gradient(90deg,var(--brand),var(--brand2));
+  border-color:transparent
+}
+
+/* Limited Mode banner */
+.banner{
+  display:flex;gap:12px;align-items:center;justify-content:space-between;
+  border:1px dashed #39405f;background:#121a31;color:#fff;
+  padding:9px 12px;border-radius:12px;margin:12px 0
+}
+.banner .btn{
+  background:linear-gradient(90deg,var(--brand),var(--brand2));
+  border:none;color:#fff;padding:8px 12px;border-radius:10px;cursor:pointer
+}
+.hidden{display:none}
+
+/* Containers */
+.container{max-width:1100px;margin:22px auto;padding:0 16px}
+h2{font-size:32px;margin:.2em 0}
+.lead{color:var(--muted);font-size:18px}
+
+/* Tiny rocket wiggle (optional) */
+.wave{display:inline-block;transform-origin:70% 70%;
+  animation:w 2.5s infinite}
+@keyframes w{0%{transform:rotate(0)} 15%{transform:rotate(-8deg)} 30%{transform:rotate(6deg)} 45%{transform:rotate(-4deg)} 60%{transform:rotate(2deg)} 100%{transform:rotate(0)}}
+
+/* Chips row */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 12px}
+.chip{
+  background:var(--chip); border:1px solid #242d44; color:#ccd3f5;
+  padding:6px 10px;border-radius:999px;font-size:12px
+}
+
+/* Cards grid */
+.cards{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:16px;margin:14px 0 6px
+}
+.card{
+  background:var(--card); border:1px solid #242d44; border-radius:16px;
+  padding:18px; min-height:160px; display:flex; flex-direction:column; gap:10px
+}
+.card .label{color:#9fb0ff;font-weight:700}
+.card p{color:var(--muted);min-height:48px;margin:0}
+.card .cta{
+  margin-top:auto; align-self:flex-start;
+  background:linear-gradient(90deg,var(--brand),var(--brand2));
+  border:none;color:#fff;padding:10px 12px;border-radius:10px;cursor:pointer
+}
+
+/* Tab panes */
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* Mini cards (analytics, settings) */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:12px;margin:10px 0}
+.mini-card{background:#16172a;border:1px solid #22344a;border-radius:12px;padding:14px}
+.mini-card .title{font-weight:600;margin-bottom:4px}
+.hint{margin-top:10px;color:#2bb8cf}
+
+/* KPI / stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.kpi{
+  background:#16172a;border:1px solid #224d4d;border-radius:14px;
+  padding:16px;text-align:center
+}
+.kpi b{font-size:26px}
+.label{color:var(--muted);font-size:12px}
+
+/* Groups & forms (settings) */
+.group{background:#151527;border:1px solid #23263f;border-radius:16px;padding:14px;margin:14px 0}
+.group h4{margin:0 0 10px}
+.form input, .form select, .form textarea{
+  width:100%;background:#111225;border:1px solid #224d4d;border-radius:10px;
+  color:var(--text);padding:10px
+}
+.form button{
+  background:#2442a9;border:1px solid #3b4170;color:#e7e9ff;border-radius:10px;
+  padding:10px 12px;cursor:pointer
+}
+
+/* Switches & selects */
+.switch{display:block;margin:8px 0}
+.switch input{margin-right:8px}
+.select label{display:block;margin-bottom:6px}
+.select select{background:#111225;border:1px solid #2a2444;color:var(--text);padding:10px;border-radius:10px}
+
+/* Wallet & lists */
+.wallet{display:flex;gap:6px;align-items:center}
+.wallet .btn{flex:1;background:#111225;border:1px solid #2a2444;border-radius:10px;color:var(--text);padding:10px}
+
+.list{display:flex;gap:10px;flex-wrap:wrap}
+.list > *{
+  background:#111225;border:1px solid #2a2444;border-radius:10px;
+  padding:10px 12px
+}
+
+/* About/footer */
+.about{display:flex;gap:10px;align-items:center;flex-wrap:wrap;color:#c7cff3}
+footer{
+  border-top:1px solid #22336d;margin-top:40px;padding:18px 16px;color:#7b8bd6;
+  text-align:center
+}
+footer a{color:#d2dcff}
