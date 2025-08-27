@@ -201,3 +201,18 @@ button.primary:hover {
   opacity: 0.9;
   transform: scale(1.05);
 }
+/* Light Mode */
+body.light-mode {
+  background: #f5f5f5;
+  color: #111;
+}
+
+body.light-mode .card {
+  background: #fff;
+  color: #111;
+}
+
+body.light-mode .tabs button.active {
+  background: #6200ea;
+  color: #fff;
+}
