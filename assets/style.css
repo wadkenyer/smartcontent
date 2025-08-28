@@ -278,3 +278,65 @@ button[disabled], .btn[disabled] {
   --text:#e8edf7;
 }
 html, body { color: var(--text); }
+/* ===== Fix: readability for Settings & long cards ===== */
+
+/* عناوين ونصوص أقسام الإعدادات */
+#settings, .settings, .group, .row {
+  color: #e8edf7 !important;
+}
+
+/* عناوين صغيرة/محددة داخل الإعدادات */
+#settings strong, .settings strong, .group strong, .row strong {
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+/* ألغِ أي بهتان/شفافية غير مرغوبة */
+#settings *, .settings *, .group *, .row * {
+  opacity: 1 !important;
+}
+
+/* حقول الإدخال والقوائم المنسدلة */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select,
+textarea {
+  background: #0b0d1f !important;
+  color: #e5e7eb !important;
+  border: 1px solid #23263d !important;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+/* نص العنصر المختار في الـ select */
+select option {
+  color: #e5e7eb;
+  background: #0b0d1f;
+}
+
+/* Placeholder داخل الحقول */
+input::placeholder,
+textarea::placeholder {
+  color: #9aa4b2 !important;
+}
+
+/* تسميات (Labels) بجوار الـ checkbox والحقول */
+label {
+  color: #e8edf7 !important;
+  font-weight: 600;
+}
+
+/* بطاقات/أقسام طويلة داخل الدارك مود */
+.card, .panel, .box {
+  background: #101327;             /* أغمق سنة لتباين أفضل */
+  border: 1px solid #23263d;
+}
+
+/* فواصل الأقسام */
+hr { border-color: #23263d; opacity: 1; }
+
+/* زر البانر (Enable now) للتباين */
+#limitedBanner button, #enableNowBtn {
+  color: #ffffff !important;
+}
