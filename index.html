@@ -128,8 +128,44 @@
 
     <!-- Analytics -->
     <section class="tab-pane" id="analytics">
-      <h2>📊 Analytics</h2>
-      <p>Track content performance, visits, and engagement.</p>
+  <h3>Analytics</h3>
+
+  <div class="grid" style="margin-top:10px">
+    <div class="mini-card">
+      <div class="tag">Total Events</div>
+      <div class="title" id="statTotal">0</div>
+    </div>
+    <div class="mini-card">
+      <div class="tag">7-day Views</div>
+      <div class="title" id="stat7d">0</div>
+    </div>
+    <div class="mini-card">
+      <div class="tag">Most Viewed Tab</div>
+      <div class="title" id="statTopTab">–</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="card-head">Traffic (last 7 days)</div>
+    <canvas id="analyticsChart" width="800" height="240"></canvas>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="card-head">Recent Events</div>
+    <div class="list" style="overflow:auto">
+      <table class="table" style="width:100%;border-collapse:collapse">
+        <thead>
+          <tr>
+            <th style="text-align:left;padding:8px;border-bottom:1px solid var(--chip)">Time</th>
+            <th style="text-align:left;padding:8px;border-bottom:1px solid var(--chip)">Type</th>
+            <th style="text-align:left;padding:8px;border-bottom:1px solid var(--chip)">Detail</th>
+          </tr>
+        </thead>
+        <tbody id="eventsTableBody"></tbody>
+      </table>
+    </div>
+    <button class="primary" id="resetAnalyticsBtn">Reset Analytics</button>
+  </div>
     </section>
 
     <!-- Settings -->
