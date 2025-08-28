@@ -233,3 +233,6 @@ body[data-theme="light"] {
 html, body, .card, .tabs button, .banner, .chip, .primary {
   transition: background-color .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease;
 }
+/* Table helpers for Analytics */
+.table th, .table td { font-size:14px; padding:8px; }
+.table tr:nth-child(even) { background: var(--card); }
