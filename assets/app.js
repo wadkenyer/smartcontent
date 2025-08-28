@@ -1,84 +1,62 @@
-// Simple tab router + links + limited mode banner
-
-const $ = (q) => document.querySelector(q);
+// أدوات مساعدة سريعة
+const $  = (q) => document.querySelector(q);
 const $$ = (q) => document.querySelectorAll(q);
 
+// تفعيل تبويب حسب الـ id
 function activate(tabId) {
   $$(".tab-pane").forEach(el => el.classList.remove("active"));
   $$(".tabs button").forEach(b => b.classList.remove("active"));
+
   const pane = document.getElementById(tabId);
-  const btn = Array.from($$(".tabs button")).find(b => b.dataset.tab === tabId);
+  const btn  = Array.from($$(".tabs button")).find(b => b.dataset.tab === tabId);
+
   if (pane) pane.classList.add("active");
-  if (btn) btn.classList.add("active");
-  window.location.hash = tabId === "home" ? "" : `#${tabId}`;
+  if (btn)  btn.classList.add("active");
+
+  // تحديث الرابط (للدخول المباشر)
+  if (tabId === "home") {
+    history.replaceState(null, "", "./index.html");
+  } else {
+    history.replaceState(null, "", `#${tabId}`);
+  }
 }
 
+// ربط أزرار التبويب
 function wireNav() {
-  $$(".tabs button").forEach(b => b.addEventListener("click", () => activate(b.dataset.tab)));
-  // card buttons
-  $$(".primary[data-link]").forEach(btn => {
+  $$(".tabs button").forEach(b => {
+    b.addEventListener("click", () => activate(b.dataset.tab));
+  });
+
+  // أزرار داخل الكروت/الأقسام تقفز للتاب المقابل
+  $$("[data-link]").forEach(btn => {
     btn.addEventListener("click", () => {
       const to = btn.getAttribute("data-link").replace("#","");
       activate(to);
     });
   });
-  // deep link on load
-  const hash = (location.hash || "#home").replace("#","");
-  activate(hash);
 }
 
-function wireLinksFromConfig(cfg) {
-  if (!cfg) return;
-  const privacyEls = ["#privacyLink","#footerPrivacy"];
-  const termsEls = ["#termsLink","#footerTerms"];
-  privacyEls.forEach(s => { const a=$(s); if (a) a.href = cfg.privacyURL; });
-  termsEls.forEach(s => { const a=$(s); if (a) a.href = cfg.termsURL; });
-  const emailEls = ["#contactLink","#footerEmail"];
-  emailEls.forEach(s => { const a=$(s); if (!a) return;
-    a.href = `mailto:${cfg.supportEmail}`; a.textContent = cfg.supportEmail;
-  });
+// عند التحميل افتح التبويب من الهاش إن وجد
+function openFromHash() {
+  const tabFromHash = (location.hash || "#home").replace("#","");
+  activate(tabFromHash);
 }
 
+// بانر "Limited Mode" (تجريبي)
 function limitedModeBanner() {
   const banner = $("#limitedBanner");
   if (!banner) return;
-  // Simulate: show banner by default (user skipped permissions)
+
+  // أظهره بشكل افتراضي (يمكنك تغيير المنطق لاحقًا)
   banner.classList.remove("hidden");
-  $("#enableNowBtn").addEventListener("click", () => {
-    // Here you would trigger permission flow in the Pi Browser.
+  $("#enableNowBtn")?.addEventListener("click", () => {
     alert("Permission flow would start here in the Pi Browser.");
     banner.classList.add("hidden");
   });
 }
-// Dark Mode Toggle
-function setupDarkModeToggle() {
-  const toggle = document.getElementById("darkModeToggle");
-  if (!toggle) return;
-
-  // تحقق من الوضع المخزن مسبقاً (localStorage)
-  const currentMode = localStorage.getItem("theme");
-  if (currentMode === "light") {
-    document.body.classList.add("light-mode");
-    toggle.checked = false;
-  } else {
-    document.body.classList.remove("light-mode");
-    toggle.checked = true;
-  }
-
-  // عند التغيير
-  toggle.addEventListener("change", () => {
-    if (toggle.checked) {
-      document.body.classList.remove("light-mode");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.body.classList.add("light-mode");
-      localStorage.setItem("theme", "light");
-    }
-  });
-        }
 
 document.addEventListener("DOMContentLoaded", () => {
   wireNav();
-  wireLinksFromConfig(window.SMARTCONTENT_CONFIG);
+  openFromHash();
   limitedModeBanner();
 });
