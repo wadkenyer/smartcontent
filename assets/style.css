@@ -236,3 +236,45 @@ html, body, .card, .tabs button, .banner, .chip, .primary {
 /* Table helpers for Analytics */
 .table th, .table td { font-size:14px; padding:8px; }
 .table tr:nth-child(even) { background: var(--card); }
+/* ===== Button text visibility fixes ===== */
+
+/* قاعدة عامة لكل الأزرار */
+button, .btn {
+  color: #e6e6f0;            /* نص فاتح قابل للقراءة */
+  font-weight: 600;
+}
+
+/* CTA الرئيسية */
+button.primary, .btn.primary {
+  color: #ffffff !important; /* أبيض واضح فوق التدرّج */
+}
+
+/* أزرار التبويبات أعلى الصفحة */
+.tabs button {
+  color: #e6e6f0;            /* نص ظاهر في الوضع الليلي */
+}
+
+/* التبويب النشط (كان بدون لون نص) */
+.tabs button.active {
+  color: #ffffff;            /* أبيض على الخلفية البنفسجية */
+}
+
+/* الـchips (الحبوب) أسفل الترحيب */
+.chip {
+  background: #111225;
+  color: #dbe4ff;
+}
+
+/* أزرار معطلة أو غير مفعّلة */
+button[disabled], .btn[disabled] {
+  opacity: .6;
+  color: #cbd5e1;            /* ما زال قابل للقراءة */
+}
+
+/* تأكيد قيم الوضع الليلي */
+:root {
+  --bg:#0b0b10;
+  --card:#111425;
+  --text:#e8edf7;
+}
+html, body { color: var(--text); }
