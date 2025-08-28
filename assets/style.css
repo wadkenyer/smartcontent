@@ -216,3 +216,20 @@ body.light-mode .tabs button.active {
   background: #6200ea;
   color: #fff;
 }
+/* ===== Light theme (toggle via [data-theme="light"]) ===== */
+:root[data-theme="light"],
+body[data-theme="light"] {
+  --bg: #f6f7fb;
+  --card: #ffffff;
+  --muted: #4b5563;
+  --text: #0f172a;
+  --brand: #6f4af7;
+  --brand2: #8a5cff;
+  --chip: #e2e8f0;
+  --accent: #7c3aed;
+}
+
+/* انتقالات سلسة عند التبديل */
+html, body, .card, .tabs button, .banner, .chip, .primary {
+  transition: background-color .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
