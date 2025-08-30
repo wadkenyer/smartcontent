@@ -343,3 +343,18 @@ hr { border-color: #23263d; opacity: 1; }
 /* RTL basics */
 html[dir="rtl"] body { text-align: right; }
 html[dir="rtl"] .tabs { flex-direction: row-reverse; }
+/* بطل الصفحة (Home) */
+.lead { font-size: 16px; opacity: .9; }
+
+.chips { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0; }
+.chip  { background:#111225; color:#dbe4ff; padding:6px 10px; border-radius:999px; font-size:12px; }
+
+/* فوتر أنيق */
+.footer {
+  margin-top: 24px;
+  padding-top: 12px;
+  border-top: 1px solid #23263d;
+  color: #aab0c0;
+}
+.footer a { color: var(--accent); }
+.footer .contact { margin: 8px 0 0; }
