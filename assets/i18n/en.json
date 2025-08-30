@@ -1,0 +1,22 @@
+{
+  "app.title": "SmartContent · Web3 Creator Suite",
+  "home.headline": "Welcome back, Creator 🚀",
+  "home.lead": "Your AI-powered Web3 content suite on the Pi Network.",
+  "nav.home": "Home",
+  "nav.editor": "Editor",
+  "nav.ai": "AI",
+  "nav.design": "Design",
+  "nav.video": "Video",
+  "nav.seo": "SEO",
+  "nav.cms": "CMS",
+  "nav.web": "Web",
+  "nav.analytics": "Analytics",
+  "nav.settings": "Settings",
+  "settings.title": "Settings",
+  "pref.push": "Push Notifications",
+  "pref.autosave": "Auto-save Drafts",
+  "pref.dark": "Dark Mode",
+  "pref.lang": "Default Language",
+  "pi.wallet": "Wallet Address",
+  "footer.needHelp": "Need help? Email us at"
+}
