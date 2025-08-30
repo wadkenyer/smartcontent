@@ -26,3 +26,8 @@ window.addEventListener("load", () => {
     console.warn("[Pi SDK] init error:", e);
   }
 });
+window.SMARTCONTENT_CONFIG = {
+  privacyURL: "https://wadkenyer.github.io/smartcontent/privacy.html",
+  termsURL:   "https://wadkenyer.github.io/smartcontent/terms.html",
+  supportEmail: "ahmedheebo@gmail.com"
+};
