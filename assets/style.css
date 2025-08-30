@@ -340,3 +340,6 @@ hr { border-color: #23263d; opacity: 1; }
 #limitedBanner button, #enableNowBtn {
   color: #ffffff !important;
 }
+/* RTL basics */
+html[dir="rtl"] body { text-align: right; }
+html[dir="rtl"] .tabs { flex-direction: row-reverse; }
