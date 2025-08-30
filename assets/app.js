@@ -296,3 +296,51 @@ document.addEventListener("DOMContentLoaded", () => {
   // config links (اختياري)
   wireLinksFromConfig(window.SMARTCONTENT_CONFIG);
 });
+// ===== i18n mini engine =====
+async function loadLocale(lang) {
+  try {
+    const res = await fetch(`assets/i18n/${lang}.json`);
+    if (!res.ok) throw new Error("locale not found");
+    return await res.json();
+  } catch (e) {
+    const res = await fetch(`assets/i18n/en.json`);
+    return await res.json();
+  }
+}
+
+function applyI18n(dict) {
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (dict[key]) el.textContent = dict[key];
+  });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+    const key = el.getAttribute("data-i18n-placeholder");
+    if (dict[key]) el.setAttribute("placeholder", dict[key]);
+  });
+}
+
+function setLangAndDir(lang) {
+  const rtlLangs = ["ar", "fa", "ur", "he"];
+  const isRTL = rtlLangs.includes(lang);
+  document.documentElement.lang = lang;
+  document.documentElement.dir  = isRTL ? "rtl" : "ltr";
+}
+
+async function initI18n() {
+  const saved = localStorage.getItem("sc_pref_lang") || "en";
+  setLangAndDir(saved);
+  const dict = await loadLocale(saved);
+  applyI18n(dict);
+
+  const sel = document.getElementById("prefLang");
+  if (sel) {
+    sel.value = saved;
+    sel.addEventListener("change", async () => {
+      const next = sel.value;
+      localStorage.setItem("sc_pref_lang", next);
+      setLangAndDir(next);
+      const d = await loadLocale(next);
+      applyI18n(d);
+    });
+  }
+}
