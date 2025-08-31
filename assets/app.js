@@ -214,6 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
   wireNav();
   wireSettings();
   renderPiUser();
+  wireCMS();
   limitedModeBanner();
   updateFooterYear();
   wirePrefs();
@@ -262,6 +263,62 @@ function renderPiUser(){
 
 // داخل DOMContentLoaded بعد wireSettings()
 renderPiUser();
+
+const S_CMS = { posts: "sc_posts" };
+
+function loadPosts(){
+  return JSON.parse(localStorage.getItem(S_CMS.posts) || "[]");
+}
+function savePosts(arr){
+  localStorage.setItem(S_CMS.posts, JSON.stringify(arr));
+}
+function renderPosts(){
+  const box = document.getElementById("postsList");
+  if(!box) return;
+  const items = loadPosts();
+  box.innerHTML = items.length ? items.map((p,i)=>`
+    <div class="mini-card" style="display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <div class="tag">${p.title}</div>
+        <p class="muted" style="margin:6px 0 0;">${p.body.slice(0,120)}${p.body.length>120?'…':''}</p>
+      </div>
+      <button class="secondary" data-del="${i}">Delete</button>
+    </div>
+  `).join("") : `<p class="muted">No posts yet.</p>`;
+
+  box.querySelectorAll("button[data-del]").forEach(b=>{
+    b.onclick = () => {
+      const idx = +b.dataset.del;
+      const arr = loadPosts();
+      arr.splice(idx,1);
+      savePosts(arr);
+      renderPosts();
+      trackEvent("cms_delete","post");
+    };
+  });
+}
+
+function wireCMS(){
+  const btn = document.getElementById("savePostBtn");
+  const t = document.getElementById("postTitle");
+  const b = document.getElementById("postBody");
+  if(!btn || !t || !b) return;
+  btn.onclick = ()=>{
+    const title = t.value.trim();
+    const body = b.value.trim();
+    if(!title || !body){ alert("Please write a title and body"); return;}
+    const arr = loadPosts();
+    arr.unshift({ title, body, ts: Date.now() });
+    savePosts(arr);
+    t.value=""; b.value="";
+    renderPosts();
+    trackEvent("cms_save","post");
+  };
+  renderPosts();
+}
+
+// أضف داخل DOMContentLoaded:
+wireCMS();
 
 const get = (k, f=null)=>{ try{ const v=localStorage.getItem(k); return v===null?f:JSON.parse(v);}catch{ return f;} };
 const set = (k, v)=>{ try{ localStorage.setItem(k, JSON.stringify(v)); }catch{} };
