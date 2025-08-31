@@ -157,13 +157,22 @@
 
     <!-- CMS -->
     <section class="tab-pane" id="cms">
-  <h2>📂 CMS</h2>
-  <p>Manage posts, pages, categories, and tags.</p>
+  <h2>🗂️ CMS</h2>
+  <div class="card">
+    <div class="row">
+      <input id="postTitle" placeholder="Title" style="flex:1;">
+    </div>
+    <div class="row">
+      <textarea id="postBody" placeholder="Write something..." rows="5" style="width:100%"></textarea>
+    </div>
+    <div class="row">
+      <button id="savePostBtn" class="primary">Save Post</button>
+    </div>
+  </div>
 
   <div class="card">
-    <div class="card-head">Content Manager</div>
-    <p>Create, edit, and schedule your articles.</p>
-    <button class="primary">Open CMS</button>
+    <div class="card-head">Your Posts</div>
+    <div id="postsList"></div>
   </div>
 </section>
 
