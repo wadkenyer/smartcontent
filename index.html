@@ -177,12 +177,24 @@
   <h2>📊 Analytics</h2>
   <p>Track usage, events, and traffic.</p>
 
-  <div class="card">
-    <div class="card-head">Overview</div>
-    <p>Total Events: <span id="totalEvents">0</span></p>
-    <p>7-day Views: <span id="weeklyViews">0</span></p>
-    <button class="primary" onclick="resetAnalytics()">Reset Analytics</button>
+  <!-- داخل تبويب analytics -->
+<div class="card">
+  <div class="card-head">Analytics</div>
+  <p>Total Events: <strong id="totalEvents">0</strong></p>
+  <p>7-day Views: <strong id="views7d">0</strong></p>
+  <p>Most Viewed Tab: <strong id="mostViewed">–</strong></p>
+
+  <div id="trafficChart" style="margin:16px 0;"></div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Time</th><th>Type</th><th>Detail</th></tr></thead>
+      <tbody id="eventsTable"></tbody>
+    </table>
   </div>
+
+  <button class="primary" id="resetAnalyticsBtn">Reset Analytics</button>
+</div>
 </section>
 
     <!-- Settings -->
