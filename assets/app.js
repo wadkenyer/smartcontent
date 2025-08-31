@@ -228,6 +228,39 @@ const S = {
   autoMint: "sc_automint",
   scNotify: "sc_scnotify",
 };
+// مفاتيح تخزين
+const S = Object.assign({}, S, { piUser: "sc_pi_user" }); // لو S معرف سابقًا
+
+function mockPiLogin(){
+  // استبدل لاحقًا بـ window.Pi.authenticate(...)
+  const u = { username: "pi_creator", uid: "USR12345" };
+  localStorage.setItem(S.piUser, JSON.stringify(u));
+  renderPiUser();
+}
+
+function mockPiLogout(){
+  localStorage.removeItem(S.piUser);
+  renderPiUser();
+}
+
+function renderPiUser(){
+  const el = document.getElementById("piUser");
+  const btn = document.getElementById("piLoginBtn");
+  const u = JSON.parse(localStorage.getItem(S.piUser) || "null");
+  if(!el || !btn) return;
+  if(u){
+    el.textContent = `@${u.username}`;
+    btn.textContent = "Logout";
+    btn.onclick = mockPiLogout;
+  }else{
+    el.textContent = "";
+    btn.textContent = "🔐 Login with Pi";
+    btn.onclick = mockPiLogin;
+  }
+}
+
+// داخل DOMContentLoaded بعد wireSettings()
+renderPiUser();
 
 const get = (k, f=null)=>{ try{ const v=localStorage.getItem(k); return v===null?f:JSON.parse(v);}catch{ return f;} };
 const set = (k, v)=>{ try{ localStorage.setItem(k, JSON.stringify(v)); }catch{} };
