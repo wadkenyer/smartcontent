@@ -212,6 +212,7 @@ function wireAnalyticsReset() {
 /* ========== تشغيل كل شيء بعد تحميل DOM ========== */
 document.addEventListener('DOMContentLoaded', () => {
   wireNav();
+  wireSettings();
   limitedModeBanner();
   updateFooterYear();
   wirePrefs();
