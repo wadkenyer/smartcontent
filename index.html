@@ -199,21 +199,84 @@
 
     <!-- Settings -->
     <section class="tab-pane" id="settings">
-  <h2>⚙️ Settings</h2>
-  <p>Customize your app preferences.</p>
+  <h2 data-i18n="settings.title">⚙️ Settings</h2>
+  <p class="lead" data-i18n="settings.lead">Customize your app preferences.</p>
 
+  <!-- App Preferences -->
   <div class="card">
-    <div class="card-head">App Preferences</div>
-    <label><input type="checkbox"> Push Notifications</label><br>
-    <label><input type="checkbox"> Auto-save Drafts</label><br>
-    <label><input type="checkbox" id="darkModeToggle"> Dark Mode</label><br>
-    <label>Default Language:
-      <select>
-        <option>English</option>
-        <option>العربية</option>
-        <option>Français</option>
+    <div class="card-head" data-i18n="settings.app_prefs">App Preferences</div>
+
+    <div class="row">
+      <label class="check">
+        <input type="checkbox" id="pushToggle">
+        <span data-i18n="settings.push">Push Notifications</span>
+      </label>
+    </div>
+
+    <div class="row">
+      <label class="check">
+        <input type="checkbox" id="autosaveToggle">
+        <span data-i18n="settings.autosave">Auto-save Drafts</span>
+      </label>
+    </div>
+
+    <div class="row">
+      <label class="check">
+        <input type="checkbox" id="darkModeToggle">
+        <span data-i18n="settings.darkmode">Dark Mode</span>
+      </label>
+    </div>
+
+    <div class="row">
+      <strong data-i18n="settings.lang">Default Language</strong>
+      <select id="langSelect" style="margin-top:8px;max-width:260px;">
+        <option value="en">English</option>
+        <option value="ar">العربية</option>
+        <option value="fr">Français</option>
+        <option value="es">Español</option>
+        <option value="de">Deutsch</option>
       </select>
-    </label>
+    </div>
+  </div>
+
+  <!-- Pi Network Settings -->
+  <div class="card">
+    <div class="card-head" data-i18n="settings.pi_head">Pi Network Settings</div>
+
+    <div class="row">
+      <strong data-i18n="settings.wallet">Wallet Address</strong>
+      <div style="display:flex;gap:8px;align-items:center;margin-top:8px;max-width:420px;">
+        <input id="walletInput" placeholder="0x..." style="flex:1;">
+        <button id="copyWalletBtn" class="secondary" type="button" title="Copy">📋</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <label class="check">
+        <input type="checkbox" id="autoMintToggle">
+        <span data-i18n="settings.automint">Auto-mint NFTs</span>
+      </label>
+    </div>
+
+    <div class="row">
+      <label class="check">
+        <input type="checkbox" id="scNotifyToggle">
+        <span data-i18n="settings.scnotify">Smart Contract Notifications</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Security & Privacy -->
+  <div class="card">
+    <div class="card-head" data-i18n="settings.sec_priv">Security & Privacy</div>
+    <div class="row">
+      <button class="muted" disabled data-i18n="settings.change_pass">Change Password</button>
+      <button class="muted" disabled data-i18n="settings.2fa">Two-Factor Authentication</button>
+    </div>
+    <div class="row">
+      <button class="muted" disabled data-i18n="settings.export">Data Export</button>
+      <button class="muted" disabled data-i18n="settings.delete">Delete Account</button>
+    </div>
   </div>
 </section>
   </main>
