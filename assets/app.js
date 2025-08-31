@@ -90,7 +90,55 @@ function wirePrefs() {
       updateAnalyticsUI();
     });
   }
+// === تبويب بسيط وموثوق ===
 
+// هيلبرز
+const $  = (q) => document.querySelector(q);
+const $$ = (q) => document.querySelectorAll(q);
+
+// إظهار تبويب بالـ id
+function showTab(id) {
+  // فعّل/أخفِ الأقسام
+  $$('.tab-pane').forEach(p => {
+    p.classList.toggle('active', p.id === id);
+  });
+  // فعّل/ألغِ تفعيل الأزرار
+  $$('.tabs [data-tab]').forEach(a => {
+    a.classList.toggle('active', a.dataset.tab === id);
+  });
+}
+
+// اذهب إلى الهاش الحالي
+function goToHash() {
+  const id = (location.hash || '#home').slice(1);
+  // لو ما في قسم بهذا الاسم، ارجع للـ home
+  const fallback = $('#home') ? 'home' : id;
+  showTab($('#' + id) ? id : fallback);
+}
+
+// اسلاك الأحداث
+function wireNav() {
+  // اضغط زر ⇢ غير الهاش واظهر التبويب
+  $$('.tabs [data-tab]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const id = a.dataset.tab;
+      if (!id) return;
+      history.replaceState(null, '', '#' + id);
+      showTab(id);
+    });
+  });
+  // تغيّر الهاش (من الرابط أو رجوع/تقدم المتصفح)
+  window.addEventListener('hashchange', goToHash);
+  // اظهر التبويب الأول عند التحميل
+  goToHash();
+}
+
+// شغّل بعد تحميل الـ DOM
+document.addEventListener('DOMContentLoaded', () => {
+  wireNav();
+  // … أبقِ نداءاتك الأخرى هنا (wireSettings() / analytics …إلخ)
+});
   const langSel = document.getElementById('langSelect');
   if (langSel) {
     const savedLang = localStorage.getItem('pref_lang');
