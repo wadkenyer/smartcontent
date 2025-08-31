@@ -284,7 +284,19 @@ function renderAnalytics() {
 }
 
 // ========= boot =========
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded"// === Auto year for footer + i18n placeholder ===
+const cr = document.getElementById("copyright");
+if (cr) {
+  const y = new Date().getFullYear();
+
+  // لو عنصر الفوتر فاضي، نحط نص افتراضي
+  if (!cr.textContent || cr.textContent.trim() === "") {
+    cr.textContent = `© ${y} SmartContent — Built for Pi Network Creators.`;
+  } else {
+    // ولو فيه ترجمة فيها {year} نستبدلها بالسنة الحالية
+    cr.textContent = cr.textContent.replace("{year}", y);
+  }
+}, () => {
   wireNav();
   openFromHash();
   limitedModeBanner();
