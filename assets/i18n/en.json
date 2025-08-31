@@ -20,3 +20,11 @@
   "pi.wallet": "Wallet Address",
   "footer.needHelp": "Need help? Email us at"
 }
+{
+  "footer": {
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "support": "Need help? Email us",
+    "copyright": "© {year} SmartContent — Built for Pi Network Creators."
+  }
+}
