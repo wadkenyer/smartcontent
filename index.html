@@ -85,21 +85,18 @@
     <!-- AI -->
     <section class="tab-pane" id="ai">
   <h2>🤖 AI Tools</h2>
-  <p>Generate posts, scripts, and summaries in seconds.</p>
-
-  <div class="cards">
-    <div class="card">
-      <div class="card-head">Post Generator</div>
-      <p>Give a topic and get a draft.</p>
-      <button class="primary">Open Generator</button>
+  <div class="card">
+    <div class="row">
+      <input id="aiTopic" placeholder="Topic (e.g. Web3 Tips)" style="flex:1;">
     </div>
-    <div class="card">
-      <div class="card-head">Summarizer</div>
-      <p>Paste text to get a concise summary.</p>
-      <button class="primary">Try Summarizer</button>
+    <div class="row">
+      <button id="aiGenBtn" class="primary">Generate Post</button>
+    </div>
+    <div class="row">
+      <textarea id="aiOut" rows="8" style="width:100%" placeholder="AI output..."></textarea>
     </div>
   </div>
-</section>
+    </section>
 
     <!-- Design -->
     <section class="tab-pane" id="design">
