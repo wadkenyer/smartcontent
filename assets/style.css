@@ -31,7 +31,9 @@ html, body {
   color: var(--text);
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
-
+.tab-pane { display:none; }
+.tab-pane.active { display:block; }
+.tabs [data-tab].active { /* شكل التبويب النشط */ font-weight:600; }
 /* مثال عام لبقية العناصر */
 .card { background: var(--card); }
 a { color: var(--accent); text-decoration: none; }
