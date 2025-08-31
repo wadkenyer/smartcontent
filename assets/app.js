@@ -213,6 +213,7 @@ function wireAnalyticsReset() {
 document.addEventListener('DOMContentLoaded', () => {
   wireNav();
   wireSettings();
+  renderPiUser();
   limitedModeBanner();
   updateFooterYear();
   wirePrefs();
