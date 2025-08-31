@@ -217,4 +217,81 @@ document.addEventListener('DOMContentLoaded', () => {
   wirePrefs();
   wireAnalyticsReset();
   updateAnalyticsUI();
-});
+});// مفاتيح التخزين في localStorage
+const S = {
+  push:     "sc_push",
+  autosave: "sc_autosave",
+  dark:     "sc_dark",
+  lang:     "sc_lang",
+  wallet:   "sc_wallet",
+  autoMint: "sc_automint",
+  scNotify: "sc_scnotify",
+};
+
+const get = (k, f=null)=>{ try{ const v=localStorage.getItem(k); return v===null?f:JSON.parse(v);}catch{ return f;} };
+const set = (k, v)=>{ try{ localStorage.setItem(k, JSON.stringify(v)); }catch{} };
+
+// طبّق الثيم
+const applyDark = (on)=> {
+  // لو عندك CSS يعتمد على body.dark حافظ عليه
+  document.body.classList.toggle("dark", !!on);
+};
+
+// لغة + اتجاه
+const applyLangMeta = (lang)=>{
+  const rtl = ["ar","fa","ur","he"];
+  document.documentElement.lang = lang || "en";
+  document.documentElement.dir  = rtl.includes(lang) ? "rtl" : "ltr";
+};
+
+// وحدة إعدادات موحّدة
+function wireSettings() {
+  const elPush      = document.getElementById("pushToggle");
+  const elAutosave  = document.getElementById("autosaveToggle");
+  const elDark      = document.getElementById("darkModeToggle");
+  const elLang      = document.getElementById("langSelect");
+  const elWallet    = document.getElementById("walletInput");
+  const elCopy      = document.getElementById("copyWalletBtn");
+  const elAutoMint  = document.getElementById("autoMintToggle");
+  const elScNotify  = document.getElementById("scNotifyToggle");
+
+  // قراءة محفوظات
+  const vPush      = get(S.push,     false);
+  const vAutosave  = get(S.autosave, false);
+  const vDark      = get(S.dark,     true);
+  const vLang      = get(S.lang,     "en");
+  const vWallet    = get(S.wallet,   "");
+  const vAutoMint  = get(S.autoMint, false);
+  const vScNotify  = get(S.scNotify, false);
+
+  // تطبيق قبل عرض
+  applyDark(vDark);
+  applyLangMeta(vLang);
+
+  // تعبئة UI
+  if (elPush)     elPush.checked     = !!vPush;
+  if (elAutosave) elAutosave.checked = !!vAutosave;
+  if (elDark)     elDark.checked     = !!vDark;
+  if (elLang)     elLang.value       = vLang;
+  if (elWallet)   elWallet.value     = vWallet || "";
+  if (elAutoMint) elAutoMint.checked = !!vAutoMint;
+  if (elScNotify) elScNotify.checked = !!vScNotify;
+
+  // حفظ عند التغيير
+  elPush?.addEventListener("change",     e=> set(S.push,     e.target.checked));
+  elAutosave?.addEventListener("change", e=> set(S.autosave, e.target.checked));
+  elDark?.addEventListener("change",     e=> { set(S.dark, e.target.checked); applyDark(e.target.checked); });
+  elLang?.addEventListener("change",     e=> { set(S.lang, e.target.value);  applyLangMeta(e.target.value); });
+  elWallet?.addEventListener("input",    e=> set(S.wallet,   e.target.value.trim()));
+  elAutoMint?.addEventListener("change", e=> set(S.autoMint, e.target.checked));
+  elScNotify?.addEventListener("change", e=> set(S.scNotify, e.target.checked));
+
+  // نسخ العنوان
+  elCopy?.addEventListener("click", async ()=>{
+    try {
+      await navigator.clipboard.writeText((elWallet?.value || "").trim());
+      elCopy.textContent = "✅";
+      setTimeout(()=> elCopy.textContent = "📋", 1200);
+    } catch {}
+  });
+}
