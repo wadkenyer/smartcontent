@@ -215,6 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
   wireSettings();
   renderPiUser();
   wireCMS();
+  wireAI();
   limitedModeBanner();
   updateFooterYear();
   wirePrefs();
@@ -319,6 +320,23 @@ function wireCMS(){
 
 // أضف داخل DOMContentLoaded:
 wireCMS();
+
+function wireAI(){
+  const btn = document.getElementById("aiGenBtn");
+  const topic = document.getElementById("aiTopic");
+  const out = document.getElementById("aiOut");
+  if(!btn || !topic || !out) return;
+  btn.onclick = ()=>{
+    const t = topic.value.trim() || "your topic";
+    // Mock generation
+    const text = `Title: ${t}\n\n- Insight 1\n- Insight 2\n- CTA: Share your thoughts.`;
+    out.value = text;
+    trackEvent("ai_generate", t);
+  };
+}
+// داخل DOMContentLoaded:
+wireAI();
+
 
 const get = (k, f=null)=>{ try{ const v=localStorage.getItem(k); return v===null?f:JSON.parse(v);}catch{ return f;} };
 const set = (k, v)=>{ try{ localStorage.setItem(k, JSON.stringify(v)); }catch{} };
