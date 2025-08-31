@@ -27,4 +27,31 @@
     "support": "Need help? Email us",
     "copyright": "© {year} SmartContent — Built for Pi Network Creators."
   }
+}{
+  "settings": {
+    "title": "⚙️ Settings",
+    "lead": "Customize your app preferences.",
+    "app_prefs": "App Preferences",
+    "push": "Push Notifications",
+    "autosave": "Auto-save Drafts",
+    "darkmode": "Dark Mode",
+    "lang": "Default Language",
+    "pi_head": "Pi Network Settings",
+    "wallet": "Wallet Address",
+    "automint": "Auto-mint NFTs",
+    "scnotify": "Smart Contract Notifications",
+    "sec_priv": "Security & Privacy",
+    "change_pass": "Change Password",
+    "2fa": "Two-Factor Authentication",
+    "export": "Data Export",
+    "delete": "Delete Account",
+    "support": "Support & Help",
+    "help_center": "Help Center"
+  },
+  "footer": {
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "support": "Need help? Email us",
+    "copyright": "© {year} SmartContent — Built for Pi Network Creators."
+  }
 }
