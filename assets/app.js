@@ -1,358 +1,220 @@
-// ========= helpers =========
+/* ========= SmartContent App Script ========= */
+/* أدوات سريعة لاختيار العناصر */
 const $  = (q) => document.querySelector(q);
 const $$ = (q) => document.querySelectorAll(q);
 
-// ========= tabs routing =========
+/* ========== التنقل بين التبويبات ========== */
 function activate(tabId) {
-  $$(".tab-pane").forEach(el => el.classList.remove("active"));
-  $$(".tabs button").forEach(b => b.classList.remove("active"));
+  // أخفِ كل البانلز
+  $$('.tab-pane').forEach(el => el.classList.remove('active'));
+  // أزل التفعيل من كل أزرار التبويب
+  $$('.tabs button').forEach(b => b.classList.remove('active'));
 
+  // فعّل البانل المطلوب
   const pane = document.getElementById(tabId);
-  const btn  = Array.from($$(".tabs button")).find(b => b.dataset.tab === tabId);
+  if (pane) pane.classList.add('active');
 
-  if (pane) pane.classList.add("active");
-  if (btn)  btn.classList.add("active");
+  // فعّل زر التبويب المطابق
+  const btn = Array.from($$('.tabs button')).find(b => b.dataset.tab === tabId);
+  if (btn) btn.classList.add('active');
 
-  // update URL (direct links)
-  if (tabId === "home") {
-    history.replaceState(null, "", "./index.html");
-  } else {
-    history.replaceState(null, "", `#${tabId}`);
-  }
+  // سجّل حدث مشاهدة تبويب في الأنلتكس
+  logEvent('tab_view', tabId);
 
-  // track + render analytics on demand
-  trackTabView(tabId);
-  if (tabId === "analytics") renderAnalytics();
+  // حدّث الواجهة الخاصة بالأنلتكس (إن وُجدت)
+  updateAnalyticsUI();
 }
 
 function wireNav() {
-  $$(".tabs button").forEach(b => b.addEventListener("click", () => activate(b.dataset.tab)));
-
-  // in-card CTA buttons
-  $$("[data-link]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const to = btn.getAttribute("data-link").replace("#","");
-      trackCtaClick(to);
-      activate(to);
-    });
+  // ربط أزرار التبويب العلوية
+  $$('.tabs button[data-tab]').forEach(b => {
+    b.addEventListener('click', () => activate(b.dataset.tab));
   });
+
+  // ربط الأزرار داخل الكروت: data-link="#id"
+  document.addEventListener('click', (e) => {
+    const el = e.target.closest('[data-link]');
+    if (!el) return;
+    const id = el.getAttribute('data-link').replace('#', '').trim();
+    if (!id) return;
+    activate(id);
+    logEvent('button_click', id);
+  });
+
+  // التنشيط العميق عبر الهاش إن وُجد (أو Home افتراضياً)
+  const hash = (location.hash || '#home').replace('#', '');
+  activate(hash);
 }
 
-function openFromHash() {
-  const tabFromHash = (location.hash || "#home").replace("#","");
-  activate(tabFromHash);
-}
-
-// ========= limited mode banner (demo) =========
+/* ========== Limited Mode Banner ========== */
 function limitedModeBanner() {
-  const banner = $("#limitedBanner");
+  const banner = $('#limitedBanner');
   if (!banner) return;
-  banner.classList.remove("hidden");
-  $("#enableNowBtn")?.addEventListener("click", () => {
-    alert("Permission flow would start here in the Pi Browser.");
-    banner.classList.add("hidden");
-  });
-}
 
-// ========= settings persistence (localStorage) =========
-const LS_KEYS = {
-  THEME: "sc_theme",            // "dark" | "light"
-  PUSH: "sc_pref_push",         // "1" | "0"
-  AUTOSAVE: "sc_pref_autosave", // "1" | "0"
-  LANG: "sc_pref_lang",         // "ar" | "en" | ...
-  WALLET: "sc_wallet_address",  // "0x..."
-};
+  // اظهره افتراضياً إن رغبتَ بمحاكاة “لم يمنح الأذونات”
+  banner.classList.remove('hidden');
 
-// --- theme ---
-function applyTheme(theme) {
-  const root = document.documentElement;
-  if (theme === "light") {
-    root.setAttribute("data-theme", "light");
-    document.body.setAttribute("data-theme", "light");
-  } else {
-    root.removeAttribute("data-theme");
-    document.body.removeAttribute("data-theme");
-  }
-}
-
-function initTheme() {
-  const saved = localStorage.getItem(LS_KEYS.THEME) || "dark";
-  applyTheme(saved);
-
-  const darkToggle = $("#prefDark");
-  if (darkToggle) {
-    darkToggle.checked = (saved === "dark");
-    darkToggle.addEventListener("change", () => {
-      const next = darkToggle.checked ? "dark" : "light";
-      localStorage.setItem(LS_KEYS.THEME, next);
-      applyTheme(next);
+  const enableBtn = $('#enableNowBtn');
+  if (enableBtn) {
+    enableBtn.addEventListener('click', () => {
+      alert('Permission flow would start here in the Pi Browser.');
+      banner.classList.add('hidden');
+      logEvent('cta_click', 'enable_permissions');
+      updateAnalyticsUI();
     });
   }
 }
 
-// --- other preferences ---
-function initPreferences() {
-  const push = $("#prefPush");
-  const autosave = $("#prefAutosave");
-  const lang = $("#prefLang");
-  const wallet = $("#walletAddress");
+/* ========== الفوتر: سنة تلقائية ========== */
+function updateFooterYear() {
+  const y  = new Date().getFullYear();
+  const cr = document.getElementById('copyright');
+  if (cr) cr.textContent = `© ${y} SmartContent – Built for Pi Network Creators`;
+}
 
-  const savedPush = localStorage.getItem(LS_KEYS.PUSH);
-  const savedAutosave = localStorage.getItem(LS_KEYS.AUTOSAVE);
-  const savedLang = localStorage.getItem(LS_KEYS.LANG);
-  const savedWallet = localStorage.getItem(LS_KEYS.WALLET);
+/* ========== تفضيلات بسيطة (اختياري) ========== */
+/* تحفظ حالة Dark Mode واللغة إن كانت موجودة في الصفحة */
+function wirePrefs() {
+  const darkChk = document.getElementById('darkModeToggle');
+  if (darkChk) {
+    // حمّل الحالة المحفوظة
+    const saved = localStorage.getItem('pref_dark') === '1';
+    darkChk.checked = saved;
+    document.documentElement.dataset.theme = saved ? 'dark' : 'default';
 
-  if (push) {
-    push.checked = savedPush === "1";
-    push.addEventListener("change", () =>
-      localStorage.setItem(LS_KEYS.PUSH, push.checked ? "1" : "0")
-    );
+    darkChk.addEventListener('change', () => {
+      const on = darkChk.checked;
+      localStorage.setItem('pref_dark', on ? '1' : '0');
+      document.documentElement.dataset.theme = on ? 'dark' : 'default';
+      logEvent('pref_change', on ? 'dark_on' : 'dark_off');
+      updateAnalyticsUI();
+    });
   }
-  if (autosave) {
-    autosave.checked = savedAutosave === "1";
-    autosave.addEventListener("change", () =>
-      localStorage.setItem(LS_KEYS.AUTOSAVE, autosave.checked ? "1" : "0")
-    );
-  }
-  if (lang) {
-    if (savedLang) lang.value = savedLang;
-    lang.addEventListener("change", () =>
-      localStorage.setItem(LS_KEYS.LANG, lang.value)
-    );
-  }
-  if (wallet) {
-    if (savedWallet) wallet.value = savedWallet;
-    wallet.addEventListener("input", () =>
-      localStorage.setItem(LS_KEYS.WALLET, wallet.value.trim())
-    );
+
+  const langSel = document.getElementById('langSelect');
+  if (langSel) {
+    const savedLang = localStorage.getItem('pref_lang');
+    if (savedLang) langSel.value = savedLang;
+
+    langSel.addEventListener('change', () => {
+      localStorage.setItem('pref_lang', langSel.value);
+      logEvent('pref_change', `lang_${langSel.value}`);
+      updateAnalyticsUI();
+      // هنا لاحقاً يمكنك استدعاء مُحمّل i18n لتطبيق اللغة
+    });
   }
 }
 
-// ========= optional dynamic links from config =========
-function wireLinksFromConfig(cfg) {
-  if (!cfg) return;
-  const map = [
-    ["#privacyLink", "privacyURL"],
-    ["#termsLink", "termsURL"],
-    ["#footerEmail", "supportEmail"] // mailto
-  ];
-  map.forEach(([sel, key]) => {
-    const el = $(sel);
-    if (!el || !cfg[key]) return;
-    if (key === "supportEmail") {
-      el.href = `mailto:${cfg[key]}`;
-      el.textContent = cfg[key];
-    } else {
-      el.href = cfg[key];
-    }
-  });
-}
-
-// ========= Analytics =========
-const ANALYTICS_KEY = "sc_analytics_events";
-const MAX_EVENTS = 1000;
+/* ========== Analytics محلي (LocalStorage) ========== */
+const LS_EVENTS_KEY = 'sc_events';
 
 function getEvents() {
   try {
-    return JSON.parse(localStorage.getItem(ANALYTICS_KEY) || "[]");
+    const raw = localStorage.getItem(LS_EVENTS_KEY);
+    return raw ? JSON.parse(raw) : [];
   } catch {
     return [];
   }
 }
-function saveEvents(arr) {
-  localStorage.setItem(ANALYTICS_KEY, JSON.stringify(arr.slice(-MAX_EVENTS)));
-}
-function trackEvent(type, data = {}) {
-  const ev = { ts: Date.now(), type, ...data };
-  const arr = getEvents();
-  arr.push(ev);
-  saveEvents(arr);
-}
-function trackTabView(tabId)   { trackEvent("tab_view",  { tabId }); }
-function trackCtaClick(target) { trackEvent("cta_click", { target }); }
 
-function fmtTime(t) {
-  const d = new Date(t);
-  return d.toLocaleString();
-}
-
-function statsFromEvents(events) {
-  // last 7 days tab_view counts per day
-  const DAY = 24*60*60*1000;
-  const today = new Date();
-  const zeroUTC = (d) => new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
-  const start = zeroUTC(new Date(Date.now() - 6*DAY)); // 7 columns (0..6)
-  const buckets = Array.from({length:7}, (_,i)=>{
-    const day = new Date(start.getTime() + i*DAY);
-    const key = day.toISOString().slice(0,10);
-    return { key, label: day.toLocaleDateString(undefined,{weekday:"short"}), count:0 };
-  });
-
-  const tabCounts = {};
-  let total = events.length;
-
-  events.forEach(e => {
-    if (e.type === "tab_view") {
-      const dayKey = new Date(e.ts).toISOString().slice(0,10);
-      const b = buckets.find(b => b.key === dayKey);
-      if (b) b.count++;
-      tabCounts[e.tabId] = (tabCounts[e.tabId]||0)+1;
-    }
-  });
-
-  const last7Views = buckets.reduce((s,b)=>s+b.count,0);
-  const topTab = Object.entries(tabCounts).sort((a,b)=>b[1]-a[1])[0]?.[0] || "—";
-
-  return { buckets, total, last7Views, topTab };
-}
-
-function drawBarChart(canvas, buckets) {
-  if (!canvas) return;
-  const ctx = canvas.getContext("2d");
-  const W = canvas.width, H = canvas.height;
-
-  // clear
-  ctx.clearRect(0,0,W,H);
-
-  const max = Math.max(1, ...buckets.map(b=>b.count));
-  const pad = 32;
-  const barW = (W - pad*2) / buckets.length * 0.6;
-  const stepX = (W - pad*2) / buckets.length;
-
-  // axes (simple)
-  ctx.strokeStyle = "#8892a6";
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(pad, H - pad);
-  ctx.lineTo(W - pad, H - pad);
-  ctx.moveTo(pad, pad);
-  ctx.lineTo(pad, H - pad);
-  ctx.stroke();
-
-  // bars
-  buckets.forEach((b, i) => {
-    const x = pad + i*stepX + (stepX - barW)/2;
-    const h = Math.round((H - pad*2) * (b.count / max));
-    const y = H - pad - h;
-
-    // bar (uses current theme fill via computed style)
-    ctx.fillStyle = getComputedStyle(document.body).getPropertyValue("--brand2") || "#8a5cff";
-    ctx.fillRect(x, y, barW, h);
-
-    // label
-    ctx.fillStyle = getComputedStyle(document.body).getPropertyValue("--text") || "#e5e7eb";
-    ctx.font = "12px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif";
-    ctx.textAlign = "center";
-    ctx.fillText(b.label, x + barW/2, H - pad + 16);
-  });
-}
-
-function renderAnalytics() {
-  const events = getEvents();
-  const { buckets, total, last7Views, topTab } = statsFromEvents(events);
-
-  // stats cards
-  $("#statTotal").textContent = String(total);
-  $("#stat7d").textContent = String(last7Views);
-  $("#statTopTab").textContent = topTab;
-
-  // table (latest 50)
-  const tbody = $("#eventsTableBody");
-  if (tbody) {
-    tbody.innerHTML = "";
-    events.slice(-50).reverse().forEach(e => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${fmtTime(e.ts)}</td>
-        <td>${e.type}</td>
-        <td>${e.tabId ? e.tabId : (e.target || "")}</td>
-      `;
-      tbody.appendChild(tr);
-    });
-  }
-
-  // chart
-  drawBarChart($("#analyticsChart"), buckets);
-
-  // reset btn
-  $("#resetAnalyticsBtn")?.addEventListener("click", () => {
-    if (confirm("Reset local analytics data?")) {
-      saveEvents([]);
-      renderAnalytics();
-    }
-  });
-}
-
-// ========= boot =========
-document.addEventListener("DOMContentLoaded"// === Auto year for footer + i18n placeholder ===
-const cr = document.getElementById("copyright");
-if (cr) {
-  const y = new Date().getFullYear();
-
-  // لو عنصر الفوتر فاضي، نحط نص افتراضي
-  if (!cr.textContent || cr.textContent.trim() === "") {
-    cr.textContent = `© ${y} SmartContent — Built for Pi Network Creators.`;
-  } else {
-    // ولو فيه ترجمة فيها {year} نستبدلها بالسنة الحالية
-    cr.textContent = cr.textContent.replace("{year}", y);
-  }
-}, () => {
-  wireNav();
-  openFromHash();
-  limitedModeBanner();
-
-  // prefs
-  initTheme();
-  initPreferences();
-
-  // config links (اختياري)
-  wireLinksFromConfig(window.SMARTCONTENT_CONFIG);
-});
-// ===== i18n mini engine =====
-async function loadLocale(lang) {
+function setEvents(arr) {
   try {
-    const res = await fetch(`assets/i18n/${lang}.json`);
-    if (!res.ok) throw new Error("locale not found");
-    return await res.json();
-  } catch (e) {
-    const res = await fetch(`assets/i18n/en.json`);
-    return await res.json();
+    localStorage.setItem(LS_EVENTS_KEY, JSON.stringify(arr));
+  } catch {}
+}
+
+function logEvent(type, detail = '') {
+  const events = getEvents();
+  events.push({
+    ts: Date.now(),
+    type,
+    detail
+  });
+  setEvents(events);
+}
+
+function resetAnalytics() {
+  setEvents([]);
+  updateAnalyticsUI();
+}
+
+function updateAnalyticsUI() {
+  // عناصر الإحصائيات إن وُجدت
+  const elTotal   = document.getElementById('totalEvents');
+  const elViews7d = document.getElementById('views7d');
+  const elMost    = document.getElementById('mostViewed');
+  const elTable   = document.getElementById('eventsTable');
+  const elChart   = document.getElementById('trafficChart'); // اختياري للرسم البسيط
+
+  const events = getEvents();
+
+  // إجمالي
+  if (elTotal) elTotal.textContent = String(events.length);
+
+  // 7 أيام
+  const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+  const last7 = events.filter(e => e.ts >= sevenDaysAgo);
+  if (elViews7d) elViews7d.textContent = String(last7.length);
+
+  // أكثر تبويب مشاهدة
+  if (elMost) {
+    const views = events.filter(e => e.type === 'tab_view');
+    const counts = views.reduce((acc, e) => {
+      acc[e.detail] = (acc[e.detail] || 0) + 1;
+      return acc;
+    }, {});
+    const most = Object.entries(counts).sort((a,b) => b[1]-a[1])[0];
+    elMost.textContent = most ? most[0] : '–';
+  }
+
+  // جدول آخر 20 حدث
+  if (elTable) {
+    const rows = events.slice(-20).reverse().map(e => {
+      const d = new Date(e.ts);
+      const time = d.toLocaleString();
+      return `<tr><td>${time}</td><td>${e.type}</td><td>${e.detail || '-'}</td></tr>`;
+    }).join('');
+    elTable.innerHTML = rows || '<tr><td colspan="3">No events yet</td></tr>';
+  }
+
+  // رسم بسيط (اختياري جداً) لعدد أحداث كل يوم خلال 7 أيام
+  if (elChart) {
+    const buckets = Array(7).fill(0);
+    last7.forEach(e => {
+      const daysAgo = Math.floor((Date.now() - e.ts) / (24*60*60*1000));
+      const idx = 6 - Math.min(Math.max(daysAgo,0),6); // 0..6، اليوم في اليمين
+      buckets[idx]++;
+    });
+    // ارسم أعمدة بسيطة داخل العنصر
+    elChart.innerHTML = `
+      <div style="display:flex; align-items:flex-end; gap:8px; height:120px;">
+        ${buckets.map(v => `
+          <div title="${v}" style="flex:1; background:linear-gradient(90deg,#7a5cff,#9a5cff); height:${v ? (10+v*10) : 6}px; border-radius:6px;"></div>
+        `).join('')}
+      </div>
+      <div style="display:flex; justify-content:space-between; font-size:12px; opacity:.8; margin-top:6px;">
+        <span>Fri</span><span>Sat</span><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span>
+      </div>
+    `;
   }
 }
 
-function applyI18n(dict) {
-  document.querySelectorAll("[data-i18n]").forEach(el => {
-    const key = el.getAttribute("data-i18n");
-    if (dict[key]) el.textContent = dict[key];
-  });
-  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
-    const key = el.getAttribute("data-i18n-placeholder");
-    if (dict[key]) el.setAttribute("placeholder", dict[key]);
-  });
-}
-
-function setLangAndDir(lang) {
-  const rtlLangs = ["ar", "fa", "ur", "he"];
-  const isRTL = rtlLangs.includes(lang);
-  document.documentElement.lang = lang;
-  document.documentElement.dir  = isRTL ? "rtl" : "ltr";
-}
-
-async function initI18n() {
-  const saved = localStorage.getItem("sc_pref_lang") || "en";
-  setLangAndDir(saved);
-  const dict = await loadLocale(saved);
-  applyI18n(dict);
-
-  const sel = document.getElementById("prefLang");
-  if (sel) {
-    sel.value = saved;
-    sel.addEventListener("change", async () => {
-      const next = sel.value;
-      localStorage.setItem("sc_pref_lang", next);
-      setLangAndDir(next);
-      const d = await loadLocale(next);
-      applyI18n(d);
+/* ========== ربط زر تصفير الأنلتكس إن وُجد ========== */
+function wireAnalyticsReset() {
+  const resetBtn = document.getElementById('resetAnalyticsBtn');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      if (confirm('Reset analytics data?')) resetAnalytics();
     });
   }
 }
+
+/* ========== تشغيل كل شيء بعد تحميل DOM ========== */
+document.addEventListener('DOMContentLoaded', () => {
+  wireNav();
+  limitedModeBanner();
+  updateFooterYear();
+  wirePrefs();
+  wireAnalyticsReset();
+  updateAnalyticsUI();
+});
