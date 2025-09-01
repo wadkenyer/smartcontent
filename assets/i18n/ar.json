@@ -35,10 +35,8 @@
   "settings.support": "الدعم والمساعدة",
 
   "footer.needHelp": "هل تحتاج مساعدة؟ راسلنا",
-  "footer": {
-    "privacy": "سياسة الخصوصية",
-    "terms": "شروط الخدمة",
-    "support": "هل تحتاج مساعدة؟ راسلنا",
-    "copyright": "© {year} SmartContent — مُنشأ لأجل Pi Network."
-  }
+  "footer.privacy": "سياسة الخصوصية",
+  "footer.terms": "شروط الخدمة",
+  "footer.support": "هل تحتاج مساعدة؟ راسلنا",
+  "footer.copyright": "© {year} SmartContent — مُنشأ لأجل Pi Network."
 }
