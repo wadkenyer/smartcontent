@@ -1,6 +1,5 @@
 {
   "app.title": "SmartContent · Web3 Creator Suite",
-
   "home.headline": "Welcome back, Creator 🚀",
   "home.lead": "Your AI-powered Web3 content suite on the Pi Network.",
 
@@ -15,7 +14,7 @@
   "nav.analytics": "Analytics",
   "nav.settings": "Settings",
 
-  "settings.title": "⚙️ Settings",
+  "settings.title": "Settings",
   "settings.lead": "Customize your app preferences.",
   "settings.app_prefs": "App Preferences",
   "settings.push": "Push Notifications",
@@ -34,8 +33,10 @@
   "settings.export": "Data Export",
   "settings.delete": "Delete Account",
 
-  "settings.support": "Support & Help",
-  "settings.help_center": "Help Center",
+  "cms.title_ph": "Title",
+  "cms.body_ph": "Write something...",
+  "cms.save": "Save Post",
+  "cms.head": "Your Posts",
 
   "footer.privacy": "Privacy Policy",
   "footer.terms": "Terms of Service",
