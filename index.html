@@ -2,302 +2,312 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SmartContent · Web3 Creator Suite</title>
 
-  <!-- ستايل عام (موجود عندك) -->
+  <!-- CSS الرئيسي -->
   <link rel="stylesheet" href="assets/style.css" />
 </head>
 <body>
-  <button id="piLoginBtn" class="chip">🔐 Login with Pi</button>
-<span id="piUser" class="muted" style="margin-inline-start:8px;"></span>
-  <!-- الشريط العلوي + التنقل -->
-  <header class="topbar">
-    <div class="brand">
-      <span class="logo">⚡</span>
-      <div>
-        <h1>SmartContent</h1>
-        <p>Web3 Creator Suite · Pi Network</p>
+  <div class="wrap">
+    <!-- ===== Header / Navigation ===== -->
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo">⚡</span>
+        <div>
+          <h1>SmartContent</h1>
+          <p>Web3 Creator Suite · Pi Network</p>
+        </div>
       </div>
-    </div>
+
+      <div class="actions">
+        <button id="piLoginBtn" class="chip">🔐 Login with Pi</button>
+        <span id="piUser" class="muted" style="margin-inline-start:8px;"></span>
+      </div>
+    </header>
 
     <nav class="tabs">
-  <a href="#home"    data-tab="home"    class="tab">Home</a>
-  <a href="#editor"  data-tab="editor"  class="tab">Editor</a>
-  <a href="#ai"      data-tab="ai"      class="tab">AI</a>
-  <a href="#design"  data-tab="design"  class="tab">Design</a>
-  <a href="#video"   data-tab="video"   class="tab">Video</a>
-  <a href="#seo"     data-tab="seo"     class="tab">SEO</a>
-  <a href="#cms"     data-tab="cms"     class="tab">CMS</a>
-  <a href="#web"     data-tab="web"     class="tab">Web</a>
-  <a href="#analytics" data-tab="analytics" class="tab">Analytics</a>
-  <a href="#settings"  data-tab="settings"  class="tab">Settings</a>
-</nav>
-  </header>
+      <a href="#home"       data-tab="home"       class="tab">Home</a>
+      <a href="#editor"     data-tab="editor"     class="tab">Editor</a>
+      <a href="#ai"         data-tab="ai"         class="tab">AI</a>
+      <a href="#design"     data-tab="design"     class="tab">Design</a>
+      <a href="#video"      data-tab="video"      class="tab">Video</a>
+      <a href="#seo"        data-tab="seo"        class="tab">SEO</a>
+      <a href="#cms"        data-tab="cms"        class="tab">CMS</a>
+      <a href="#web"        data-tab="web"        class="tab">Web</a>
+      <a href="#analytics"  data-tab="analytics"  class="tab">Analytics</a>
+      <a href="#settings"   data-tab="settings"   class="tab">Settings</a>
+    </nav>
 
-  <!-- بانر الصلاحيات (اختياري) -->
-  <section class="banner hidden" id="limitedBanner">
-    <strong>You are in Limited Mode.</strong>
-    <span>Some features require permissions.</span>
-    <button id="enableNowBtn">Enable now</button>
-  </section>
-
-  <!-- المحتوى -->
-  <main class="container">
-    <!-- Home -->
-    <section class="tab-pane active" id="home">
-  <h2>🚀 Welcome back, Creator!</h2>
-  <p>Your AI-powered Web3 content suite on the Pi Network.</p>
-
-  <div class="chips">
-    <span class="chip">Pi SDK Ready</span>
-    <span class="chip">Pi Payments</span>
-    <span class="chip">Privacy-first</span>
-  </div>
-
-  <div class="cards">
-    <div class="card">
-      <div class="card-head">✍️ Editor</div>
-      <p>Write with autosave and version history.</p>
-      <button class="primary" data-link="#editor">Open Editor</button>
-    </div>
-    <div class="card">
-      <div class="card-head">🤖 AI Tools</div>
-      <p>Generate posts, scripts, and summaries.</p>
-      <button class="primary" data-link="#ai">Try AI</button>
-    </div>
-  </div>
-</section>
-
-    <!-- Editor -->
-    <section class="tab-pane" id="editor">
-  <h2>✍️ Editor</h2>
-  <p>Write distraction-free with autosave & version history.</p>
-
-  <div class="card">
-    <div class="card-head">Quick Draft</div>
-    <p>Start a new note right away:</p>
-    <textarea style="width:100%;height:140px;border-radius:12px;padding:12px;background:#111225;color:#dbe4ff;border:1px solid #23263d" placeholder="Type here..."></textarea>
-    <button class="primary" style="margin-top:10px">Save Draft</button>
-  </div>
+    <!-- ===== Limited Mode banner (اختياري) ===== -->
+    <section class="banner hidden" id="limitedBanner">
+      <strong>You are in Limited Mode.</strong>
+      <span>Some features require permissions.</span>
+      <button id="enableNowBtn">Enable now</button>
     </section>
 
-    <!-- AI -->
-    <section class="tab-pane" id="ai">
-  <h2>🤖 AI Tools</h2>
-  <div class="card">
-    <div class="row">
-      <input id="aiTopic" placeholder="Topic (e.g. Web3 Tips)" style="flex:1;">
-    </div>
-    <div class="row">
-      <button id="aiGenBtn" class="primary">Generate Post</button>
-    </div>
-    <div class="row">
-      <textarea id="aiOut" rows="8" style="width:100%" placeholder="AI output..."></textarea>
-    </div>
-  </div>
-    </section>
+    <!-- ===== Main content / Tabs ===== -->
+    <main class="container">
 
-    <!-- Design -->
-    <section class="tab-pane" id="design">
-  <h2>🎨 Design</h2>
-  <p>Create social thumbnails and banners.</p>
+      <!-- Home -->
+      <section class="tab-pane active" id="home">
+        <h2>🚀 Welcome back, Creator!</h2>
+        <p>Your AI-powered Web3 content suite on the Pi Network.</p>
 
-  <div class="grid" style="margin-top:10px">
-    <div class="mini-card">
-      <div class="tag">1080×1080</div>
-      <div class="title">Square Post</div>
-    </div>
-    <div class="mini-card">
-      <div class="tag">1920×1080</div>
-      <div class="title">YouTube Thumb</div>
-    </div>
-    <div class="mini-card">
-      <div class="tag">1080×1920</div>
-      <div class="title">Story/Reel</div>
-    </div>
-  </div>
+        <div class="chips">
+          <span class="chip">Pi SDK Ready</span>
+          <span class="chip">Pi Payments</span>
+          <span class="chip">Privacy-first</span>
+        </div>
 
-  <button class="primary" style="margin-top:12px">Open Design Studio</button>
-</section>
+        <div class="cards">
+          <div class="card">
+            <div class="card-head">✍️ Editor</div>
+            <p>Write with autosave and version history.</p>
+            <button class="primary" data-link="#editor">Open Editor</button>
+          </div>
 
-    <!-- Video -->
-    <section class="tab-pane" id="video">
-  <h2>🎬 Video</h2>
-  <p>Record, caption, and publish shorts with TTS/voice-over.</p>
+          <div class="card">
+            <div class="card-head">🤖 AI Tools</div>
+            <p>Generate posts, scripts, and summaries.</p>
+            <button class="primary" data-link="#ai">Try AI</button>
+          </div>
+        </div>
+      </section>
 
-  <div class="card">
-    <div class="card-head">Video Studio</div>
-    <p>Quickly edit, add subtitles, and publish to social platforms.</p>
-    <button class="primary">Open Video Studio</button>
-  </div>
-</section>
+      <!-- Editor -->
+      <section class="tab-pane" id="editor">
+        <h2>✍️ Editor</h2>
+        <p>Write distraction-free with autosave & version history.</p>
 
-    <!-- SEO -->
-    <section class="tab-pane" id="seo">
-  <h2>🔍 SEO</h2>
-  <p>Optimize your articles and pages for search engines.</p>
+        <div class="card">
+          <div class="card-head">Quick Draft</div>
+          <p>Start a new note right away:</p>
+          <textarea id="quickDraft" placeholder="Type here..." style="width:100%;height:140px;border-radius:12px;padding:12px;background:#111225;color:#dbe4ff;border:1px solid #23263d"></textarea>
+          <button class="primary" id="saveDraftBtn" style="margin-top:10px">Save Draft</button>
+        </div>
+      </section>
 
-  <div class="cards">
-    <div class="card">
-      <div class="card-head">Keyword Planner</div>
-      <p>Find trending keywords for your content.</p>
-      <button class="primary">Try Planner</button>
-    </div>
-    <div class="card">
-      <div class="card-head">SEO Audit</div>
-      <p>Analyze pages and get instant improvement tips.</p>
-      <button class="primary">Run Audit</button>
-    </div>
-  </div>
-</section>
+      <!-- AI -->
+      <section class="tab-pane" id="ai">
+        <h2>🤖 AI Tools</h2>
+        <div class="card">
+          <div class="row">
+            <input id="aiTopic" placeholder="Topic (e.g. Web3 Tips)" style="flex:1;">
+          </div>
+          <div class="row">
+            <button id="aiGenBtn" class="primary">Generate Post</button>
+          </div>
+          <div class="row">
+            <textarea id="aiOut" rows="8" style="width:100%" placeholder="AI output..."></textarea>
+          </div>
+        </div>
+      </section>
 
-    <!-- CMS -->
-    <section class="tab-pane" id="cms">
-  <h2>🗂️ CMS</h2>
-  <div class="card">
-    <div class="row">
-      <input id="postTitle" placeholder="Title" style="flex:1;">
-    </div>
-    <div class="row">
-      <textarea id="postBody" placeholder="Write something..." rows="5" style="width:100%"></textarea>
-    </div>
-    <div class="row">
-      <button id="savePostBtn" class="primary">Save Post</button>
-    </div>
-  </div>
+      <!-- Design -->
+      <section class="tab-pane" id="design">
+        <h2>🎨 Design</h2>
+        <p>Create social thumbnails and banners.</p>
 
-  <div class="card">
-    <div class="card-head">Your Posts</div>
-    <div id="postsList"></div>
-  </div>
-</section>
+        <div class="grid" style="margin-top:10px">
+          <div class="mini-card">
+            <div class="tag">1080×1080</div>
+            <div class="title">Square Post</div>
+          </div>
+          <div class="mini-card">
+            <div class="tag">1920×1080</div>
+            <div class="title">YouTube Thumb</div>
+          </div>
+          <div class="mini-card">
+            <div class="tag">1080×1920</div>
+            <div class="title">Story/Reel</div>
+          </div>
+        </div>
 
-    <!-- Web -->
-    <section class="tab-pane" id="web">
-  <h2>🌐 Web Publishing</h2>
-  <p>Publishing & deployment tools coming soon.</p>
-  <button class="primary">Connect Domain</button>
-</section>
+        <button class="primary" style="margin-top:12px">Open Design Studio</button>
+      </section>
 
-    <!-- Analytics -->
-    <section class="tab-pane" id="analytics">
-  <h2>📊 Analytics</h2>
-  <p>Track usage, events, and traffic.</p>
+      <!-- Video -->
+      <section class="tab-pane" id="video">
+        <h2>🎬 Video</h2>
+        <p>Record, caption, and publish shorts with TTS/voice-over.</p>
 
-  <!-- داخل تبويب analytics -->
-<div class="card">
-  <div class="card-head">Analytics</div>
-  <p>Total Events: <strong id="totalEvents">0</strong></p>
-  <p>7-day Views: <strong id="views7d">0</strong></p>
-  <p>Most Viewed Tab: <strong id="mostViewed">–</strong></p>
+        <div class="card">
+          <div class="card-head">Video Studio</div>
+          <p>Quickly edit, add subtitles, and publish to social platforms.</p>
+          <button class="primary">Open Video Studio</button>
+        </div>
+      </section>
 
-  <div id="trafficChart" style="margin:16px 0;"></div>
+      <!-- SEO -->
+      <section class="tab-pane" id="seo">
+        <h2>🔍 SEO</h2>
+        <p>Optimize your articles and pages for search engines.</p>
 
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>Time</th><th>Type</th><th>Detail</th></tr></thead>
-      <tbody id="eventsTable"></tbody>
-    </table>
-  </div>
+        <div class="cards">
+          <div class="card">
+            <div class="card-head">Keyword Planner</div>
+            <p>Find trending keywords for your content.</p>
+            <button class="primary">Try Planner</button>
+          </div>
+          <div class="card">
+            <div class="card-head">SEO Audit</div>
+            <p>Analyze pages and get instant improvement tips.</p>
+            <button class="primary">Run Audit</button>
+          </div>
+        </div>
+      </section>
 
-  <button class="primary" id="resetAnalyticsBtn">Reset Analytics</button>
-</div>
-</section>
+      <!-- CMS -->
+      <section class="tab-pane" id="cms">
+        <h2>🗂️ CMS</h2>
+        <div class="card">
+          <div class="row">
+            <input id="postTitle" placeholder="Title" style="flex:1;">
+          </div>
+          <div class="row">
+            <textarea id="postBody" placeholder="Write something..." rows="5" style="width:100%"></textarea>
+          </div>
+          <div class="row">
+            <button id="savePostBtn" class="primary">Save Post</button>
+          </div>
+        </div>
 
-    <!-- Settings -->
-    <section class="tab-pane" id="settings">
-  <h2 data-i18n="settings.title">⚙️ Settings</h2>
-  <p class="lead" data-i18n="settings.lead">Customize your app preferences.</p>
+        <div class="card">
+          <div class="card-head">Your Posts</div>
+          <div id="postsList"></div>
+        </div>
+      </section>
 
-  <!-- App Preferences -->
-  <div class="card">
-    <div class="card-head" data-i18n="settings.app_prefs">App Preferences</div>
+      <!-- Web -->
+      <section class="tab-pane" id="web">
+        <h2>🌐 Web Publishing</h2>
+        <p>Publishing & deployment tools coming soon.</p>
+        <button class="primary">Connect Domain</button>
+      </section>
 
-    <div class="row">
-      <label class="check">
-        <input type="checkbox" id="pushToggle">
-        <span data-i18n="settings.push">Push Notifications</span>
-      </label>
-    </div>
+      <!-- Analytics -->
+      <section class="tab-pane" id="analytics">
+        <h2>📊 Analytics</h2>
+        <p>Track usage, events, and traffic.</p>
 
-    <div class="row">
-      <label class="check">
-        <input type="checkbox" id="autosaveToggle">
-        <span data-i18n="settings.autosave">Auto-save Drafts</span>
-      </label>
-    </div>
+        <div class="card">
+          <div class="card-head">Analytics</div>
+          <p>Total Events: <strong id="totalEvents">0</strong></p>
+          <p>7-day Views: <strong id="views7d">0</strong></p>
+          <p>Most Viewed Tab: <strong id="mostViewed">–</strong></p>
 
-    <div class="row">
-      <label class="check">
-        <input type="checkbox" id="darkModeToggle">
-        <span data-i18n="settings.darkmode">Dark Mode</span>
-      </label>
-    </div>
+          <div id="trafficChart" style="margin:16px 0;"></div>
 
-    <div class="row">
-      <strong data-i18n="settings.lang">Default Language</strong>
-      <select id="langSelect" style="margin-top:8px;max-width:260px;">
-        <option value="en">English</option>
-        <option value="ar">العربية</option>
-        <option value="fr">Français</option>
-        <option value="es">Español</option>
-        <option value="de">Deutsch</option>
-      </select>
-    </div>
-  </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Time</th><th>Type</th><th>Detail</th></tr>
+              </thead>
+              <tbody id="eventsTable"></tbody>
+            </table>
+          </div>
 
-  <!-- Pi Network Settings -->
-  <div class="card">
-    <div class="card-head" data-i18n="settings.pi_head">Pi Network Settings</div>
+          <button class="primary" id="resetAnalyticsBtn">Reset Analytics</button>
+        </div>
+      </section>
 
-    <div class="row">
-      <strong data-i18n="settings.wallet">Wallet Address</strong>
-      <div style="display:flex;gap:8px;align-items:center;margin-top:8px;max-width:420px;">
-        <input id="walletInput" placeholder="0x..." style="flex:1;">
-        <button id="copyWalletBtn" class="secondary" type="button" title="Copy">📋</button>
+      <!-- Settings -->
+      <section class="tab-pane" id="settings">
+        <h2 data-i18n="settings.title">⚙️ Settings</h2>
+        <p class="lead" data-i18n="settings.lead">Customize your app preferences.</p>
+
+        <!-- App Preferences -->
+        <div class="card">
+          <div class="card-head" data-i18n="settings.app_prefs">App Preferences</div>
+
+          <div class="row">
+            <label class="check">
+              <input type="checkbox" id="pushToggle">
+              <span data-i18n="settings.push">Push Notifications</span>
+            </label>
+          </div>
+
+          <div class="row">
+            <label class="check">
+              <input type="checkbox" id="autosaveToggle">
+              <span data-i18n="settings.autosave">Auto-save Drafts</span>
+            </label>
+          </div>
+
+          <div class="row">
+            <label class="check">
+              <input type="checkbox" id="darkModeToggle">
+              <span data-i18n="settings.darkmode">Dark Mode</span>
+            </label>
+          </div>
+
+          <div class="row">
+            <strong data-i18n="settings.lang">Default Language</strong>
+            <select id="langSelect" style="margin-top:8px;max-width:260px;">
+              <option value="en">English</option>
+              <option value="ar">العربية</option>
+              <option value="fr">Français</option>
+              <option value="es">Español</option>
+              <option value="de">Deutsch</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Pi Network Settings -->
+        <div class="card">
+          <div class="card-head" data-i18n="settings.pi_head">Pi Network Settings</div>
+
+          <div class="row">
+            <strong data-i18n="settings.wallet">Wallet Address</strong>
+            <div style="display:flex;gap:8px;align-items:center;margin-top:8px;max-width:420px;">
+              <input id="walletInput" placeholder="0x..." style="flex:1;">
+              <button id="copyWalletBtn" class="secondary" type="button" title="Copy">📋</button>
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="check">
+              <input type="checkbox" id="autoMintToggle">
+              <span data-i18n="settings.automint">Auto-mint NFTs</span>
+            </label>
+          </div>
+
+          <div class="row">
+            <label class="check">
+              <input type="checkbox" id="scNotifyToggle">
+              <span data-i18n="settings.scnotify">Smart Contract Notifications</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Security & Privacy -->
+        <div class="card">
+          <div class="card-head" data-i18n="settings.sec_priv">Security & Privacy</div>
+          <div class="row">
+            <button class="muted" disabled data-i18n="settings.change_pass">Change Password</button>
+            <button class="muted" disabled data-i18n="settings.2fa">Two-Factor Authentication</button>
+          </div>
+          <div class="row">
+            <button class="muted" disabled data-i18n="settings.export">Data Export</button>
+            <button class="muted" disabled data-i18n="settings.delete">Delete Account</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===== Footer ===== -->
+    <footer class="footer">
+      <div class="footer-links">
+        <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a> ·
+        <a href="terms.html" data-i18n="footer.terms">Terms of Service</a> ·
+        <a href="mailto:ahmedheebo@gmail.com" data-i18n="footer.support">Need help? Email us</a>
       </div>
-    </div>
-
-    <div class="row">
-      <label class="check">
-        <input type="checkbox" id="autoMintToggle">
-        <span data-i18n="settings.automint">Auto-mint NFTs</span>
-      </label>
-    </div>
-
-    <div class="row">
-      <label class="check">
-        <input type="checkbox" id="scNotifyToggle">
-        <span data-i18n="settings.scnotify">Smart Contract Notifications</span>
-      </label>
-    </div>
+      <p class="muted" id="copyright" data-i18n="footer.copyright"></p>
+    </footer>
   </div>
 
-  <!-- Security & Privacy -->
-  <div class="card">
-    <div class="card-head" data-i18n="settings.sec_priv">Security & Privacy</div>
-    <div class="row">
-      <button class="muted" disabled data-i18n="settings.change_pass">Change Password</button>
-      <button class="muted" disabled data-i18n="settings.2fa">Two-Factor Authentication</button>
-    </div>
-    <div class="row">
-      <button class="muted" disabled data-i18n="settings.export">Data Export</button>
-      <button class="muted" disabled data-i18n="settings.delete">Delete Account</button>
-    </div>
-  </div>
-</section>
-  </main>
-<footer class="footer">
-  <div class="footer-links">
-    <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a> ·
-    <a href="terms.html" data-i18n="footer.terms">Terms of Service</a> ·
-    <a href="mailto:ahmedheebo@gmail.com" data-i18n="footer.support">Need help? Email us</a>
-  </div>
-
-  <p class="muted" id="copyright" data-i18n="footer.copyright"></p>
-</footer>
-  <!-- سكربتات -->
-  <script src="assets/app.js"></script>
+  <!-- Scripts -->
+  <script src="assets/app.js" defer></script>
 </body>
-  </html>
+              </html>
