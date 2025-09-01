@@ -1,19 +1,27 @@
 // assets/config.js
+
+// إعدادات عامة للتطبيق
 window.SC_CONFIG = {
   version: "2.1.0",
   contactEmail: "ahmedheebo@gmail.com",
   privacyUrl: "https://wadkenyer.github.io/smartcontent/privacy.html",
-  termsUrl: "https://wadkenyer.github.io/smartcontent/terms.html",
+  termsUrl:   "https://wadkenyer.github.io/smartcontent/terms.html",
 
-  // فعّل/عطّل الساندبوكس أثناء التطوير
-  sandbox: true, // غيّرها إلى false عند الإنتاج
+  // Sandbox للتطوير (بدّلها إلى false عند النشر النهائي)
+  sandbox: true,
 };
 
-// تهيئة Pi SDK إن كان متاحًا
+// كائن إضافي مخصص للروابط والدعم (اختياري - متاح للاستخدام في الواجهة)
+window.SMARTCONTENT_CONFIG = {
+  privacyURL:  window.SC_CONFIG.privacyUrl,
+  termsURL:    window.SC_CONFIG.termsUrl,
+  supportEmail: window.SC_CONFIG.contactEmail,
+};
+
+// تهيئة Pi SDK إذا كان متاح
 window.addEventListener("load", () => {
   try {
     if (window.Pi) {
-      // ملاحظة: استدعاءات init قد تختلف حسب إصدار SDK لديك
       Pi.init({
         version: "2.0",
         sandbox: !!window.SC_CONFIG.sandbox,
@@ -26,8 +34,3 @@ window.addEventListener("load", () => {
     console.warn("[Pi SDK] init error:", e);
   }
 });
-window.SMARTCONTENT_CONFIG = {
-  privacyURL: "https://wadkenyer.github.io/smartcontent/privacy.html",
-  termsURL:   "https://wadkenyer.github.io/smartcontent/terms.html",
-  supportEmail: "ahmedheebo@gmail.com"
-};
