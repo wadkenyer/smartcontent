@@ -86,15 +86,17 @@
 
       <!-- Editor -->
       <section class="tab-pane" id="editor">
-        <h2>✍️ Editor</h2>
-        <p>Write distraction-free with autosave & version history.</p>
+        <h2 data-i18n="editor.title">Editor</h2>
+<p data-i18n="editor.lead">Write distraction-free with autosave & version history.</p>
 
-        <div class="card">
-          <div class="card-head">Quick Draft</div>
-          <p>Start a new note right away:</p>
-          <textarea id="quickDraft" placeholder="Type here..." style="width:100%;height:140px;border-radius:12px;padding:12px;background:#111225;color:#dbe4ff;border:1px solid #23263d"></textarea>
-          <button class="primary" id="saveDraftBtn" style="margin-top:10px">Save Draft</button>
-        </div>
+<div class="card">
+  <div class="card-head" data-i18n="editor.quick">Quick Draft</div>
+  <p data-i18n="editor.quick_sub">Start a new note right away:</p>
+  <textarea
+    data-i18n-attr="placeholder:editor.ph_body"
+    placeholder="Type here..." style="width:100%;height:140px;"></textarea>
+  <button class="primary" data-i18n="editor.save">Save Draft</button>
+</div>
       </section>
 
       <!-- AI -->
@@ -192,9 +194,9 @@
 
       <!-- Web -->
       <section class="tab-pane" id="web">
-        <h2>🌐 Web Publishing</h2>
-        <p>Publishing & deployment tools coming soon.</p>
-        <button class="primary">Connect Domain</button>
+        <h2 data-i18n="web.title">Web Publishing 🌐</h2>
+<p data-i18n="web.lead">Publishing & deployment tools coming soon.</p>
+<button class="primary" data-i18n="web.connect">Connect Domain</button>
       </section>
 
       <!-- Analytics -->
