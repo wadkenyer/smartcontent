@@ -1,7 +1,9 @@
 {
   "app.title": "SmartContent · Web3 Creator Suite",
+
   "home.headline": "Welcome back, Creator 🚀",
   "home.lead": "Your AI-powered Web3 content suite on the Pi Network.",
+
   "nav.home": "Home",
   "nav.editor": "Editor",
   "nav.ai": "AI",
@@ -12,46 +14,31 @@
   "nav.web": "Web",
   "nav.analytics": "Analytics",
   "nav.settings": "Settings",
-  "settings.title": "Settings",
-  "pref.push": "Push Notifications",
-  "pref.autosave": "Auto-save Drafts",
-  "pref.dark": "Dark Mode",
-  "pref.lang": "Default Language",
-  "pi.wallet": "Wallet Address",
-  "footer.needHelp": "Need help? Email us at"
-}
-{
-  "footer": {
-    "privacy": "Privacy Policy",
-    "terms": "Terms of Service",
-    "support": "Need help? Email us",
-    "copyright": "© {year} SmartContent — Built for Pi Network Creators."
-  }
-}{
-  "settings": {
-    "title": "⚙️ Settings",
-    "lead": "Customize your app preferences.",
-    "app_prefs": "App Preferences",
-    "push": "Push Notifications",
-    "autosave": "Auto-save Drafts",
-    "darkmode": "Dark Mode",
-    "lang": "Default Language",
-    "pi_head": "Pi Network Settings",
-    "wallet": "Wallet Address",
-    "automint": "Auto-mint NFTs",
-    "scnotify": "Smart Contract Notifications",
-    "sec_priv": "Security & Privacy",
-    "change_pass": "Change Password",
-    "2fa": "Two-Factor Authentication",
-    "export": "Data Export",
-    "delete": "Delete Account",
-    "support": "Support & Help",
-    "help_center": "Help Center"
-  },
-  "footer": {
-    "privacy": "Privacy Policy",
-    "terms": "Terms of Service",
-    "support": "Need help? Email us",
-    "copyright": "© {year} SmartContent — Built for Pi Network Creators."
-  }
+
+  "settings.title": "⚙️ Settings",
+  "settings.lead": "Customize your app preferences.",
+  "settings.app_prefs": "App Preferences",
+  "settings.push": "Push Notifications",
+  "settings.autosave": "Auto-save Drafts",
+  "settings.darkmode": "Dark Mode",
+  "settings.lang": "Default Language",
+
+  "settings.pi_head": "Pi Network Settings",
+  "settings.wallet": "Wallet Address",
+  "settings.automint": "Auto-mint NFTs",
+  "settings.scnotify": "Smart Contract Notifications",
+
+  "settings.sec_priv": "Security & Privacy",
+  "settings.change_pass": "Change Password",
+  "settings.2fa": "Two-Factor Authentication",
+  "settings.export": "Data Export",
+  "settings.delete": "Delete Account",
+
+  "settings.support": "Support & Help",
+  "settings.help_center": "Help Center",
+
+  "footer.privacy": "Privacy Policy",
+  "footer.terms": "Terms of Service",
+  "footer.support": "Need help? Email us",
+  "footer.copyright": "© {year} SmartContent — Built for Pi Network Creators."
 }
