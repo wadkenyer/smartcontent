@@ -21,9 +21,10 @@
   "settings.autosave": "الحفظ التلقائي",
   "settings.darkmode": "الوضع الداكن",
   "settings.lang": "اللغة الافتراضية",
+
   "settings.pi_head": "إعدادات Pi Network",
   "settings.wallet": "عنوان المحفظة",
-  "settings.automint": "الصك التلقائي للـNFTs",
+  "settings.automint": "الصكّ التلقائي للـ NFTs",
   "settings.scnotify": "إشعارات العقود الذكية",
 
   "settings.sec_priv": "الأمان والخصوصية",
@@ -32,9 +33,11 @@
   "settings.export": "تصدير البيانات",
   "settings.delete": "حذف الحساب",
 
-  "settings.support": "الدعم والمساعدة",
+  "cms.title_ph": "العنوان",
+  "cms.body_ph": "اكتب شيئاً...",
+  "cms.save": "حفظ المنشور",
+  "cms.head": "منشوراتك",
 
-  "footer.needHelp": "هل تحتاج مساعدة؟ راسلنا",
   "footer.privacy": "سياسة الخصوصية",
   "footer.terms": "شروط الخدمة",
   "footer.support": "هل تحتاج مساعدة؟ راسلنا",
