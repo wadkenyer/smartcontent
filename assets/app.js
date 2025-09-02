@@ -1,4 +1,4 @@
-/* ========== SmartContent · one-file script ========== */
+/* ========== SmartContent · one-file script (fixed) ========== */
 /* Helpers */
 const $  = (q) => document.querySelector(q);
 const $$ = (q) => document.querySelectorAll(q);
@@ -20,11 +20,31 @@ const get = (k, f=null)=>{ try{ const v=localStorage.getItem(k); return v===null
 const set = (k, v)=>{ try{ localStorage.setItem(k, JSON.stringify(v)); }catch{} };
 
 /* Theme + dir */
-function applyDark(on){ document.documentElement.dataset.theme = on ? "dark" : "light"; }
+function applyDark(on){
+  document.documentElement.dataset.theme = on ? "dark" : "light";
+}
 function applyLangMeta(lang){
   const rtl = ["ar","fa","ur","he"];
-  document.documentElement.lang = lang || "en";
-  document.documentElement.dir  = rtl.includes(lang||"en") ? "rtl" : "ltr";
+  const l = lang || "en";
+  document.documentElement.lang = l;
+  document.documentElement.dir  = rtl.includes(l) ? "rtl" : "ltr";
+}
+
+/* ---- i18n bridge (يستدعي الدالة الصحيحة من i18n.js) ---- */
+function applyI18n(lang){
+  // يفضَّل setLang إن كانت موجودة، ولو فيه loadAndApply هنستخدمها
+  if (window.SC_I18N) {
+    if (typeof SC_I18N.setLang === "function") {
+      SC_I18N.setLang(lang);
+      return;
+    }
+    if (typeof SC_I18N.loadAndApply === "function") {
+      SC_I18N.loadAndApply(lang);
+      return;
+    }
+  }
+  // لو مفيش i18n لأي سبب، مفيش كراش
+  // console.warn("i18n not available, skipping apply");
 }
 
 /* -------- Tabs (hash-based) -------- */
@@ -69,9 +89,10 @@ function wireSettings(){
   const vAutoMint = get(S.autoMint,false);
   const vScNotify = get(S.scNotify,false);
 
-  // apply before render
+  // apply before render (مافي كراش)
   applyDark(vDark);
   applyLangMeta(vLang);
+  applyI18n(vLang);
 
   // fill UI
   if (elPush) elPush.checked = !!vPush;
@@ -82,14 +103,20 @@ function wireSettings(){
   if (elAutoMint) elAutoMint.checked = !!vAutoMint;
   if (elScNotify) elScNotify.checked = !!vScNotify;
 
-  // i18n first render
-  loadLang(vLang);
-
   // persist on change
   elPush?.addEventListener("change", e=> set(S.push, e.target.checked));
   elAutosave?.addEventListener("change", e=> set(S.autosave, e.target.checked));
-  elDark?.addEventListener("change", e=> { const on=e.target.checked; set(S.dark,on); applyDark(on); });
-  elLang?.addEventListener("change", e=> { const lang=e.target.value; set(S.lang,lang); applyLangMeta(lang); loadLang(lang); });
+  elDark?.addEventListener("change", e=> {
+    const on=e.target.checked;
+    set(S.dark,on);
+    applyDark(on);
+  });
+  elLang?.addEventListener("change", e=> {
+    const lang=e.target.value;
+    set(S.lang,lang);
+    applyLangMeta(lang);
+    applyI18n(lang);
+  });
   elWallet?.addEventListener("input", e=> set(S.wallet, e.target.value.trim()));
   elAutoMint?.addEventListener("change", e=> set(S.autoMint, e.target.checked));
   elScNotify?.addEventListener("change", e=> set(S.scNotify, e.target.checked));
@@ -112,7 +139,7 @@ function updateFooterYear(){
   }
 }
 
-/* -------- Simple mock Pi login (اختياري الآن) -------- */
+/* -------- Mock Pi login (يشتغل لحد ما توصل SDK) -------- */
 function mockPiLogin(){
   const u = { username: "pi_creator" };
   set(S.piUser, u);
