@@ -1,7 +1,5 @@
 {
   "app.title": "SmartContent · Web3 Creator Suite",
-  "home.headline": "Welcome back, Creator 🚀",
-  "home.lead": "Your AI-powered Web3 content suite on the Pi Network.",
 
   "nav.home": "Home",
   "nav.editor": "Editor",
@@ -14,36 +12,8 @@
   "nav.analytics": "Analytics",
   "nav.settings": "Settings",
 
-  "settings.title": "Settings",
-  "settings.lead": "Customize your app preferences.",
-  "settings.app_prefs": "App Preferences",
-  "settings.push": "Push Notifications",
-  "settings.autosave": "Auto-save Drafts",
-  "settings.darkmode": "Dark Mode",
-  "settings.lang": "Default Language",
-
-  "settings.pi_head": "Pi Network Settings",
-  "settings.wallet": "Wallet Address",
-  "settings.automint": "Auto-mint NFTs",
-  "settings.scnotify": "Smart Contract Notifications",
-
-  "settings.sec_priv": "Security & Privacy",
-  "settings.change_pass": "Change Password",
-  "settings.2fa": "Two-Factor Authentication",
-  "settings.export": "Data Export",
-  "settings.delete": "Delete Account",
-
-  "cms.title_ph": "Title",
-  "cms.body_ph": "Write something...",
-  "cms.save": "Save Post",
-  "cms.head": "Your Posts",
-
-  "footer.privacy": "Privacy Policy",
-  "footer.terms": "Terms of Service",
-  "footer.support": "Need help? Email us",
-  "footer.copyright": "© {year} SmartContent — Built for Pi Network Creators."
-}
-{
+  "home.headline": "Welcome back, Creator 🚀",
+  "home.lead": "Your AI-powered Web3 content suite on the Pi Network.",
   "home.privacy": "Privacy-first",
   "home.payments": "Pi Payments",
   "home.sdk": "Pi SDK Ready",
@@ -59,8 +29,60 @@
 
   "ai.title": "AI Tools",
   "ai.lead": "Generate posts, scripts, and summaries.",
+  "ai.topic_ph": "Topic (e.g. Web3 Tips)",
+  "ai.generate": "Generate Post",
+  "ai.out_ph": "AI output...",
+
+  "design.title": "Design",
+  "design.lead": "Create social thumbnails and banners.",
+  "design.square": "Square Post",
+  "design.thumb": "YouTube Thumb",
+  "design.story": "Story/Reel",
+  "design.open": "Open Design Studio",
+
+  "video.title": "Video",
+  "video.lead": "Record, caption, and publish shorts with TTS/voice-over.",
+  "video.studio": "Video Studio",
+  "video.studio_lead": "Quickly edit, add subtitles, and publish to social platforms.",
+  "video.open": "Open Video Studio",
+
+  "seo.title": "SEO",
+  "seo.lead": "Optimize your articles and pages for search engines.",
+  "seo.planner": "Keyword Planner",
+  "seo.planner_lead": "Find trending keywords for your content.",
+  "seo.try_planner": "Try Planner",
+  "seo.audit": "SEO Audit",
+  "seo.audit_lead": "Analyze pages and get instant improvement tips.",
+  "seo.run_audit": "Run Audit",
+
+  "cms.head": "CMS",
+  "cms.title_ph": "Title",
+  "cms.body_ph": "Write something...",
+  "cms.save": "Save Post",
 
   "web.title": "Web Publishing 🌐",
   "web.lead": "Publishing & deployment tools coming soon.",
-  "web.connect": "Connect Domain"
+  "web.connect": "Connect Domain",
+
+  "settings.title": "⚙️ Settings",
+  "settings.lead": "Customize your app preferences.",
+  "settings.app_prefs": "App Preferences",
+  "settings.push": "Push Notifications",
+  "settings.autosave": "Auto-save Drafts",
+  "settings.darkmode": "Dark Mode",
+  "settings.lang": "Default Language",
+  "settings.pi_head": "Pi Network Settings",
+  "settings.wallet": "Wallet Address",
+  "settings.automint": "Auto-mint NFTs",
+  "settings.scnotify": "Smart Contract Notifications",
+  "settings.sec_priv": "Security & Privacy",
+  "settings.change_pass": "Change Password",
+  "settings.2fa": "Two-Factor Authentication",
+  "settings.export": "Data Export",
+  "settings.delete": "Delete Account",
+
+  "footer.privacy": "Privacy Policy",
+  "footer.terms": "Terms of Service",
+  "footer.support": "Need help? Email us",
+  "footer.copyright": "© {year} SmartContent — Built for Pi Network Creators."
 }
