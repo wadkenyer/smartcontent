@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SmartContent · Web3 Creator Suite</title>
 
-  <!-- CSS الرئيسي -->
   <link rel="stylesheet" href="assets/style.css" />
 </head>
 <body>
@@ -27,16 +26,16 @@
     </header>
 
     <nav class="tabs">
-      <a href="#home"       data-tab="home"       class="tab">Home</a>
-      <a href="#editor"     data-tab="editor"     class="tab">Editor</a>
-      <a href="#ai"         data-tab="ai"         class="tab">AI</a>
-      <a href="#design"     data-tab="design"     class="tab">Design</a>
-      <a href="#video"      data-tab="video"      class="tab">Video</a>
-      <a href="#seo"        data-tab="seo"        class="tab">SEO</a>
-      <a href="#cms"        data-tab="cms"        class="tab">CMS</a>
-      <a href="#web"        data-tab="web"        class="tab">Web</a>
-      <a href="#analytics"  data-tab="analytics"  class="tab">Analytics</a>
-      <a href="#settings"   data-tab="settings"   class="tab">Settings</a>
+      <a href="#home"       data-tab="home"       class="tab" data-i18n="nav.home">Home</a>
+      <a href="#editor"     data-tab="editor"     class="tab" data-i18n="nav.editor">Editor</a>
+      <a href="#ai"         data-tab="ai"         class="tab" data-i18n="nav.ai">AI</a>
+      <a href="#design"     data-tab="design"     class="tab" data-i18n="nav.design">Design</a>
+      <a href="#video"      data-tab="video"      class="tab" data-i18n="nav.video">Video</a>
+      <a href="#seo"        data-tab="seo"        class="tab" data-i18n="nav.seo">SEO</a>
+      <a href="#cms"        data-tab="cms"        class="tab" data-i18n="nav.cms">CMS</a>
+      <a href="#web"        data-tab="web"        class="tab" data-i18n="nav.web">Web</a>
+      <a href="#analytics"  data-tab="analytics"  class="tab" data-i18n="nav.analytics">Analytics</a>
+      <a href="#settings"   data-tab="settings"   class="tab" data-i18n="nav.settings">Settings</a>
     </nav>
 
     <!-- ===== Limited Mode banner (اختياري) ===== -->
@@ -52,34 +51,26 @@
       <!-- Home -->
       <section class="tab-pane active" id="home">
         <h2 data-i18n="home.headline">Welcome back, Creator 🚀</h2>
-<p class="lead" data-i18n="home.lead">
-  Your AI-powered Web3 content suite on the Pi Network.
-</p>
+        <p class="lead" data-i18n="home.lead">
+          Your AI-powered Web3 content suite on the Pi Network.
+        </p>
 
-<div class="chips">
-  <span class="chip" data-i18n="home.privacy">Privacy-first</span>
-  <span class="chip" data-i18n="home.payments">Pi Payments</span>
-  <span class="chip" data-i18n="home.sdk">Pi SDK Ready</span>
-</div>
+        <div class="chips">
+          <span class="chip" data-i18n="home.privacy">Privacy-first</span>
+          <span class="chip" data-i18n="home.payments">Pi Payments</span>
+          <span class="chip" data-i18n="home.sdk">Pi SDK Ready</span>
+        </div>
 
-<div class="cards">
-  <div class="card">
-    <div class="card-head" data-i18n="editor.title">Editor</div>
-    <p data-i18n="editor.lead">Write with autosave and version history.</p>
-    <button class="primary" data-link="#editor" data-i18n="home.open_editor">Open Editor</button>
-  </div>
-  <div class="card">
-    <div class="card-head" data-i18n="ai.title">AI Tools</div>
-    <p data-i18n="ai.lead">Generate posts, scripts, and summaries.</p>
-    <button class="primary" data-link="#ai" data-i18n="home.try_ai">Try AI</button>
-  </div>
-</div>
-      
-
+        <div class="cards">
           <div class="card">
-            <div class="card-head">🤖 AI Tools</div>
-            <p>Generate posts, scripts, and summaries.</p>
-            <button class="primary" data-link="#ai">Try AI</button>
+            <div class="card-head" data-i18n="editor.title">Editor</div>
+            <p data-i18n="editor.lead">Write with autosave and version history.</p>
+            <button class="primary" data-link="#editor" data-i18n="home.open_editor">Open Editor</button>
+          </div>
+          <div class="card">
+            <div class="card-head" data-i18n="ai.title">AI Tools</div>
+            <p data-i18n="ai.lead">Generate posts, scripts, and summaries.</p>
+            <button class="primary" data-link="#ai" data-i18n="home.try_ai">Try AI</button>
           </div>
         </div>
       </section>
@@ -87,102 +78,111 @@
       <!-- Editor -->
       <section class="tab-pane" id="editor">
         <h2 data-i18n="editor.title">Editor</h2>
-<p data-i18n="editor.lead">Write distraction-free with autosave & version history.</p>
+        <p data-i18n="editor.lead">Write distraction-free with autosave & version history.</p>
 
-<div class="card">
-  <div class="card-head" data-i18n="editor.quick">Quick Draft</div>
-  <p data-i18n="editor.quick_sub">Start a new note right away:</p>
-  <textarea
-    data-i18n-attr="placeholder:editor.ph_body"
-    placeholder="Type here..." style="width:100%;height:140px;"></textarea>
-  <button class="primary" data-i18n="editor.save">Save Draft</button>
-</div>
+        <div class="card">
+          <div class="card-head" data-i18n="editor.quick">Quick Draft</div>
+          <p data-i18n="editor.quick_sub">Start a new note right away:</p>
+          <textarea
+            data-i18n-attr="placeholder:editor.ph_body"
+            placeholder="Type here..."
+            style="width:100%;height:140px;"></textarea>
+          <button class="primary" data-i18n="editor.save">Save Draft</button>
+        </div>
       </section>
 
       <!-- AI -->
       <section class="tab-pane" id="ai">
-        <h2>🤖 AI Tools</h2>
+        <h2 data-i18n="ai.title">🤖 AI Tools</h2>
         <div class="card">
           <div class="row">
-            <input id="aiTopic" placeholder="Topic (e.g. Web3 Tips)" style="flex:1;">
+            <input id="aiTopic"
+                   style="flex:1;"
+                   data-i18n-attr="placeholder:ai.topic_ph"
+                   placeholder="Topic (e.g. Web3 Tips)">
           </div>
           <div class="row">
-            <button id="aiGenBtn" class="primary">Generate Post</button>
+            <button id="aiGenBtn" class="primary" data-i18n="ai.generate">Generate Post</button>
           </div>
           <div class="row">
-            <textarea id="aiOut" rows="8" style="width:100%" placeholder="AI output..."></textarea>
+            <textarea id="aiOut" rows="8" style="width:100%"
+                      data-i18n-attr="placeholder:ai.out_ph"
+                      placeholder="AI output..."></textarea>
           </div>
         </div>
       </section>
 
       <!-- Design -->
       <section class="tab-pane" id="design">
-        <h2>🎨 Design</h2>
-        <p>Create social thumbnails and banners.</p>
+        <h2 data-i18n="design.title">🎨 Design</h2>
+        <p data-i18n="design.lead">Create social thumbnails and banners.</p>
 
         <div class="grid" style="margin-top:10px">
           <div class="mini-card">
             <div class="tag">1080×1080</div>
-            <div class="title">Square Post</div>
+            <div class="title" data-i18n="design.square">Square Post</div>
           </div>
           <div class="mini-card">
             <div class="tag">1920×1080</div>
-            <div class="title">YouTube Thumb</div>
+            <div class="title" data-i18n="design.thumb">YouTube Thumb</div>
           </div>
           <div class="mini-card">
             <div class="tag">1080×1920</div>
-            <div class="title">Story/Reel</div>
+            <div class="title" data-i18n="design.story">Story/Reel</div>
           </div>
         </div>
 
-        <button class="primary" style="margin-top:12px">Open Design Studio</button>
+        <button class="primary" style="margin-top:12px" data-i18n="design.open">Open Design Studio</button>
       </section>
 
       <!-- Video -->
       <section class="tab-pane" id="video">
-        <h2>🎬 Video</h2>
-        <p>Record, caption, and publish shorts with TTS/voice-over.</p>
+        <h2 data-i18n="video.title">🎬 Video</h2>
+        <p data-i18n="video.lead">Record, caption, and publish shorts with TTS/voice-over.</p>
 
         <div class="card">
-          <div class="card-head">Video Studio</div>
-          <p>Quickly edit, add subtitles, and publish to social platforms.</p>
-          <button class="primary">Open Video Studio</button>
+          <div class="card-head" data-i18n="video.studio">Video Studio</div>
+          <p data-i18n="video.studio_lead">Quickly edit, add subtitles, and publish to social platforms.</p>
+          <button class="primary" data-i18n="video.open">Open Video Studio</button>
         </div>
       </section>
 
       <!-- SEO -->
       <section class="tab-pane" id="seo">
-        <h2>🔍 SEO</h2>
-        <p>Optimize your articles and pages for search engines.</p>
+        <h2 data-i18n="seo.title">🔍 SEO</h2>
+        <p data-i18n="seo.lead">Optimize your articles and pages for search engines.</p>
 
         <div class="cards">
           <div class="card">
-            <div class="card-head">Keyword Planner</div>
-            <p>Find trending keywords for your content.</p>
-            <button class="primary">Try Planner</button>
+            <div class="card-head" data-i18n="seo.planner">Keyword Planner</div>
+            <p data-i18n="seo.planner_lead">Find trending keywords for your content.</p>
+            <button class="primary" data-i18n="seo.try_planner">Try Planner</button>
           </div>
           <div class="card">
-            <div class="card-head">SEO Audit</div>
-            <p>Analyze pages and get instant improvement tips.</p>
-            <button class="primary">Run Audit</button>
+            <div class="card-head" data-i18n="seo.audit">SEO Audit</div>
+            <p data-i18n="seo.audit_lead">Analyze pages and get instant improvement tips.</p>
+            <button class="primary" data-i18n="seo.run_audit">Run Audit</button>
           </div>
         </div>
       </section>
 
       <!-- CMS -->
       <section class="tab-pane" id="cms">
-        <h2>🗂️ CMS</h2>
+        <h2 data-i18n="cms.head">🗂️ CMS</h2>
         <div class="card">
           <div class="row">
             <input id="postTitle"
-       data-i18n-attr="placeholder:cms.title_ph"
-       placeholder="Title">
+                   data-i18n-attr="placeholder:cms.title_ph"
+                   placeholder="Title">
           </div>
           <div class="row">
-            <textarea id="postBody" placeholder="Write something..." rows="5" style="width:100%"></textarea>
+            <textarea id="postBody"
+                      data-i18n-attr="placeholder:cms.body_ph"
+                      placeholder="Write something..."
+                      rows="5" style="width:100%"></textarea>
           </div>
           <div class="row">
-            <button id="savePostBtn" class="primary">Save Post</button>
+            <button id="savePostBtn" class="primary" data-i18n="cms.save">Save Post</button>
           </div>
         </div>
 
@@ -195,8 +195,8 @@
       <!-- Web -->
       <section class="tab-pane" id="web">
         <h2 data-i18n="web.title">Web Publishing 🌐</h2>
-<p data-i18n="web.lead">Publishing & deployment tools coming soon.</p>
-<button class="primary" data-i18n="web.connect">Connect Domain</button>
+        <p data-i18n="web.lead">Publishing & deployment tools coming soon.</p>
+        <button class="primary" data-i18n="web.connect">Connect Domain</button>
       </section>
 
       <!-- Analytics -->
@@ -313,16 +313,16 @@
     <footer class="footer">
       <div class="footer-links">
         <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a> ·
-        <a href="terms.html" data-i18n="footer.terms">Terms of Service</a> ·
+        <a href="terms.html"   data-i18n="footer.terms">Terms of Service</a> ·
         <a href="mailto:ahmedheebo@gmail.com" data-i18n="footer.support">Need help? Email us</a>
       </div>
       <p class="muted" id="copyright" data-i18n="footer.copyright"></p>
     </footer>
   </div>
 
-  <!-- Scripts -->
-    <script defer src="assets/config.js"></script>
-    <script defer src="assets/i18n.js"></script>
-    <script defer src="assets/app.js"></script>
-  </body>
-</html>
+  <!-- Scripts (الترتيب صحيح) -->
+  <script defer src="assets/config.js"></script>
+  <script defer src="assets/i18n.js"></script>
+  <script defer src="assets/app.js"></script>
+</body>
+  </html>
