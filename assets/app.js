@@ -27,40 +27,6 @@ function applyLangMeta(lang){
   document.documentElement.dir  = rtl.includes(lang||"en") ? "rtl" : "ltr";
 }
 
-/* -------- i18n loader -------- */
-async function loadLang(lang){
-  try{
-    const res  = await fetch(`assets/i18n/${lang}.json`, {cache:"no-store"});
-    const dict = await res.json();
-
-    // نصوص العناصر
-    document.querySelectorAll("[data-i18n]").forEach(el=>{
-      const key = el.getAttribute("data-i18n");
-      const val = key.split(".").reduce((o,i)=>o?.[i], dict);
-      if (val != null) el.textContent = val;
-    });
-
-    // Placeholders إن وُجدت
-    document.querySelectorAll("[data-i18n-ph]").forEach(el=>{
-      const key = el.getAttribute("data-i18n-ph");
-      const val = key.split(".").reduce((o,i)=>o?.[i], dict);
-      if (val != null) el.setAttribute("placeholder", val);
-    });
-
-    // سطر حقوق بسنة تلقائية (لو موجود قالب في ملف اللغة)
-    const cr = $("#copyright");
-    if (cr) {
-      const y = new Date().getFullYear();
-      const tpl = dict?.footer?.copyright;
-      cr.textContent = tpl ? tpl.replace("{year}", y) : `© ${y} SmartContent`;
-    }
-
-    console.log(`[i18n] loaded ${lang}`);
-  }catch(e){
-    console.warn("[i18n] load error:", e);
-  }
-}
-
 /* -------- Tabs (hash-based) -------- */
 function showTab(id){
   $$(".tab-pane").forEach(p => p.classList.toggle("active", p.id === id));
