@@ -1,111 +1,86 @@
-// assets/i18n.js
+// assets/i18n.js  — FINAL
 (() => {
   const LS_KEY = "sc_lang";
-  const RTL = ["ar", "fa", "ur", "he"];
+  const RTL    = ["ar","fa","ur","he"];
 
-  // اللغة المخزّنة أو EN كافتراضي
-  let lang = localStorage.getItem(LS_KEY) || "en";
-
-  /* ===== Helpers ===== */
-
-  // حدّث lang/dir للصفحة
-  function applyLangMeta(l) {
-    document.documentElement.lang = l || "en";
-    document.documentElement.dir = RTL.includes(l) ? "rtl" : "ltr";
+  // اضبط وسم <html>
+  function applyLangMeta(lang){
+    document.documentElement.lang = lang || "en";
+    document.documentElement.dir  = RTL.includes(lang) ? "rtl" : "ltr";
   }
 
-  // طبّق القاموس على عناصر الصفحة
-  function applyDict(dict) {
+  // طبّق النصوص على عناصر تحمل data-i18n أو data-i18n-attr
+  function applyDict(dict){
     if (!dict || typeof dict !== "object") return;
 
-    // 1) النصوص: data-i18n="key"
-    document.querySelectorAll("[data-i18n]").forEach((el) => {
+    // 1) نصوص داخلية
+    document.querySelectorAll("[data-i18n]").forEach(el => {
       const key = el.dataset.i18n;
-      const val = getByPath(dict, key);
+      const val = get(dict, key);
       if (val != null) el.textContent = val;
     });
 
-    // 2) الخصائص: data-i18n-attr="placeholder:key,title:key2,..."
-    document.querySelectorAll("[data-i18n-attr]").forEach((el) => {
-      const pairs = el.dataset.i18nAttr
-        .split(",")
-        .map((s) => s.trim())
-        .filter(Boolean);
-
-      pairs.forEach((p) => {
-        const [attr, key] = p.split(":").map((s) => s.trim());
-        if (!attr || !key) return;
-        const val = getByPath(dict, key);
-        if (val != null) {
-          try {
-            el.setAttribute(attr, val);
-          } catch (_) {}
-        }
+    // 2) خصائص/Placeholders... الخ
+    document.querySelectorAll("[data-i18n-attr]").forEach(el => {
+      const pairs = el.dataset.i18nAttr.split(";").map(s => s.trim()).filter(Boolean);
+      pairs.forEach(pair => {
+        const [attr, key] = pair.split(":").map(s => s.trim());
+        const val = get(dict, key);
+        if (attr && val != null) el.setAttribute(attr, val);
       });
     });
   }
 
-  // قراءة قيمة متداخلة من القاموس باستخدام المسار "a.b.c"
-  function getByPath(obj, path) {
-    return path.split(".").reduce((acc, k) => (acc && acc[k] != null ? acc[k] : undefined), obj);
-  }
-
-  // حمّل قاموس لغة
-  async function loadDict(l) {
-    const url = `assets/i18n/${l}.json`;
+  // جلب آمن + لوج واضح
+  async function loadDict(lang){
+    const url = `assets/i18n/${lang}.json`;
     try {
       const res = await fetch(url, { cache: "no-store" });
-      if (!res.ok) throw new Error(res.status);
+      if (!res.ok) throw new Error(res.status + " " + res.statusText);
       return await res.json();
     } catch (e) {
-      console.warn(`[i18n] failed to load ${url}, fallback to en`, e);
-      if (l !== "en") return loadDict("en");
-      return {};
+      console.warn("[i18n] failed to load", url, e);
+      return null;
     }
   }
 
-  // حمّل وطبّق
-  async function loadAndApply(l) {
-    const dict = await loadDict(l);
-    applyLangMeta(l);
-    applyDict(dict);
+  // قراءة قيمة nested key مثل "settings.title"
+  function get(obj, path){
+    return path.split(".").reduce((o,k)=> (o && k in o ? o[k] : undefined), obj);
   }
 
-  /* ===== Bootstrap ===== */
+  async function loadAndApply(lang){
+    applyLangMeta(lang);
+    const dict = await loadDict(lang);
+    if (!dict) return;
+    applyDict(dict);
+    // حُط السنة في الفوتر (بعد الترجمة)
+    const y = new Date().getFullYear();
+    const cr = document.getElementById("copyright");
+    if (cr && cr.textContent.includes("{year}")) {
+      cr.textContent = cr.textContent.replace("{year}", y);
+    }
+  }
 
+  // تشغيل أولي + سلك اختيار اللغة
   document.addEventListener("DOMContentLoaded", () => {
-    // طبّق اللغة الحالية
+    const lang = localStorage.getItem(LS_KEY) || "en";
     loadAndApply(lang);
 
-    // اربط القائمة المنسدلة إن وُجدت
     const sel = document.getElementById("langSelect");
     if (sel) {
-      // عيّن القيمة الحالية
       sel.value = lang;
       sel.addEventListener("change", () => {
         const v = sel.value || "en";
         localStorage.setItem(LS_KEY, v);
-        lang = v;
         loadAndApply(v);
       });
     }
   });
 
-  // API صغيرة للاستخدام من app.js عند الحاجة
+  // API اختياري لاستخدامه لاحقًا
   window.SC_I18N = {
-    setLang(l) {
-      const v = l || "en";
-      localStorage.setItem(LS_KEY, v);
-      lang = v;
-      loadAndApply(v);
-    },
-    getLang() {
-      return localStorage.getItem(LS_KEY) || "en";
-    },
-    // ترجمة مفتاح واحد برمجياً (اختياري)
-    async t(key) {
-      const dict = await loadDict(lang);
-      return getByPath(dict, key) ?? key;
-    },
+    setLang: (l) => { localStorage.setItem(LS_KEY, l || "en"); loadAndApply(l || "en"); },
+    getLang: ()  => localStorage.getItem(LS_KEY) || "en",
   };
 })();
