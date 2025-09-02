@@ -322,6 +322,111 @@
 
   <!-- Scripts (الترتيب صحيح) -->
   <script defer src="assets/config.js"></script>
+  <!-- يُستدعى في آخر الـ <body> بعد config.js وقبل app.js -->
+<script>
+(() => {
+  const LS_KEY = "sc_lang";
+  const RTL = ["ar","fa","ur","he"];
+
+  // عناصر مساعدة
+  const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+
+  // طبّق لغة/اتجاه على <html>
+  function applyLangMeta(lang) {
+    const l = lang || "en";
+    document.documentElement.lang = l;
+    document.documentElement.dir  = RTL.includes(l) ? "rtl" : "ltr";
+  }
+
+  // طبّق قاموس الترجمة على عناصر الصفحة
+  function applyDict(dict) {
+    if (!dict) return;
+
+    // نصوص صريحة
+    $$("[data-i18n]").forEach(el => {
+      const key = el.dataset.i18n;
+      const val = get(dict, key);
+      if (val != null) el.textContent = val;
+    });
+
+    // خصائص مثل placeholder / title / aria-label
+    $$("[data-i18n-attr]").forEach(el => {
+      const pairs = el.dataset.i18nAttr.split(",").map(s => s.trim()).filter(Boolean);
+      pairs.forEach(pair => {
+        const [attr, key] = pair.split(":").map(s => s.trim());
+        const val = get(dict, key);
+        if (attr && val != null) el.setAttribute(attr, val);
+      });
+    });
+
+    // العنوان والسنة في الفوتر إذا فيه قوالب
+    const y = String(new Date().getFullYear());
+    const cp = get(dict, "footer.copyright");
+    if (cp) {
+      const el = document.getElementById("copyright");
+      if (el) el.textContent = cp.replace("{year}", y);
+    }
+    const appTitle = get(dict, "app.title");
+    if (appTitle) document.title = appTitle;
+  }
+
+  // جلب آمن من كائن بالقيمة "a.b.c"
+  function get(obj, path) {
+    return path.split(".").reduce((o, k) => (o && k in o ? o[k] : undefined), obj);
+  }
+
+  // حمّل JSON من مجلد i18n
+  async function loadDict(lang) {
+    const l = lang || "en";
+    const url = `assets/i18n/${l}.json`;
+    const res = await fetch(url, { cache: "no-cache" });
+    if (!res.ok) throw new Error(`i18n fetch failed: ${url}`);
+    return res.json();
+  }
+
+  async function loadAndApply(lang) {
+    let l = lang || localStorage.getItem(LS_KEY) || "en";
+    // fallback تلقائي للإنجليزية إذا ملف اللغة ناقص
+    try {
+      const dict = await loadDict(l);
+      applyLangMeta(l);
+      applyDict(dict);
+    } catch (e) {
+      console.warn("[i18n] falling back to EN:", e.message);
+      l = "en";
+      localStorage.setItem(LS_KEY, l);
+      const dict = await loadDict(l);
+      applyLangMeta(l);
+      applyDict(dict);
+    }
+    // عيّن قيمة السلكت إذا موجود
+    const sel = document.getElementById("langSelect");
+    if (sel) sel.value = l;
+  }
+
+  // عند التحميل الأول
+  document.addEventListener("DOMContentLoaded", () => {
+    const lang = localStorage.getItem(LS_KEY) || "en";
+    loadAndApply(lang);
+
+    // تبديل اللغة من القائمة
+    const sel = document.getElementById("langSelect");
+    if (sel) {
+      sel.addEventListener("change", () => {
+        const v = sel.value || "en";
+        localStorage.setItem(LS_KEY, v);
+        loadAndApply(v);
+      });
+    }
+  });
+
+  // واجهة بسيطة لو احتجتها من app.js
+  window.SC_I18N = {
+    setLang: (l) => { localStorage.setItem(LS_KEY, l || "en"); loadAndApply(l || "en"); },
+    getLang: () => localStorage.getItem(LS_KEY) || "en"
+  };
+})();
+      </script>
   <script defer src="assets/i18n.js"></script>
   <script defer src="assets/app.js"></script>
 </body>
