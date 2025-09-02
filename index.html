@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SmartContent · Web3 Creator Suite</title>
+  <title data-i18n="app.title">SmartContent · Web3 Creator Suite</title>
 
+  <!-- CSS -->
   <link rel="stylesheet" href="assets/style.css" />
 </head>
 <body>
   <div class="wrap">
-    <!-- ===== Header / Navigation ===== -->
+    <!-- ===== Header ===== -->
     <header class="topbar">
       <div class="brand">
         <span class="logo">⚡</span>
@@ -20,45 +21,44 @@
       </div>
 
       <div class="actions">
-        <button id="piLoginBtn" class="chip">🔐 Login with Pi</button>
+        <button id="piLoginBtn" class="chip">🔐 <span>Login with Pi</span></button>
         <span id="piUser" class="muted" style="margin-inline-start:8px;"></span>
       </div>
     </header>
 
+    <!-- ===== Tabs ===== -->
     <nav class="tabs">
-      <a href="#home"       data-tab="home"       class="tab" data-i18n="nav.home">Home</a>
-      <a href="#editor"     data-tab="editor"     class="tab" data-i18n="nav.editor">Editor</a>
-      <a href="#ai"         data-tab="ai"         class="tab" data-i18n="nav.ai">AI</a>
-      <a href="#design"     data-tab="design"     class="tab" data-i18n="nav.design">Design</a>
-      <a href="#video"      data-tab="video"      class="tab" data-i18n="nav.video">Video</a>
-      <a href="#seo"        data-tab="seo"        class="tab" data-i18n="nav.seo">SEO</a>
-      <a href="#cms"        data-tab="cms"        class="tab" data-i18n="nav.cms">CMS</a>
-      <a href="#web"        data-tab="web"        class="tab" data-i18n="nav.web">Web</a>
-      <a href="#analytics"  data-tab="analytics"  class="tab" data-i18n="nav.analytics">Analytics</a>
-      <a href="#settings"   data-tab="settings"   class="tab" data-i18n="nav.settings">Settings</a>
+      <a href="#home"      data-tab="home"      class="tab" data-i18n="nav.home">Home</a>
+      <a href="#editor"    data-tab="editor"    class="tab" data-i18n="nav.editor">Editor</a>
+      <a href="#ai"        data-tab="ai"        class="tab" data-i18n="nav.ai">AI</a>
+      <a href="#design"    data-tab="design"    class="tab" data-i18n="nav.design">Design</a>
+      <a href="#video"     data-tab="video"     class="tab" data-i18n="nav.video">Video</a>
+      <a href="#seo"       data-tab="seo"       class="tab" data-i18n="nav.seo">SEO</a>
+      <a href="#cms"       data-tab="cms"       class="tab" data-i18n="nav.cms">CMS</a>
+      <a href="#web"       data-tab="web"       class="tab" data-i18n="nav.web">Web</a>
+      <a href="#analytics" data-tab="analytics" class="tab" data-i18n="nav.analytics">Analytics</a>
+      <a href="#settings"  data-tab="settings"  class="tab" data-i18n="nav.settings">Settings</a>
     </nav>
 
-    <!-- ===== Limited Mode banner (اختياري) ===== -->
+    <!-- ===== Limited Mode (optional) ===== -->
     <section class="banner hidden" id="limitedBanner">
-      <strong>You are in Limited Mode.</strong>
+      <strong>Limited Mode</strong>
       <span>Some features require permissions.</span>
       <button id="enableNowBtn">Enable now</button>
     </section>
 
-    <!-- ===== Main content / Tabs ===== -->
+    <!-- ===== Main ===== -->
     <main class="container">
 
-      <!-- Home -->
+      <!-- ===== Home ===== -->
       <section class="tab-pane active" id="home">
         <h2 data-i18n="home.headline">Welcome back, Creator 🚀</h2>
-        <p class="lead" data-i18n="home.lead">
-          Your AI-powered Web3 content suite on the Pi Network.
-        </p>
+        <p class="lead" data-i18n="home.lead">Your AI-powered Web3 content suite on the Pi Network.</p>
 
         <div class="chips">
-          <span class="chip" data-i18n="home.privacy">Privacy-first</span>
-          <span class="chip" data-i18n="home.payments">Pi Payments</span>
           <span class="chip" data-i18n="home.sdk">Pi SDK Ready</span>
+          <span class="chip" data-i18n="home.payments">Pi Payments</span>
+          <span class="chip" data-i18n="home.privacy">Privacy-first</span>
         </div>
 
         <div class="cards">
@@ -75,7 +75,7 @@
         </div>
       </section>
 
-      <!-- Editor -->
+      <!-- ===== Editor ===== -->
       <section class="tab-pane" id="editor">
         <h2 data-i18n="editor.title">Editor</h2>
         <p data-i18n="editor.lead">Write distraction-free with autosave & version history.</p>
@@ -84,20 +84,20 @@
           <div class="card-head" data-i18n="editor.quick">Quick Draft</div>
           <p data-i18n="editor.quick_sub">Start a new note right away:</p>
           <textarea
+            style="width:100%;height:140px;border-radius:12px;padding:12px;"
             data-i18n-attr="placeholder:editor.ph_body"
-            placeholder="Type here..."
-            style="width:100%;height:140px;"></textarea>
-          <button class="primary" data-i18n="editor.save">Save Draft</button>
+            placeholder="Type here..."></textarea>
+          <button class="primary" style="margin-top:10px" data-i18n="editor.save">Save Draft</button>
         </div>
       </section>
 
-      <!-- AI -->
+      <!-- ===== AI ===== -->
       <section class="tab-pane" id="ai">
-        <h2 data-i18n="ai.title">🤖 AI Tools</h2>
+        <h2 data-i18n="ai.title">AI Tools 🤖</h2>
         <div class="card">
           <div class="row">
             <input id="aiTopic"
-                   style="flex:1;"
+                   style="flex:1"
                    data-i18n-attr="placeholder:ai.topic_ph"
                    placeholder="Topic (e.g. Web3 Tips)">
           </div>
@@ -112,9 +112,9 @@
         </div>
       </section>
 
-      <!-- Design -->
+      <!-- ===== Design ===== -->
       <section class="tab-pane" id="design">
-        <h2 data-i18n="design.title">🎨 Design</h2>
+        <h2 data-i18n="design.title">Design 🎨</h2>
         <p data-i18n="design.lead">Create social thumbnails and banners.</p>
 
         <div class="grid" style="margin-top:10px">
@@ -128,16 +128,16 @@
           </div>
           <div class="mini-card">
             <div class="tag">1080×1920</div>
-            <div class="title" data-i18n="design.story">Story/Reel</div>
+            <div class="title" data-i18n="design.story">Story / Reel</div>
           </div>
         </div>
 
         <button class="primary" style="margin-top:12px" data-i18n="design.open">Open Design Studio</button>
       </section>
 
-      <!-- Video -->
+      <!-- ===== Video ===== -->
       <section class="tab-pane" id="video">
-        <h2 data-i18n="video.title">🎬 Video</h2>
+        <h2 data-i18n="video.title">Video 🎬</h2>
         <p data-i18n="video.lead">Record, caption, and publish shorts with TTS/voice-over.</p>
 
         <div class="card">
@@ -147,28 +147,29 @@
         </div>
       </section>
 
-      <!-- SEO -->
+      <!-- ===== SEO ===== -->
       <section class="tab-pane" id="seo">
-        <h2 data-i18n="seo.title">🔍 SEO</h2>
+        <h2 data-i18n="seo.title">SEO 🔍</h2>
         <p data-i18n="seo.lead">Optimize your articles and pages for search engines.</p>
 
         <div class="cards">
           <div class="card">
-            <div class="card-head" data-i18n="seo.planner">Keyword Planner</div>
-            <p data-i18n="seo.planner_lead">Find trending keywords for your content.</p>
-            <button class="primary" data-i18n="seo.try_planner">Try Planner</button>
+            <div class="card-head" data-i18n="seo.kp">Keyword Planner</div>
+            <p data-i18n="seo.kp_lead">Find trending keywords for your content.</p>
+            <button class="primary" data-i18n="seo.kp_try">Try Planner</button>
           </div>
           <div class="card">
             <div class="card-head" data-i18n="seo.audit">SEO Audit</div>
             <p data-i18n="seo.audit_lead">Analyze pages and get instant improvement tips.</p>
-            <button class="primary" data-i18n="seo.run_audit">Run Audit</button>
+            <button class="primary" data-i18n="seo.audit_run">Run Audit</button>
           </div>
         </div>
       </section>
 
-      <!-- CMS -->
+      <!-- ===== CMS ===== -->
       <section class="tab-pane" id="cms">
-        <h2 data-i18n="cms.head">🗂️ CMS</h2>
+        <h2 data-i18n="cms.head">CMS 🗂️</h2>
+
         <div class="card">
           <div class="row">
             <input id="postTitle"
@@ -176,10 +177,9 @@
                    placeholder="Title">
           </div>
           <div class="row">
-            <textarea id="postBody"
+            <textarea id="postBody" rows="5" style="width:100%"
                       data-i18n-attr="placeholder:cms.body_ph"
-                      placeholder="Write something..."
-                      rows="5" style="width:100%"></textarea>
+                      placeholder="Write something..."></textarea>
           </div>
           <div class="row">
             <button id="savePostBtn" class="primary" data-i18n="cms.save">Save Post</button>
@@ -187,50 +187,54 @@
         </div>
 
         <div class="card">
-          <div class="card-head">Your Posts</div>
+          <div class="card-head" data-i18n="cms.your_posts">Your Posts</div>
           <div id="postsList"></div>
         </div>
       </section>
 
-      <!-- Web -->
+      <!-- ===== Web ===== -->
       <section class="tab-pane" id="web">
         <h2 data-i18n="web.title">Web Publishing 🌐</h2>
         <p data-i18n="web.lead">Publishing & deployment tools coming soon.</p>
         <button class="primary" data-i18n="web.connect">Connect Domain</button>
       </section>
 
-      <!-- Analytics -->
+      <!-- ===== Analytics ===== -->
       <section class="tab-pane" id="analytics">
-        <h2>📊 Analytics</h2>
-        <p>Track usage, events, and traffic.</p>
+        <h2 data-i18n="analytics.title">Analytics 📊</h2>
+        <p data-i18n="analytics.lead">Track usage, events, and traffic.</p>
 
         <div class="card">
-          <div class="card-head">Analytics</div>
-          <p>Total Events: <strong id="totalEvents">0</strong></p>
-          <p>7-day Views: <strong id="views7d">0</strong></p>
-          <p>Most Viewed Tab: <strong id="mostViewed">–</strong></p>
+          <div class="card-head" data-i18n="analytics.title">Analytics</div>
+          <p><span data-i18n="analytics.total">Total Events</span>: <strong id="totalEvents">0</strong></p>
+          <p><span data-i18n="analytics.views7">7-day Views</span>: <strong id="views7d">0</strong></p>
+          <p><span data-i18n="analytics.most">Most Viewed Tab</span>: <strong id="mostViewed">–</strong></p>
 
           <div id="trafficChart" style="margin:16px 0;"></div>
 
           <div class="table-wrap">
             <table>
               <thead>
-                <tr><th>Time</th><th>Type</th><th>Detail</th></tr>
+              <tr>
+                <th data-i18n="analytics.col_time">Time</th>
+                <th data-i18n="analytics.col_type">Type</th>
+                <th data-i18n="analytics.col_detail">Detail</th>
+              </tr>
               </thead>
               <tbody id="eventsTable"></tbody>
             </table>
           </div>
 
-          <button class="primary" id="resetAnalyticsBtn">Reset Analytics</button>
+          <button class="primary" id="resetAnalyticsBtn" data-i18n="analytics.reset">Reset Analytics</button>
         </div>
       </section>
 
-      <!-- Settings -->
+      <!-- ===== Settings ===== -->
       <section class="tab-pane" id="settings">
         <h2 data-i18n="settings.title">⚙️ Settings</h2>
         <p class="lead" data-i18n="settings.lead">Customize your app preferences.</p>
 
-        <!-- App Preferences -->
+        <!-- App Prefs -->
         <div class="card">
           <div class="card-head" data-i18n="settings.app_prefs">App Preferences</div>
 
@@ -313,16 +317,16 @@
     <footer class="footer">
       <div class="footer-links">
         <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a> ·
-        <a href="terms.html"   data-i18n="footer.terms">Terms of Service</a> ·
+        <a href="terms.html" data-i18n="footer.terms">Terms of Service</a> ·
         <a href="mailto:ahmedheebo@gmail.com" data-i18n="footer.support">Need help? Email us</a>
       </div>
-      <p class="muted" id="copyright" data-i18n="footer.copyright"></p>
+      <p class="muted" id="copyright" data-i18n="footer.copyright">© 2025 SmartContent — Built for Pi Network Creators.</p>
     </footer>
   </div>
 
-  <!-- Scripts (الترتيب صحيح) -->
+  <!-- ===== Scripts (الترتيب مهم) ===== -->
   <script defer src="assets/config.js"></script>
   <script defer src="assets/i18n.js"></script>
   <script defer src="assets/app.js"></script>
 </body>
-</html>
+  </html>
