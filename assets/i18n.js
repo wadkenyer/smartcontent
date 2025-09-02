@@ -1,52 +1,45 @@
-// assets/i18n.js  — FINAL
+// assets/i18n.js — FINAL
 (() => {
   const LS_KEY = "sc_lang";
   const RTL    = ["ar","fa","ur","he"];
 
-  // اضبط وسم <html>
   function applyLangMeta(lang){
-    document.documentElement.lang = lang || "en";
-    document.documentElement.dir  = RTL.includes(lang) ? "rtl" : "ltr";
+    const l = lang || localStorage.getItem(LS_KEY) || "en";
+    document.documentElement.lang = l;
+    document.documentElement.dir  = RTL.includes(l) ? "rtl" : "ltr";
   }
 
-  // طبّق النصوص على عناصر تحمل data-i18n أو data-i18n-attr
+  function getPath(obj, path){
+    return path.split(".").reduce((o,k)=> (o && k in o ? o[k] : undefined), obj);
+  }
+
   function applyDict(dict){
     if (!dict || typeof dict !== "object") return;
 
-    // 1) نصوص داخلية
     document.querySelectorAll("[data-i18n]").forEach(el => {
-      const key = el.dataset.i18n;
-      const val = get(dict, key);
-      if (val != null) el.textContent = val;
+      const v = getPath(dict, el.dataset.i18n);
+      if (v != null) el.textContent = v;
     });
 
-    // 2) خصائص/Placeholders... الخ
     document.querySelectorAll("[data-i18n-attr]").forEach(el => {
-      const pairs = el.dataset.i18nAttr.split(";").map(s => s.trim()).filter(Boolean);
+      const pairs = el.dataset.i18nAttr
+        .split(/[;,]/).map(s=>s.trim()).filter(Boolean); // يقبل ; أو ,
       pairs.forEach(pair => {
-        const [attr, key] = pair.split(":").map(s => s.trim());
-        const val = get(dict, key);
-        if (attr && val != null) el.setAttribute(attr, val);
+        const [attr, key] = pair.split(":").map(s=>s.trim());
+        const v = getPath(dict, key);
+        if (attr && v != null) el.setAttribute(attr, v);
       });
     });
   }
 
-  // جلب آمن + لوج واضح
   async function loadDict(lang){
-    const url = `assets/i18n/${lang}.json`;
-    try {
-      const res = await fetch(url, { cache: "no-store" });
-      if (!res.ok) throw new Error(res.status + " " + res.statusText);
-      return await res.json();
-    } catch (e) {
-      console.warn("[i18n] failed to load", url, e);
-      return null;
-    }
-  }
-
-  // قراءة قيمة nested key مثل "settings.title"
-  function get(obj, path){
-    return path.split(".").reduce((o,k)=> (o && k in o ? o[k] : undefined), obj);
+    const tryLoad = async (l) => {
+      const res = await fetch(`assets/i18n/${l}.json`, { cache: "no-store" });
+      if (!res.ok) throw new Error(res.status);
+      return res.json();
+    };
+    try { return await tryLoad(lang); }
+    catch { try { return await tryLoad("en"); } catch { return null; } }
   }
 
   async function loadAndApply(lang){
@@ -54,7 +47,8 @@
     const dict = await loadDict(lang);
     if (!dict) return;
     applyDict(dict);
-    // حُط السنة في الفوتر (بعد الترجمة)
+
+    // استبدال {year} بعد الترجمة
     const y = new Date().getFullYear();
     const cr = document.getElementById("copyright");
     if (cr && cr.textContent.includes("{year}")) {
@@ -62,7 +56,6 @@
     }
   }
 
-  // تشغيل أولي + سلك اختيار اللغة
   document.addEventListener("DOMContentLoaded", () => {
     const lang = localStorage.getItem(LS_KEY) || "en";
     loadAndApply(lang);
@@ -78,9 +71,9 @@
     }
   });
 
-  // API اختياري لاستخدامه لاحقًا
   window.SC_I18N = {
-    setLang: (l) => { localStorage.setItem(LS_KEY, l || "en"); loadAndApply(l || "en"); },
+    setLang: (l) => { const v = l || "en"; localStorage.setItem(LS_KEY, v); loadAndApply(v); },
     getLang: ()  => localStorage.getItem(LS_KEY) || "en",
+    loadAndApply
   };
 })();
