@@ -1,17 +1,5 @@
 {
-  "app.title": "SmartContent · Web3 Creator Suite",
-
-  "nav.home": "Home",
-  "nav.editor": "Editor",
-  "nav.ai": "AI",
-  "nav.design": "Design",
-  "nav.video": "Video",
-  "nav.seo": "SEO",
-  "nav.cms": "CMS",
-  "nav.web": "Web",
-  "nav.analytics": "Analytics",
-  "nav.settings": "Settings",
-
+  "app.title": "SmartContent",
   "home.headline": "Welcome back, Creator 🚀",
   "home.lead": "Your AI-powered Web3 content suite on the Pi Network.",
   "home.privacy": "Privacy-first",
@@ -19,6 +7,10 @@
   "home.sdk": "Pi SDK Ready",
   "home.open_editor": "Open Editor",
   "home.try_ai": "Try AI",
+
+  "nav.home": "Home", "nav.editor": "Editor", "nav.ai": "AI", "nav.design": "Design",
+  "nav.video": "Video", "nav.seo": "SEO", "nav.cms": "CMS", "nav.web": "Web",
+  "nav.analytics": "Analytics", "nav.settings": "Settings",
 
   "editor.title": "Editor",
   "editor.lead": "Write with autosave and version history.",
@@ -33,32 +25,10 @@
   "ai.generate": "Generate Post",
   "ai.out_ph": "AI output...",
 
-  "design.title": "Design",
-  "design.lead": "Create social thumbnails and banners.",
-  "design.square": "Square Post",
-  "design.thumb": "YouTube Thumb",
-  "design.story": "Story/Reel",
-  "design.open": "Open Design Studio",
-
-  "video.title": "Video",
-  "video.lead": "Record, caption, and publish shorts with TTS/voice-over.",
-  "video.studio": "Video Studio",
-  "video.studio_lead": "Quickly edit, add subtitles, and publish to social platforms.",
-  "video.open": "Open Video Studio",
-
-  "seo.title": "SEO",
-  "seo.lead": "Optimize your articles and pages for search engines.",
-  "seo.planner": "Keyword Planner",
-  "seo.planner_lead": "Find trending keywords for your content.",
-  "seo.try_planner": "Try Planner",
-  "seo.audit": "SEO Audit",
-  "seo.audit_lead": "Analyze pages and get instant improvement tips.",
-  "seo.run_audit": "Run Audit",
-
-  "cms.head": "CMS",
   "cms.title_ph": "Title",
   "cms.body_ph": "Write something...",
   "cms.save": "Save Post",
+  "cms.head": "Your Posts",
 
   "web.title": "Web Publishing 🌐",
   "web.lead": "Publishing & deployment tools coming soon.",
@@ -75,11 +45,6 @@
   "settings.wallet": "Wallet Address",
   "settings.automint": "Auto-mint NFTs",
   "settings.scnotify": "Smart Contract Notifications",
-  "settings.sec_priv": "Security & Privacy",
-  "settings.change_pass": "Change Password",
-  "settings.2fa": "Two-Factor Authentication",
-  "settings.export": "Data Export",
-  "settings.delete": "Delete Account",
 
   "footer.privacy": "Privacy Policy",
   "footer.terms": "Terms of Service",
