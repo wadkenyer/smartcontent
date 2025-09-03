@@ -82,3 +82,38 @@ input,select,textarea{
 
 /* RTL */
 html[dir="rtl"] .tabs{ direction:rtl; }
+/* === RTL Fixes === */
+html[dir="rtl"] body {
+  text-align: right;
+}
+
+html[dir="rtl"] .brand {
+  flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .tabs {
+  flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .tabs [data-tab] {
+  text-align: center;
+}
+
+html[dir="rtl"] .row {
+  text-align: right;
+}
+
+html[dir="rtl"] input,
+html[dir="rtl"] textarea,
+html[dir="rtl"] select {
+  text-align: right;
+  direction: rtl;
+}
+
+html[dir="rtl"] .card-head {
+  text-align: right;
+}
+
+html[dir="rtl"] .footer {
+  text-align: center; /* نخليها وسط */
+}
