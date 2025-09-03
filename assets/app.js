@@ -123,21 +123,25 @@ function piLogout(){
   localStorage.removeItem(S.piUser);
   renderPiUser();
 }
+// في app.js
 function renderPiUser(){
   const el = $("#piUser");
   const btn = $("#piLoginBtn");
   const u = get(S.piUser, null);
   if (!el || !btn) return;
+
   if (u){
     el.textContent = "@"+u.username;
     btn.textContent = "Logout";
-    btn.onclick = piLogout;
+    btn.onclick = mockPiLogout;
   }else{
     el.textContent = "";
     btn.textContent = "🔐 Login with Pi";
-    btn.onclick = piLogin;
+    // خلي الزر يتفاعل (مؤقت)
+    btn.onclick = mockPiLogin; 
   }
 }
+
 
 /* DOM ready */
 document.addEventListener("DOMContentLoaded", () => {
