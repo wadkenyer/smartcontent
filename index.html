@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title data-i18n="app.title">SmartContent · Web3 Creator Suite</title>
-
-  <!-- CSS -->
+  <title>SmartContent · Web3 Creator Suite</title>
   <link rel="stylesheet" href="assets/style.css" />
 </head>
 <body>
   <div class="wrap">
-    <!-- ===== Header ===== -->
+    <!-- Header -->
     <header class="topbar">
       <div class="brand">
         <span class="logo">⚡</span>
@@ -19,14 +17,13 @@
           <p>Web3 Creator Suite · Pi Network</p>
         </div>
       </div>
-
       <div class="actions">
-        <button id="piLoginBtn" class="chip">🔐 <span>Login with Pi</span></button>
+        <button id="piLoginBtn" class="chip">🔐 Login with Pi</button>
         <span id="piUser" class="muted" style="margin-inline-start:8px;"></span>
       </div>
     </header>
 
-    <!-- ===== Tabs ===== -->
+    <!-- Nav -->
     <nav class="tabs">
       <a href="#home"      data-tab="home"      class="tab" data-i18n="nav.home">Home</a>
       <a href="#editor"    data-tab="editor"    class="tab" data-i18n="nav.editor">Editor</a>
@@ -40,27 +37,16 @@
       <a href="#settings"  data-tab="settings"  class="tab" data-i18n="nav.settings">Settings</a>
     </nav>
 
-    <!-- ===== Limited Mode (optional) ===== -->
-    <section class="banner hidden" id="limitedBanner">
-      <strong>Limited Mode</strong>
-      <span>Some features require permissions.</span>
-      <button id="enableNowBtn">Enable now</button>
-    </section>
-
-    <!-- ===== Main ===== -->
     <main class="container">
-
-      <!-- ===== Home ===== -->
+      <!-- Home -->
       <section class="tab-pane active" id="home">
         <h2 data-i18n="home.headline">Welcome back, Creator 🚀</h2>
         <p class="lead" data-i18n="home.lead">Your AI-powered Web3 content suite on the Pi Network.</p>
-
         <div class="chips">
-          <span class="chip" data-i18n="home.sdk">Pi SDK Ready</span>
-          <span class="chip" data-i18n="home.payments">Pi Payments</span>
           <span class="chip" data-i18n="home.privacy">Privacy-first</span>
+          <span class="chip" data-i18n="home.payments">Pi Payments</span>
+          <span class="chip" data-i18n="home.sdk">Pi SDK Ready</span>
         </div>
-
         <div class="cards">
           <div class="card">
             <div class="card-head" data-i18n="editor.title">Editor</div>
@@ -75,206 +61,103 @@
         </div>
       </section>
 
-      <!-- ===== Editor ===== -->
+      <!-- Editor -->
       <section class="tab-pane" id="editor">
         <h2 data-i18n="editor.title">Editor</h2>
         <p data-i18n="editor.lead">Write distraction-free with autosave & version history.</p>
-
         <div class="card">
           <div class="card-head" data-i18n="editor.quick">Quick Draft</div>
           <p data-i18n="editor.quick_sub">Start a new note right away:</p>
           <textarea
-            style="width:100%;height:140px;border-radius:12px;padding:12px;"
             data-i18n-attr="placeholder:editor.ph_body"
-            placeholder="Type here..."></textarea>
-          <button class="primary" style="margin-top:10px" data-i18n="editor.save">Save Draft</button>
+            placeholder="Type here..." style="width:100%;height:140px;"></textarea>
+          <button class="primary" data-i18n="editor.save">Save Draft</button>
         </div>
       </section>
 
-      <!-- ===== AI ===== -->
+      <!-- AI -->
       <section class="tab-pane" id="ai">
-        <h2 data-i18n="ai.title">AI Tools 🤖</h2>
+        <h2>🤖 AI Tools</h2>
         <div class="card">
           <div class="row">
             <input id="aiTopic"
-                   style="flex:1"
-                   data-i18n-attr="placeholder:ai.topic_ph"
-                   placeholder="Topic (e.g. Web3 Tips)">
+              data-i18n-attr="placeholder:ai.topic_ph"
+              placeholder="Topic (e.g. Web3 Tips)" style="flex:1;">
           </div>
           <div class="row">
             <button id="aiGenBtn" class="primary" data-i18n="ai.generate">Generate Post</button>
           </div>
           <div class="row">
             <textarea id="aiOut" rows="8" style="width:100%"
-                      data-i18n-attr="placeholder:ai.out_ph"
-                      placeholder="AI output..."></textarea>
+              data-i18n-attr="placeholder:ai.out_ph"
+              placeholder="AI output..."></textarea>
           </div>
         </div>
       </section>
 
-      <!-- ===== Design ===== -->
-      <section class="tab-pane" id="design">
-        <h2 data-i18n="design.title">Design 🎨</h2>
-        <p data-i18n="design.lead">Create social thumbnails and banners.</p>
-
-        <div class="grid" style="margin-top:10px">
-          <div class="mini-card">
-            <div class="tag">1080×1080</div>
-            <div class="title" data-i18n="design.square">Square Post</div>
-          </div>
-          <div class="mini-card">
-            <div class="tag">1920×1080</div>
-            <div class="title" data-i18n="design.thumb">YouTube Thumb</div>
-          </div>
-          <div class="mini-card">
-            <div class="tag">1080×1920</div>
-            <div class="title" data-i18n="design.story">Story / Reel</div>
-          </div>
-        </div>
-
-        <button class="primary" style="margin-top:12px" data-i18n="design.open">Open Design Studio</button>
-      </section>
-
-      <!-- ===== Video ===== -->
-      <section class="tab-pane" id="video">
-        <h2 data-i18n="video.title">Video 🎬</h2>
-        <p data-i18n="video.lead">Record, caption, and publish shorts with TTS/voice-over.</p>
-
-        <div class="card">
-          <div class="card-head" data-i18n="video.studio">Video Studio</div>
-          <p data-i18n="video.studio_lead">Quickly edit, add subtitles, and publish to social platforms.</p>
-          <button class="primary" data-i18n="video.open">Open Video Studio</button>
-        </div>
-      </section>
-
-      <!-- ===== SEO ===== -->
-      <section class="tab-pane" id="seo">
-        <h2 data-i18n="seo.title">SEO 🔍</h2>
-        <p data-i18n="seo.lead">Optimize your articles and pages for search engines.</p>
-
-        <div class="cards">
-          <div class="card">
-            <div class="card-head" data-i18n="seo.kp">Keyword Planner</div>
-            <p data-i18n="seo.kp_lead">Find trending keywords for your content.</p>
-            <button class="primary" data-i18n="seo.kp_try">Try Planner</button>
-          </div>
-          <div class="card">
-            <div class="card-head" data-i18n="seo.audit">SEO Audit</div>
-            <p data-i18n="seo.audit_lead">Analyze pages and get instant improvement tips.</p>
-            <button class="primary" data-i18n="seo.audit_run">Run Audit</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===== CMS ===== -->
+      <!-- CMS -->
       <section class="tab-pane" id="cms">
-        <h2 data-i18n="cms.head">CMS 🗂️</h2>
-
+        <h2>🗂️ CMS</h2>
         <div class="card">
           <div class="row">
-            <input id="postTitle"
-                   data-i18n-attr="placeholder:cms.title_ph"
-                   placeholder="Title">
+            <input id="postTitle" data-i18n-attr="placeholder:cms.title_ph" placeholder="Title">
           </div>
           <div class="row">
             <textarea id="postBody" rows="5" style="width:100%"
-                      data-i18n-attr="placeholder:cms.body_ph"
-                      placeholder="Write something..."></textarea>
+              data-i18n-attr="placeholder:cms.body_ph"
+              placeholder="Write something..."></textarea>
           </div>
           <div class="row">
             <button id="savePostBtn" class="primary" data-i18n="cms.save">Save Post</button>
           </div>
         </div>
-
         <div class="card">
-          <div class="card-head" data-i18n="cms.your_posts">Your Posts</div>
+          <div class="card-head" data-i18n="cms.head">Your Posts</div>
           <div id="postsList"></div>
         </div>
       </section>
 
-      <!-- ===== Web ===== -->
+      <!-- Web -->
       <section class="tab-pane" id="web">
         <h2 data-i18n="web.title">Web Publishing 🌐</h2>
         <p data-i18n="web.lead">Publishing & deployment tools coming soon.</p>
         <button class="primary" data-i18n="web.connect">Connect Domain</button>
       </section>
 
-      <!-- ===== Analytics ===== -->
+      <!-- Analytics (مختصر) -->
       <section class="tab-pane" id="analytics">
-        <h2 data-i18n="analytics.title">Analytics 📊</h2>
-        <p data-i18n="analytics.lead">Track usage, events, and traffic.</p>
-
-        <div class="card">
-          <div class="card-head" data-i18n="analytics.title">Analytics</div>
-          <p><span data-i18n="analytics.total">Total Events</span>: <strong id="totalEvents">0</strong></p>
-          <p><span data-i18n="analytics.views7">7-day Views</span>: <strong id="views7d">0</strong></p>
-          <p><span data-i18n="analytics.most">Most Viewed Tab</span>: <strong id="mostViewed">–</strong></p>
-
-          <div id="trafficChart" style="margin:16px 0;"></div>
-
-          <div class="table-wrap">
-            <table>
-              <thead>
-              <tr>
-                <th data-i18n="analytics.col_time">Time</th>
-                <th data-i18n="analytics.col_type">Type</th>
-                <th data-i18n="analytics.col_detail">Detail</th>
-              </tr>
-              </thead>
-              <tbody id="eventsTable"></tbody>
-            </table>
-          </div>
-
-          <button class="primary" id="resetAnalyticsBtn" data-i18n="analytics.reset">Reset Analytics</button>
-        </div>
+        <h2>📊 Analytics</h2>
+        <p>Track usage, events, and traffic.</p>
       </section>
 
-      <!-- ===== Settings ===== -->
+      <!-- Settings -->
       <section class="tab-pane" id="settings">
         <h2 data-i18n="settings.title">⚙️ Settings</h2>
         <p class="lead" data-i18n="settings.lead">Customize your app preferences.</p>
 
-        <!-- App Prefs -->
         <div class="card">
           <div class="card-head" data-i18n="settings.app_prefs">App Preferences</div>
 
-          <div class="row">
-            <label class="check">
-              <input type="checkbox" id="pushToggle">
-              <span data-i18n="settings.push">Push Notifications</span>
-            </label>
-          </div>
+          <label class="check"><input type="checkbox" id="pushToggle">
+            <span data-i18n="settings.push">Push Notifications</span></label>
 
-          <div class="row">
-            <label class="check">
-              <input type="checkbox" id="autosaveToggle">
-              <span data-i18n="settings.autosave">Auto-save Drafts</span>
-            </label>
-          </div>
+          <label class="check"><input type="checkbox" id="autosaveToggle">
+            <span data-i18n="settings.autosave">Auto-save Drafts</span></label>
 
-          <div class="row">
-            <label class="check">
-              <input type="checkbox" id="darkModeToggle">
-              <span data-i18n="settings.darkmode">Dark Mode</span>
-            </label>
-          </div>
+          <label class="check"><input type="checkbox" id="darkModeToggle">
+            <span data-i18n="settings.darkmode">Dark Mode</span></label>
 
           <div class="row">
             <strong data-i18n="settings.lang">Default Language</strong>
             <select id="langSelect" style="margin-top:8px;max-width:260px;">
               <option value="en">English</option>
               <option value="ar">العربية</option>
-              <option value="fr">Français</option>
-              <option value="es">Español</option>
-              <option value="de">Deutsch</option>
             </select>
           </div>
         </div>
 
-        <!-- Pi Network Settings -->
         <div class="card">
           <div class="card-head" data-i18n="settings.pi_head">Pi Network Settings</div>
-
           <div class="row">
             <strong data-i18n="settings.wallet">Wallet Address</strong>
             <div style="display:flex;gap:8px;align-items:center;margin-top:8px;max-width:420px;">
@@ -282,51 +165,28 @@
               <button id="copyWalletBtn" class="secondary" type="button" title="Copy">📋</button>
             </div>
           </div>
-
-          <div class="row">
-            <label class="check">
-              <input type="checkbox" id="autoMintToggle">
-              <span data-i18n="settings.automint">Auto-mint NFTs</span>
-            </label>
-          </div>
-
-          <div class="row">
-            <label class="check">
-              <input type="checkbox" id="scNotifyToggle">
-              <span data-i18n="settings.scnotify">Smart Contract Notifications</span>
-            </label>
-          </div>
-        </div>
-
-        <!-- Security & Privacy -->
-        <div class="card">
-          <div class="card-head" data-i18n="settings.sec_priv">Security & Privacy</div>
-          <div class="row">
-            <button class="muted" disabled data-i18n="settings.change_pass">Change Password</button>
-            <button class="muted" disabled data-i18n="settings.2fa">Two-Factor Authentication</button>
-          </div>
-          <div class="row">
-            <button class="muted" disabled data-i18n="settings.export">Data Export</button>
-            <button class="muted" disabled data-i18n="settings.delete">Delete Account</button>
-          </div>
+          <label class="check"><input type="checkbox" id="autoMintToggle">
+            <span data-i18n="settings.automint">Auto-mint NFTs</span></label>
+          <label class="check"><input type="checkbox" id="scNotifyToggle">
+            <span data-i18n="settings.scnotify">Smart Contract Notifications</span></label>
         </div>
       </section>
     </main>
 
-    <!-- ===== Footer ===== -->
+    <!-- Footer -->
     <footer class="footer">
       <div class="footer-links">
         <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a> ·
         <a href="terms.html" data-i18n="footer.terms">Terms of Service</a> ·
-        <a href="mailto:ahmedheebo@gmail.com" data-i18n="footer.support">Need help? Email us</a>
+        <a href="mailto:help@smartcontent.app" data-i18n="footer.support">Need help? Email us</a>
       </div>
-      <p class="muted" id="copyright" data-i18n="footer.copyright">© 2025 SmartContent — Built for Pi Network Creators.</p>
+      <p class="muted" id="copyright" data-i18n="footer.copyright">© {year} SmartContent — Built for Pi Network Creators.</p>
     </footer>
   </div>
 
-  <!-- ===== Scripts (الترتيب مهم) ===== -->
+  <!-- Scripts (الترتيب مهم) -->
   <script defer src="assets/config.js"></script>
   <script defer src="assets/i18n.js"></script>
   <script defer src="assets/app.js"></script>
 </body>
-  </html>
+</html>
