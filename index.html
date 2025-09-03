@@ -1,257 +1,501 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" dir="ltr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SmartContent · Web3 Creator Suite</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SmartContent · Pi Network</title>
+<style>
+/* ========== Theme tokens ========== */
+:root{
+  /* light */
+  --bg:#f6f7fb;
+  --card:#ffffff;
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="assets/style.css" />
+  /* نصوص أوضح كما طَلبت */
+  --text:#0a0a0a;
+  --muted:#444;
 
-  <!-- Pi SDK (يعمل داخل Pi Browser) -->
-  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  --brand:#6f4af7;
+  --chip:#e2e8f0;
+  --accent:#7c3aed;
+  --line:#e5e7eb;
+  --ink:#0b0d1f; /* inputs text */
+}
+:root[data-theme="dark"]{
+  --bg:#0b0b10;
+  --card:#111425;
+  --text:#e4e7f1;
+  --muted:#aab0c0;
 
-  <!-- مهم: i18n قبل app.js -->
-  <script defer src="assets/i18n.js"></script>
-  <script defer src="assets/app.js"></script>
+  --brand:#6f4af7;
+  --chip:#23233a;
+  --accent:#23c3a9;
+  --line:#23263d;
+  --ink:#d0d0ff;
+}
+
+/* ========== Reset + smooth transitions ========== */
+html,body,.card,.tabs [data-tab], .chip, .primary, input, select, textarea, .footer {
+  transition: background-color .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease, opacity .25s ease;
+}
+html, body { margin:0; padding:0; }
+body{
+  background: linear-gradient(180deg, var(--bg), var(--card));
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  line-height: 1.6;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { opacity: .9; }
+
+/* ========== Header / Tabs / Layout ========== */
+.topbar{
+  position: sticky; top:0; z-index:1000;
+  background: color-mix(in oklab, var(--card) 85%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.brand{ display:flex; align-items:center; gap:12px; padding:14px 18px; }
+.brand h1{ font-size:1.9rem; margin:0; }
+.badge{ font-size:.92rem; color:var(--muted); }
+
+.tabs{ display:flex; gap:10px; flex-wrap:wrap; padding:10px 16px; }
+.tabs [data-tab]{
+  display:inline-block;
+  background: color-mix(in oklab, var(--card) 60%, #141a2b);
+  border:1px solid var(--line);
+  color:var(--text);
+  padding:9px 12px;
+  border-radius:10px;
+  font-weight:600;
+}
+.tabs [data-tab].active{ outline:2px solid var(--accent); }
+
+.container{ max-width:980px; margin:0 auto; padding:20px; }
+.card{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; margin:16px 0; }
+.card-head{ font-weight:700; margin-bottom:6px; }
+.row{ display:block; margin:12px 0; }
+.chip{ background:var(--chip); border:1px solid var(--line); padding:6px 10px; border-radius:999px; }
+.primary{ background:var(--accent); color:#fff; border:0; padding:10px 14px; border-radius:10px; cursor:pointer; }
+.primary:disabled{ opacity:.6; cursor:not-allowed; }
+
+input,select,textarea{
+  background:var(--bg);
+  color:var(--ink);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:10px 12px;
+  width:100%;
+  box-sizing:border-box;
+}
+label{ display:block; margin-bottom:6px; font-weight:600; }
+.checkbox{ display:flex; align-items:center; gap:10px; margin:10px 0; }
+.smallmuted{ color:var(--muted); font-size:.95rem; }
+
+.footer{ margin:28px 0 18px; text-align:center; color:var(--muted); }
+.footer a{ color:var(--accent); }
+
+/* RTL تحسين بسيط */
+html[dir="rtl"] .tabs{ direction:rtl; }
+
+/* tab content visibility */
+.tab-pane{ display:none; }
+.tab-pane.active{ display:block; }
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <!-- ===== Header ===== -->
-    <header class="topbar">
-      <div class="brand">
-        <span class="logo">⚡</span>
-        <div>
-          <h1>SmartContent</h1>
-          <p>Web3 Creator Suite · Pi Network</p>
-        </div>
-      </div>
 
-      <div class="actions">
-        <button id="piLoginBtn" class="chip">🔐 Login with Pi</button>
-        <span id="piUser" class="muted" style="margin-inline-start:8px;"></span>
-      </div>
-    </header>
-
-    <!-- ===== Tabs ===== -->
-    <nav class="tabs">
-      <a href="#home"       data-tab="home"       class="tab" data-i18n="nav.home">Home</a>
-      <a href="#editor"     data-tab="editor"     class="tab" data-i18n="nav.editor">Editor</a>
-      <a href="#ai"         data-tab="ai"         class="tab" data-i18n="nav.ai">AI</a>
-      <a href="#design"     data-tab="design"     class="tab" data-i18n="nav.design">Design</a>
-      <a href="#video"      data-tab="video"      class="tab" data-i18n="nav.video">Video</a>
-      <a href="#seo"        data-tab="seo"        class="tab" data-i18n="nav.seo">SEO</a>
-      <a href="#cms"        data-tab="cms"        class="tab" data-i18n="nav.cms">CMS</a>
-      <a href="#web"        data-tab="web"        class="tab" data-i18n="nav.web">Web</a>
-      <a href="#analytics"  data-tab="analytics"  class="tab" data-i18n="nav.analytics">Analytics</a>
-      <a href="#settings"   data-tab="settings"   class="tab" data-i18n="nav.settings">Settings</a>
-    </nav>
-
-    <!-- ===== Content ===== -->
-    <main class="container">
-
-      <!-- Home -->
-      <section class="tab-pane active" id="home">
-        <h2 data-i18n="home.headline">Welcome back, Creator 🚀</h2>
-        <p class="lead" data-i18n="home.lead">Your AI-powered Web3 content suite on the Pi Network.</p>
-
-        <div class="chips">
-          <span class="chip" data-i18n="home.privacy">Privacy-first</span>
-          <span class="chip" data-i18n="home.payments">Pi Payments</span>
-          <span class="chip" data-i18n="home.sdk">Pi SDK Ready</span>
-        </div>
-
-        <div class="cards">
-          <div class="card">
-            <div class="card-head" data-i18n="editor.title">Editor</div>
-            <p data-i18n="editor.lead">Write with autosave and version history.</p>
-            <button class="primary" data-link="#editor" data-i18n="home.open_editor">Open Editor</button>
-          </div>
-          <div class="card">
-            <div class="card-head" data-i18n="ai.title">AI Tools</div>
-            <p data-i18n="ai.lead">Generate posts, scripts, and summaries.</p>
-            <button class="primary" data-link="#ai" data-i18n="home.try_ai">Try AI</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Editor -->
-      <section class="tab-pane" id="editor">
-        <h2 data-i18n="editor.title">Editor</h2>
-        <p data-i18n="editor.lead">Write distraction-free with autosave & version history.</p>
-
-        <div class="card">
-          <div class="card-head" data-i18n="editor.quick">Quick Draft</div>
-          <p data-i18n="editor.quick_sub">Start a new note right away:</p>
-          <textarea
-            data-i18n-attr="placeholder:editor.ph_body"
-            placeholder="Type here..." style="width:100%;height:140px;"></textarea>
-          <button class="primary" data-i18n="editor.save">Save Draft</button>
-        </div>
-      </section>
-
-      <!-- AI -->
-      <section class="tab-pane" id="ai">
-        <h2 data-i18n="ai.title">🤖 AI Tools</h2>
-        <div class="card">
-          <div class="row">
-            <input id="aiTopic" data-i18n-attr="placeholder:ai.topic_ph" placeholder="Topic (e.g. Web3 Tips)" style="flex:1;">
-          </div>
-          <div class="row">
-            <button id="aiGenBtn" class="primary" data-i18n="ai.generate">Generate Post</button>
-          </div>
-          <div class="row">
-            <textarea id="aiOut" rows="8" style="width:100%" data-i18n-attr="placeholder:ai.out_ph" placeholder="AI output..."></textarea>
-          </div>
-        </div>
-      </section>
-
-      <!-- Design -->
-      <section class="tab-pane" id="design">
-        <h2 data-i18n="design.title">🎨 Design</h2>
-        <p data-i18n="design.lead">Create social thumbnails and banners.</p>
-      </section>
-
-      <!-- Video -->
-      <section class="tab-pane" id="video">
-        <h2 data-i18n="video.title">🎬 Video</h2>
-        <p data-i18n="video.lead">Record, caption, and publish shorts with TTS/voice-over.</p>
-      </section>
-
-      <!-- SEO -->
-      <section class="tab-pane" id="seo">
-        <h2 data-i18n="seo.title">🔍 SEO</h2>
-        <p data-i18n="seo.lead">Optimize your articles and pages for search engines.</p>
-      </section>
-
-      <!-- CMS -->
-      <section class="tab-pane" id="cms">
-        <h2>🗂️ CMS</h2>
-        <div class="card">
-          <div class="row">
-            <input id="postTitle"
-              data-i18n-attr="placeholder:cms.title_ph"
-              placeholder="Title">
-          </div>
-          <div class="row">
-            <textarea id="postBody"
-              data-i18n-attr="placeholder:cms.body_ph"
-              placeholder="Write something..." rows="5" style="width:100%"></textarea>
-          </div>
-          <div class="row">
-            <button id="savePostBtn" class="primary" data-i18n="cms.save">Save Post</button>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-head" data-i18n="cms.head">Your Posts</div>
-          <div id="postsList"></div>
-        </div>
-      </section>
-
-      <!-- Web -->
-      <section class="tab-pane" id="web">
-        <h2 data-i18n="web.title">Web Publishing 🌐</h2>
-        <p data-i18n="web.lead">Publishing & deployment tools coming soon.</p>
-        <button class="primary" data-i18n="web.connect">Connect Domain</button>
-      </section>
-
-      <!-- Analytics -->
-      <section class="tab-pane" id="analytics">
-        <h2 data-i18n="analytics.title">📊 Analytics</h2>
-        <p data-i18n="analytics.lead">Track usage, events, and traffic.</p>
-      </section>
-
-      <!-- Settings -->
-      <section class="tab-pane" id="settings">
-        <h2 data-i18n="settings.title">⚙️ Settings</h2>
-        <p class="lead" data-i18n="settings.lead">Customize your app preferences.</p>
-
-        <div class="card">
-          <div class="card-head" data-i18n="settings.app_prefs">App Preferences</div>
-
-          <div class="row">
-            <label class="check">
-              <input type="checkbox" id="pushToggle">
-              <span data-i18n="settings.push">Push Notifications</span>
-            </label>
-          </div>
-
-          <div class="row">
-            <label class="check">
-              <input type="checkbox" id="autosaveToggle">
-              <span data-i18n="settings.autosave">Auto-save Drafts</span>
-            </label>
-          </div>
-
-          <div class="row">
-            <label class="check">
-              <input type="checkbox" id="darkModeToggle">
-              <span data-i18n="settings.darkmode">Dark Mode</span>
-            </label>
-          </div>
-
-          <div class="row">
-            <strong data-i18n="settings.lang">Default Language</strong>
-            <select id="langSelect" style="margin-top:8px;max-width:260px;">
-              <option value="en">English</option>
-              <option value="ar">العربية</option>
-              <option value="fr">Français</option>
-              <option value="es">Español</option>
-              <option value="de">Deutsch</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-head" data-i18n="settings.pi_head">Pi Network Settings</div>
-
-          <div class="row">
-            <strong data-i18n="settings.wallet">Wallet Address</strong>
-            <div style="display:flex;gap:8px;align-items:center;margin-top:8px;max-width:420px;">
-              <input id="walletInput" placeholder="0x..." style="flex:1;">
-              <button id="copyWalletBtn" class="secondary" type="button" title="Copy">📋</button>
-            </div>
-          </div>
-
-          <div class="row">
-            <label class="check">
-              <input type="checkbox" id="autoMintToggle">
-              <span data-i18n="settings.automint">Auto-mint NFTs</span>
-            </label>
-          </div>
-
-          <div class="row">
-            <label class="check">
-              <input type="checkbox" id="scNotifyToggle">
-              <span data-i18n="settings.scnotify">Smart Contract Notifications</span>
-            </label>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-head" data-i18n="settings.sec_priv">Security & Privacy</div>
-          <div class="row">
-            <button class="muted" disabled data-i18n="settings.change_pass">Change Password</button>
-            <button class="muted" disabled data-i18n="settings.2fa">Two-Factor Authentication</button>
-          </div>
-          <div class="row">
-            <button class="muted" disabled data-i18n="settings.export">Data Export</button>
-            <button class="muted" disabled data-i18n="settings.delete">Delete Account</button>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!-- ===== Footer ===== -->
-    <footer class="footer">
-      <div class="footer-links">
-        <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a> ·
-        <a href="terms.html" data-i18n="footer.terms">Terms of Service</a> ·
-        <a href="mailto:ahmedheebo@gmail.com" data-i18n="footer.support">Need help? Email us</a>
-      </div>
-      <p class="muted" id="copyright" data-i18n="footer.copyright">© {year} SmartContent — Built for Pi Network Creators.</p>
-    </footer>
+<header class="topbar">
+  <div class="container brand">
+    <div style="font-size:1.4rem">⚡</div>
+    <h1>SmartContent</h1>
+    <div class="badge">Web3 Creator Suite · Pi Network</div>
+    <div style="margin-inline-start:auto;">
+      <button id="piLoginBtn" class="chip" data-i18n="auth.login">Login with Pi</button>
+      <span id="piUser" class="smallmuted"></span>
+    </div>
   </div>
+
+  <nav class="container tabs">
+    <a href="#home"      data-tab="home"      data-i18n="nav.home">Home</a>
+    <a href="#editor"    data-tab="editor"    data-i18n="nav.editor">Editor</a>
+    <a href="#ai"        data-tab="ai"        data-i18n="nav.ai">AI</a>
+    <a href="#design"    data-tab="design"    data-i18n="nav.design">Design</a>
+    <a href="#video"     data-tab="video"     data-i18n="nav.video">Video</a>
+    <a href="#seo"       data-tab="seo"       data-i18n="nav.seo">SEO</a>
+    <a href="#cms"       data-tab="cms"       data-i18n="nav.cms">CMS</a>
+    <a href="#web"       data-tab="web"       data-i18n="nav.web">Web</a>
+    <a href="#analytics" data-tab="analytics" data-i18n="nav.analytics">Analytics</a>
+    <a href="#settings"  data-tab="settings"  data-i18n="nav.settings">Settings</a>
+  </nav>
+</header>
+
+<main class="container">
+
+  <!-- Home -->
+  <section id="home" class="tab-pane active">
+    <div class="card">
+      <h2 class="card-head" data-i18n="home.headline">Welcome back, Creator 🚀</h2>
+      <p class="smallmuted" data-i18n="home.lead">Your AI-powered Web3 content suite on the Pi Network.</p>
+      <div class="row" style="display:flex; gap:8px; flex-wrap:wrap;">
+        <span class="chip" data-i18n="home.privacy">Privacy-first</span>
+        <span class="chip" data-i18n="home.payments">Pi Payments</span>
+        <span class="chip" data-i18n="home.sdk">Pi SDK Ready</span>
+      </div>
+      <div class="row" style="display:flex; gap:10px;">
+        <a href="#editor" class="primary" data-i18n="home.open_editor">Open Editor</a>
+        <a href="#ai" class="chip" data-i18n="home.try_ai">Try AI</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Editor -->
+  <section id="editor" class="tab-pane">
+    <div class="card">
+      <h2 class="card-head" data-i18n="editor.title">Editor</h2>
+      <p class="smallmuted" data-i18n="editor.lead">Write distraction-free with autosave & version history.</p>
+      <h3 data-i18n="editor.quick">Quick Draft</h3>
+      <p class="smallmuted" data-i18n="editor.quick_sub">Start a new note right away:</p>
+      <textarea rows="6" data-i18n-attr="placeholder:editor.ph_body" placeholder="Type here..."></textarea>
+      <div class="row"><button class="primary" data-i18n="editor.save">Save Draft</button></div>
+    </div>
+  </section>
+
+  <!-- AI -->
+  <section id="ai" class="tab-pane">
+    <div class="card">
+      <h2 class="card-head" data-i18n="ai.title">AI Tools</h2>
+      <p class="smallmuted" data-i18n="ai.lead">Generate posts, scripts, and summaries.</p>
+    </div>
+  </section>
+
+  <!-- Design -->
+  <section id="design" class="tab-pane">
+    <div class="card">
+      <h2 class="card-head" data-i18n="design.title">Design</h2>
+      <p class="smallmuted" data-i18n="design.lead">Create social thumbnails and banners.</p>
+    </div>
+  </section>
+
+  <!-- Video -->
+  <section id="video" class="tab-pane">
+    <div class="card">
+      <h2 class="card-head" data-i18n="video.title">Video</h2>
+      <p class="smallmuted" data-i18n="video.lead">Record, caption, and publish shorts with TTS/voice-over.</p>
+    </div>
+  </section>
+
+  <!-- SEO -->
+  <section id="seo" class="tab-pane">
+    <div class="card">
+      <h2 class="card-head" data-i18n="seo.title">SEO</h2>
+      <p class="smallmuted" data-i18n="seo.lead">Optimize your articles and pages for search engines.</p>
+    </div>
+  </section>
+
+  <!-- CMS -->
+  <section id="cms" class="tab-pane">
+    <div class="card">
+      <h2 class="card-head" data-i18n="cms.title">CMS</h2>
+      <input id="postTitle" data-i18n-attr="placeholder:cms.title_ph" placeholder="Title" />
+      <div class="row">
+        <textarea rows="6" data-i18n-attr="placeholder:cms.body_ph" placeholder="Write something..."></textarea>
+      </div>
+      <button class="primary" data-i18n="cms.save">Save Post</button>
+      <p class="smallmuted" style="margin-top:10px;" data-i18n="cms.your_posts">Your Posts</p>
+    </div>
+  </section>
+
+  <!-- Web -->
+  <section id="web" class="tab-pane">
+    <div class="card">
+      <h2 class="card-head" data-i18n="web.title">Web Publishing 🌐</h2>
+      <p class="smallmuted" data-i18n="web.lead">Publishing & deployment tools coming soon.</p>
+      <button class="chip" data-i18n="web.connect">Connect Domain</button>
+    </div>
+  </section>
+
+  <!-- Analytics -->
+  <section id="analytics" class="tab-pane">
+    <div class="card">
+      <h2 class="card-head" data-i18n="analytics.title">Analytics</h2>
+      <div class="row">
+        <span class="chip" data-i18n="analytics.total">Total Events</span>
+        <span class="chip" data-i18n="analytics.views7">7-day Views</span>
+        <span class="chip" data-i18n="analytics.most_viewed">Most Viewed Tab</span>
+      </div>
+      <button class="chip" data-i18n="analytics.reset">Reset Analytics</button>
+    </div>
+  </section>
+
+  <!-- Settings -->
+  <section id="settings" class="tab-pane">
+    <div class="card">
+      <h2 class="card-head" data-i18n="settings.title">Settings</h2>
+      <p class="smallmuted" data-i18n="settings.lead">Customize your app preferences.</p>
+
+      <h3 data-i18n="settings.app_prefs">App Preferences</h3>
+      <label class="checkbox"><input type="checkbox" id="pushToggle" /> <span data-i18n="settings.push">Push Notifications</span></label>
+      <label class="checkbox"><input type="checkbox" id="autosaveToggle" /> <span data-i18n="settings.autosave">Auto-save Drafts</span></label>
+      <label class="checkbox"><input type="checkbox" id="darkModeToggle" /> <span data-i18n="settings.darkmode">Dark Mode</span></label>
+
+      <div class="row">
+        <label for="langSelect" data-i18n="settings.lang">Default Language</label>
+        <select id="langSelect">
+          <option value="en">English</option>
+          <option value="ar">العربية</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 data-i18n="settings.pi_head">Pi Network Settings</h3>
+      <div class="row">
+        <label for="walletInput" data-i18n="settings.wallet">Wallet Address</label>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <button id="copyWalletBtn" class="chip" title="Copy">📋</button>
+          <input id="walletInput" placeholder="...0x" />
+        </div>
+      </div>
+      <label class="checkbox"><input type="checkbox" id="autoMintToggle" /> <span data-i18n="settings.automint">Auto-mint NFTs</span></label>
+      <label class="checkbox"><input type="checkbox" id="scNotifyToggle" /> <span data-i18n="settings.scnotify">Smart Contract Notifications</span></label>
+    </div>
+
+    <div class="card">
+      <h3 data-i18n="settings.sec_priv">Security & Privacy</h3>
+      <div class="row" style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="chip" disabled data-i18n="settings.2fa">Two-Factor Authentication</button>
+        <button class="chip" disabled data-i18n="settings.change_pass">Change Password</button>
+        <button class="chip" disabled data-i18n="settings.delete">Delete Account</button>
+        <button class="chip" disabled data-i18n="settings.export">Data Export</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer container">
+  <a href="#" data-i18n="footer.privacy">Privacy Policy</a> ·
+  <a href="#" data-i18n="footer.terms">Terms of Service</a> ·
+  <a href="#" data-i18n="footer.support">Need help? Email us</a>
+  <div id="copyright">© {year} SmartContent — Built for Pi Network.</div>
+</footer>
+
+<script>
+/* ====================== i18n (embedded dicts) ====================== */
+(() => {
+  const DICTS = {
+    en: {
+      "nav":{"home":"Home","editor":"Editor","ai":"AI","design":"Design","video":"Video","seo":"SEO","cms":"CMS","web":"Web","analytics":"Analytics","settings":"Settings"},
+      "auth":{"login":"Login with Pi"},
+      "home":{"headline":"Welcome back, Creator 🚀","lead":"Your AI-powered Web3 content suite on the Pi Network.","privacy":"Privacy-first","payments":"Pi Payments","sdk":"Pi SDK Ready","open_editor":"Open Editor","try_ai":"Try AI"},
+      "editor":{"title":"Editor","lead":"Write distraction-free with autosave & version history.","quick":"Quick Draft","quick_sub":"Start a new note right away:","save":"Save Draft","ph_body":"Type here..."},
+      "ai":{"title":"AI Tools","lead":"Generate posts, scripts, and summaries."},
+      "design":{"title":"Design","lead":"Create social thumbnails and banners."},
+      "video":{"title":"Video","lead":"Record, caption, and publish shorts with TTS/voice-over."},
+      "seo":{"title":"SEO","lead":"Optimize your articles and pages for search engines."},
+      "cms":{"title":"CMS","title_ph":"Title","body_ph":"Write something...","save":"Save Post","your_posts":"Your Posts"},
+      "web":{"title":"Web Publishing 🌐","lead":"Publishing & deployment tools coming soon.","connect":"Connect Domain"},
+      "analytics":{"title":"Analytics","total":"Total Events","views7":"7-day Views","most_viewed":"Most Viewed Tab","reset":"Reset Analytics"},
+      "settings":{"title":"Settings","lead":"Customize your app preferences.","app_prefs":"App Preferences","push":"Push Notifications","autosave":"Auto-save Drafts","darkmode":"Dark Mode","lang":"Default Language","pi_head":"Pi Network Settings","wallet":"Wallet Address","automint":"Auto-mint NFTs","scnotify":"Smart Contract Notifications","sec_priv":"Security & Privacy","2fa":"Two-Factor Authentication","change_pass":"Change Password","delete":"Delete Account","export":"Data Export"},
+      "footer":{"privacy":"Privacy Policy","terms":"Terms of Service","support":"Need help? Email us","copyright":"© {year} SmartContent — Built for Pi Network."}
+    },
+    ar: {
+      "nav":{"home":"الرئيسية","editor":"المحرّر","ai":"الذكاء الاصطناعي","design":"التصميم","video":"الفيديو","seo":"السيو","cms":"إدارة المحتوى","web":"الويب","analytics":"التحليلات","settings":"الإعدادات"},
+      "auth":{"login":"تسجيل الدخول عبر باي"},
+      "home":{"headline":"مرحبًا أيها المُبدع 🚀","lead":"أدوات محتوى Web3 مدعومة بالذكاء الاصطناعي على شبكة باي.","privacy":"خصوصية أولاً","payments":"مدفوعات Pi","sdk":"جاهز لـ Pi SDK","open_editor":"افتح المحرّر","try_ai":"جرّب أدوات الذكاء الاصطناعي"},
+      "editor":{"title":"المحرّر","lead":"اكتب بدون إزعاج مع الحفظ التلقائي وسجل الإصدارات.","quick":"مسودة سريعة","quick_sub":"ابدأ ملاحظة جديدة حالًا:","save":"حفظ المسودة","ph_body":"اكتب هنا..."},
+      "ai":{"title":"أدوات الذكاء الاصطناعي","lead":"أنشئ منشورات ونصوصًا وملخصات."},
+      "design":{"title":"التصميم","lead":"أنشئ صورًا مصغّرة وبانرات للشبكات الاجتماعية."},
+      "video":{"title":"الفيديو","lead":"سجّل وحرّر المقاطع القصيرة مع التعليقات/الترجمة الصوتية."},
+      "seo":{"title":"السيو","lead":"تحسين مقالاتك وصفحاتك لمحركات البحث."},
+      "cms":{"title":"إدارة المحتوى","title_ph":"العنوان","body_ph":"اكتب شيئًا...","save":"حفظ المنشور","your_posts":"منشوراتك"},
+      "web":{"title":"نشر الويب 🌐","lead":"أدوات النشر والتشغيل قادمة قريبًا.","connect":"ربط النطاق"},
+      "analytics":{"title":"التحليلات","total":"إجمالي الأحداث","views7":"مشاهدات 7 أيام","most_viewed":"أكثر تبويب مشاهدة","reset":"إعادة تعيين التحليلات"},
+      "settings":{"title":"الإعدادات","lead":"خصّص تفضيلات تطبيقك.","app_prefs":"تفضيلات التطبيق","push":"إشعارات الدفع","autosave":"الحفظ التلقائي","darkmode":"الوضع الليلي","lang":"اللغة الافتراضية","pi_head":"إعدادات شبكة Pi","wallet":"عنوان المحفظة","automint":"سكّ NFTs تلقائيًا","scnotify":"تنبيهات العقود الذكية","sec_priv":"الأمان والخصوصية","2fa":"المصادقة الثنائية","change_pass":"تغيير كلمة المرور","delete":"حذف الحساب","export":"تصدير البيانات"},
+      "footer":{"privacy":"سياسة الخصوصية","terms":"شروط الخدمة","support":"تحتاج مساعدة؟ راسلنا","copyright":"© {year} SmartContent — مطوّر لأجل شبكة Pi."}
+    }
+  };
+
+  const RTL = ["ar","fa","ur","he"];
+  const LS_LANG = "sc_lang";
+
+  function applyLangMeta(lang){
+    document.documentElement.lang = lang || "en";
+    document.documentElement.dir  = RTL.includes(lang) ? "rtl" : "ltr";
+  }
+  function get(obj, path){
+    return path.split(".").reduce((o,k)=> (o && k in o ? o[k] : undefined), obj);
+  }
+  function applyDict(dict){
+    if (!dict) return;
+    document.querySelectorAll("[data-i18n]").forEach(el=>{
+      const key = el.dataset.i18n;
+      const val = get(dict, key);
+      if (val != null) el.textContent = val;
+    });
+    document.querySelectorAll("[data-i18n-attr]").forEach(el=>{
+      const pairs = el.dataset.i18nAttr.split(";").map(s=>s.trim()).filter(Boolean);
+      pairs.forEach(pair=>{
+        const [attr,key] = pair.split(":").map(s=>s.trim());
+        const val = get(dict, key);
+        if (attr && val != null) el.setAttribute(attr, val);
+      });
+    });
+    // footer year
+    const y = new Date().getFullYear();
+    const cr = document.getElementById("copyright");
+    if (cr && cr.textContent.includes("{year}")) {
+      cr.textContent = cr.textContent.replace("{year}", y);
+    }
+  }
+  function loadAndApply(lang){
+    const l = lang || "en";
+    applyLangMeta(l);
+    const dict = DICTS[l] || DICTS.en;
+    applyDict(dict);
+  }
+  window.SC_I18N = {
+    setLang: (l)=>{ localStorage.setItem(LS_LANG, l||"en"); loadAndApply(l||"en"); },
+    getLang: ()=> localStorage.getItem(LS_LANG) || "en",
+    _apply: loadAndApply
+  };
+})();
+</script>
+
+<script>
+/* ====================== App logic (tabs, settings, theme, mock login) ====================== */
+(() => {
+  const $  = (q)=>document.querySelector(q);
+  const $$ = (q)=>document.querySelectorAll(q);
+
+  const S = {
+    push:"sc_push",
+    autosave:"sc_autosave",
+    dark:"sc_dark",
+    lang:"sc_lang",
+    wallet:"sc_wallet",
+    autoMint:"sc_automint",
+    scNotify:"sc_scnotify",
+    piUser:"sc_pi_user"
+  };
+
+  const get = (k,f=null)=>{ try{ const v=localStorage.getItem(k); return v===null?f:JSON.parse(v);}catch{return f;} };
+  const set = (k,v)=>{ try{ localStorage.setItem(k, JSON.stringify(v)); }catch{} };
+
+  function applyDark(on){ document.documentElement.dataset.theme = on ? "dark" : "light"; }
+
+  /* Tabs */
+  function showTab(id){
+    $$(".tab-pane").forEach(p=>p.classList.toggle("active", p.id===id));
+    $$(".tabs [data-tab]").forEach(a=>a.classList.toggle("active", a.dataset.tab===id));
+  }
+  function goToHash(){
+    const id = (location.hash||"#home").slice(1);
+    showTab($("#"+id)? id : "home");
+  }
+  function wireNav(){
+    $$(".tabs [data-tab]").forEach(a=>{
+      a.addEventListener("click",(e)=>{
+        e.preventDefault();
+        const id=a.dataset.tab;
+        history.replaceState(null,"","#"+id);
+        showTab(id);
+      });
+    });
+    window.addEventListener("hashchange", goToHash);
+    goToHash();
+  }
+
+  /* Settings */
+  function wireSettings(){
+    const elPush = $("#pushToggle");
+    const elAutosave = $("#autosaveToggle");
+    const elDark = $("#darkModeToggle");
+    const elLang = $("#langSelect");
+    const elWallet = $("#walletInput");
+    const elCopy = $("#copyWalletBtn");
+    const elAutoMint = $("#autoMintToggle");
+    const elScNotify = $("#scNotifyToggle");
+
+    const vPush = get(S.push,false);
+    const vAutosave = get(S.autosave,false);
+    const vDark = get(S.dark,true);
+    const vLang = get(S.lang,"en");
+    const vWallet = get(S.wallet,"");
+    const vAutoMint = get(S.autoMint,false);
+    const vScNotify = get(S.scNotify,false);
+
+    applyDark(vDark);
+    SC_I18N._apply(vLang);
+
+    if (elPush) elPush.checked = !!vPush;
+    if (elAutosave) elAutosave.checked = !!vAutosave;
+    if (elDark) elDark.checked = !!vDark;
+    if (elLang) elLang.value = vLang;
+    if (elWallet) elWallet.value = vWallet || "";
+    if (elAutoMint) elAutoMint.checked = !!vAutoMint;
+    if (elScNotify) elScNotify.checked = !!vScNotify;
+
+    elPush?.addEventListener("change", e=> set(S.push, e.target.checked));
+    elAutosave?.addEventListener("change", e=> set(S.autosave, e.target.checked));
+    elDark?.addEventListener("change", e=>{ const on=e.target.checked; set(S.dark,on); applyDark(on); });
+    elLang?.addEventListener("change", e=>{ const lang=e.target.value||"en"; set(S.lang,lang); SC_I18N.setLang(lang); });
+    elWallet?.addEventListener("input", e=> set(S.wallet, e.target.value.trim()));
+    elAutoMint?.addEventListener("change", e=> set(S.autoMint, e.target.checked));
+    elScNotify?.addEventListener("change", e=> set(S.scNotify, e.target.checked));
+
+    elCopy?.addEventListener("click", async ()=>{
+      try{
+        await navigator.clipboard.writeText((elWallet?.value||"").trim());
+        elCopy.textContent="✅";
+        setTimeout(()=> elCopy.textContent="📋",1200);
+      }catch{}
+    });
+  }
+
+  /* Mock Pi login (placeholder) */
+  function mockPiLogin(){
+    const u={ username:"pi_creator" };
+    set(S.piUser,u);
+    renderPiUser();
+  }
+  function mockPiLogout(){
+    localStorage.removeItem(S.piUser);
+    renderPiUser();
+  }
+  function renderPiUser(){
+    const el=$("#piUser");
+    const btn=$("#piLoginBtn");
+    const u=get(S.piUser,null);
+    if(!el||!btn) return;
+    if(u){
+      el.textContent="@"+u.username;
+      btn.textContent = (SC_I18N.getLang()==="ar") ? "تسجيل الخروج" : "Logout";
+      btn.onclick=mockPiLogout;
+    }else{
+      el.textContent="";
+      btn.textContent = (SC_I18N.getLang()==="ar") ? "تسجيل الدخول عبر باي" : "Login with Pi";
+      btn.onclick=mockPiLogin;
+    }
+  }
+
+  /* Footer year fallback (in case i18n not yet applied) */
+  function updateFooterYear(){
+    const el=$("#copyright");
+    if(el && el.textContent.includes("{year}")){
+      el.textContent = el.textContent.replace("{year}", new Date().getFullYear());
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", ()=>{
+    wireNav();
+    wireSettings();
+    renderPiUser();
+    updateFooterYear();
+  });
+})();
+</script>
+
 </body>
 </html>
