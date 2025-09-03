@@ -1,53 +1,63 @@
 {
-  "app.title": "SmartContent",
-  "home.headline": "Welcome back, Creator 🚀",
-  "home.lead": "Your AI-powered Web3 content suite on the Pi Network.",
-  "home.privacy": "Privacy-first",
-  "home.payments": "Pi Payments",
-  "home.sdk": "Pi SDK Ready",
-  "home.open_editor": "Open Editor",
-  "home.try_ai": "Try AI",
-
-  "nav.home": "Home", "nav.editor": "Editor", "nav.ai": "AI", "nav.design": "Design",
-  "nav.video": "Video", "nav.seo": "SEO", "nav.cms": "CMS", "nav.web": "Web",
-  "nav.analytics": "Analytics", "nav.settings": "Settings",
-
-  "editor.title": "Editor",
-  "editor.lead": "Write with autosave and version history.",
-  "editor.quick": "Quick Draft",
-  "editor.quick_sub": "Start a new note right away:",
-  "editor.ph_body": "Type here...",
-  "editor.save": "Save Draft",
-
-  "ai.title": "AI Tools",
-  "ai.lead": "Generate posts, scripts, and summaries.",
-  "ai.topic_ph": "Topic (e.g. Web3 Tips)",
-  "ai.generate": "Generate Post",
-  "ai.out_ph": "AI output...",
-
-  "cms.title_ph": "Title",
-  "cms.body_ph": "Write something...",
-  "cms.save": "Save Post",
-  "cms.head": "Your Posts",
-
-  "web.title": "Web Publishing 🌐",
-  "web.lead": "Publishing & deployment tools coming soon.",
-  "web.connect": "Connect Domain",
-
-  "settings.title": "⚙️ Settings",
-  "settings.lead": "Customize your app preferences.",
-  "settings.app_prefs": "App Preferences",
-  "settings.push": "Push Notifications",
-  "settings.autosave": "Auto-save Drafts",
-  "settings.darkmode": "Dark Mode",
-  "settings.lang": "Default Language",
-  "settings.pi_head": "Pi Network Settings",
-  "settings.wallet": "Wallet Address",
-  "settings.automint": "Auto-mint NFTs",
-  "settings.scnotify": "Smart Contract Notifications",
-
-  "footer.privacy": "Privacy Policy",
-  "footer.terms": "Terms of Service",
-  "footer.support": "Need help? Email us",
-  "footer.copyright": "© {year} SmartContent — Built for Pi Network Creators."
+  "nav": {
+    "home": "Home",
+    "editor": "Editor",
+    "ai": "AI",
+    "seo": "SEO",
+    "cms": "CMS",
+    "web": "Web",
+    "analytics": "Analytics",
+    "settings": "Settings"
+  },
+  "home": {
+    "headline": "Welcome back, Creator 🚀",
+    "lead": "Your AI-powered Web3 content suite on the Pi Network.",
+    "privacy": "Privacy-first",
+    "payments": "Pi Payments",
+    "sdk": "Pi SDK Ready"
+  },
+  "editor": {
+    "title": "Editor",
+    "lead": "Write distraction-free with autosave & version history.",
+    "quick": "Quick Draft",
+    "quick_sub": "Start a new note right away:",
+    "ph_body": "Type here...",
+    "save": "Save Draft"
+  },
+  "ai": {
+    "title": "🤖 AI Tools",
+    "lead": "Generate posts, scripts, and summaries.",
+    "topic_ph": "Topic (e.g. Web3 Tips)",
+    "gen": "Generate Post"
+  },
+  "cms": {
+    "title_ph": "Title",
+    "body_ph": "Write something...",
+    "save": "Save Post",
+    "head": "Your Posts"
+  },
+  "web": {
+    "title": "Web Publishing 🌐",
+    "lead": "Publishing & deployment tools coming soon.",
+    "connect": "Connect Domain"
+  },
+  "settings": {
+    "title": "⚙️ Settings",
+    "lead": "Customize your app preferences.",
+    "app_prefs": "App Preferences",
+    "push": "Push Notifications",
+    "autosave": "Auto-save Drafts",
+    "darkmode": "Dark Mode",
+    "lang": "Default Language",
+    "pi_head": "Pi Network Settings",
+    "wallet": "Wallet Address",
+    "automint": "Auto-mint NFTs",
+    "scnotify": "Smart Contract Notifications"
+  },
+  "footer": {
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "support": "Need help? Email us",
+    "copyright": "© {year} SmartContent — Built for Pi Network."
+  }
 }
