@@ -24,14 +24,12 @@
   --line:#23263d;
   --ink:#d0d0ff;
 }
+:root {
+  --muted: #334155; /* أغمق شوية */
 /* تحسين الأزرار في الوضع الفاتح */
 :root {
   --tab-bg: #f1f5f9; /* خلفية فاتحة */
   --tab-active: #7c3aed; /* بنفسجي/Accent */
-}
-:root {
-  --text: #0a0a0a;   /* أغمق من الحالي */
-  --muted: #444;     /* أوضح */
 }
 .tabs [data-tab] {
   background: var(--tab-bg);
@@ -47,9 +45,7 @@
 html,body,.card,.tabs [data-tab], .chip, .primary, input, select, textarea, .footer {
   transition: background-color .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease, opacity .25s ease;
 }
-:root {
-  --muted: #334155; /* أغمق شوية */
-}
+
 
 /* base */
 html, body { margin:0; padding:0; }
