@@ -1,17 +1,20 @@
-/* ===== Theme tokens ===== */
+/* ========== Theme tokens ========== */
 :root{
   /* light */
-  --bg:#ffffff;
-  --card:#f9fafb;
-  --text:#111827;
-  --muted:#374151;
+  --bg:#f6f7fb;
+  --card:#ffffff;
+
+  /* طلبت تغميق النصوص */
+  --text:#0a0a0a;   /* أغمق لقراءة أوضح */
+  --muted:#444;     /* نص ثانوي أوضح */
 
   --brand:#6f4af7;
-  --chip:#e5e7eb;
-  --accent:#2563eb;
+  --chip:#e2e8f0;
+  --accent:#7c3aed;
   --line:#e5e7eb;
-  --ink:#0b0d1f;
+  --ink:#0b0d1f; /* لون نص حقول الإدخال */
 }
+
 :root[data-theme="dark"]{
   --bg:#0b0b10;
   --card:#111425;
@@ -24,30 +27,12 @@
   --line:#23263d;
   --ink:#d0d0ff;
 }
-:root {
-  --muted: #334155; /* أغمق شوية */
-/* تحسين الأزرار في الوضع الفاتح */
-:root {
-  --tab-bg: #f1f5f9; /* خلفية فاتحة */
-  --tab-active: #7c3aed; /* بنفسجي/Accent */
-}
-.tabs [data-tab] {
-  background: var(--tab-bg);
-  color: var(--text);
-}
 
-.tabs [data-tab].active {
-  background: var(--tab-active);
-  color: #fff;
-  border-color: var(--tab-active);
-}
-/* transitions */
+/* ========== Reset + smooth transitions ========== */
 html,body,.card,.tabs [data-tab], .chip, .primary, input, select, textarea, .footer {
   transition: background-color .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease, opacity .25s ease;
 }
 
-
-/* base */
 html, body { margin:0; padding:0; }
 body{
   background: linear-gradient(180deg, var(--bg), var(--card));
@@ -55,26 +40,35 @@ body{
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   line-height: 1.6;
 }
+
 a { color: var(--accent); text-decoration: none; }
 a:hover { opacity: .9; }
 
-/* topbar */
-.topbar{ position:sticky; top:0; z-index:1000; background: color-mix(in oklab, var(--card) 85%, transparent); backdrop-filter: blur(10px); border-bottom:1px solid var(--line); }
+/* ========== Header / Tabs / Layout ========== */
+.topbar{
+  position: sticky; top:0; z-index:1000;
+  background: color-mix(in oklab, var(--card) 85%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom:1px solid var(--line);
+}
 .brand{ display:flex; align-items:center; gap:12px; padding:14px 18px; }
-.brand .logo { font-size:22px; }
 
-/* tabs */
 .tabs{ display:flex; gap:10px; flex-wrap:wrap; padding:10px 16px; }
-.tabs [data-tab]{ display:inline-block; background: color-mix(in oklab, var(--card) 60%, #141a2b); border:1px solid var(--line); color:var(--text); padding:9px 12px; border-radius:10px; font-weight:600; }
+.tabs [data-tab]{
+  display:inline-block;
+  background: color-mix(in oklab, var(--card) 60%, #141a2b);
+  border:1px solid var(--line);
+  color:var(--text);
+  padding:9px 12px;
+  border-radius:10px;
+  font-weight:600;
+}
 .tabs [data-tab].active{ outline:2px solid var(--accent); }
 
-/* layout */
 .container{ max-width:980px; margin:0 auto; padding:20px; }
 .card{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; margin:16px 0; }
 .card-head{ font-weight:700; margin-bottom:6px; }
 .row{ display:block; margin:12px 0; }
-
-/* controls */
 .chip{ background:var(--chip); border:1px solid var(--line); padding:6px 10px; border-radius:999px; }
 .primary{ background:var(--accent); color:#fff; border:0; padding:10px 14px; border-radius:10px; cursor:pointer; }
 .primary:disabled{ opacity:.6; cursor:not-allowed; }
@@ -87,50 +81,8 @@ input,select,textarea{
   padding:10px 12px;
 }
 
-/* tabs panes */
-.tab-pane{ display:none; }
-.tab-pane.active{ display:block; }
-
-.lead{ color: var(--muted); }
-
-/* footer */
 .footer{ margin:28px 0 18px; text-align:center; color:var(--muted); }
 .footer a{ color:var(--accent); }
 
-/* RTL */
+/* RTL تحسين بسيط */
 html[dir="rtl"] .tabs{ direction:rtl; }
-/* === RTL Fixes === */
-html[dir="rtl"] body {
-  text-align: right;
-}
-
-html[dir="rtl"] .brand {
-  flex-direction: row-reverse;
-}
-
-html[dir="rtl"] .tabs {
-  flex-direction: row-reverse;
-}
-
-html[dir="rtl"] .tabs [data-tab] {
-  text-align: center;
-}
-
-html[dir="rtl"] .row {
-  text-align: right;
-}
-
-html[dir="rtl"] input,
-html[dir="rtl"] textarea,
-html[dir="rtl"] select {
-  text-align: right;
-  direction: rtl;
-}
-
-html[dir="rtl"] .card-head {
-  text-align: right;
-}
-
-html[dir="rtl"] .footer {
-  text-align: center; /* نخليها وسط */
-}
