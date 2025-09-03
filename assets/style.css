@@ -29,7 +29,10 @@
   --tab-bg: #f1f5f9; /* خلفية فاتحة */
   --tab-active: #7c3aed; /* بنفسجي/Accent */
 }
-
+:root {
+  --text: #0a0a0a;   /* أغمق من الحالي */
+  --muted: #444;     /* أوضح */
+}
 .tabs [data-tab] {
   background: var(--tab-bg);
   color: var(--text);
