@@ -4,6 +4,10 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>SmartContent · Pi Network</title>
+
+<!-- Icons CDN (اختياري للأيقونات الجميلة) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
 /* ========== Theme tokens ========== */
 :root{
@@ -11,7 +15,7 @@
   --bg:#f6f7fb;
   --card:#ffffff;
 
-  /* نصوص أوضح كما طَلبت */
+  /* طلب تغميق النصوص */
   --text:#0a0a0a;
   --muted:#444;
 
@@ -61,7 +65,7 @@ a:hover { opacity: .9; }
 
 .tabs{ display:flex; gap:10px; flex-wrap:wrap; padding:10px 16px; }
 .tabs [data-tab]{
-  display:inline-block;
+  display:inline-flex; align-items:center; gap:8px;
   background: color-mix(in oklab, var(--card) 60%, #141a2b);
   border:1px solid var(--line);
   color:var(--text);
@@ -78,6 +82,15 @@ a:hover { opacity: .9; }
 .chip{ background:var(--chip); border:1px solid var(--line); padding:6px 10px; border-radius:999px; }
 .primary{ background:var(--accent); color:#fff; border:0; padding:10px 14px; border-radius:10px; cursor:pointer; }
 .primary:disabled{ opacity:.6; cursor:not-allowed; }
+
+/* تحسين تباين الأزرار/الشرائح المعطّلة (مثل 2FA) */
+.chip[disabled]{
+  opacity:.9;
+  color:var(--text);
+  background:var(--chip);
+  border:1px solid var(--line);
+}
+button[disabled]{ cursor:not-allowed; }
 
 input,select,textarea{
   background:var(--bg);
@@ -101,6 +114,9 @@ html[dir="rtl"] .tabs{ direction:rtl; }
 /* tab content visibility */
 .tab-pane{ display:none; }
 .tab-pane.active{ display:block; }
+
+/* أيقونات التبويب (Font Awesome) */
+.tab-icon{ width:1.1em; display:inline-block; text-align:center; }
 </style>
 </head>
 <body>
@@ -117,16 +133,16 @@ html[dir="rtl"] .tabs{ direction:rtl; }
   </div>
 
   <nav class="container tabs">
-    <a href="#home"      data-tab="home"      data-i18n="nav.home">Home</a>
-    <a href="#editor"    data-tab="editor"    data-i18n="nav.editor">Editor</a>
-    <a href="#ai"        data-tab="ai"        data-i18n="nav.ai">AI</a>
-    <a href="#design"    data-tab="design"    data-i18n="nav.design">Design</a>
-    <a href="#video"     data-tab="video"     data-i18n="nav.video">Video</a>
-    <a href="#seo"       data-tab="seo"       data-i18n="nav.seo">SEO</a>
-    <a href="#cms"       data-tab="cms"       data-i18n="nav.cms">CMS</a>
-    <a href="#web"       data-tab="web"       data-i18n="nav.web">Web</a>
-    <a href="#analytics" data-tab="analytics" data-i18n="nav.analytics">Analytics</a>
-    <a href="#settings"  data-tab="settings"  data-i18n="nav.settings">Settings</a>
+    <a href="#home"      data-tab="home"      data-i18n="nav.home"><i class="fa-solid fa-house tab-icon"></i><span>Home</span></a>
+    <a href="#editor"    data-tab="editor"    data-i18n="nav.editor"><i class="fa-solid fa-pen-to-square tab-icon"></i><span>Editor</span></a>
+    <a href="#ai"        data-tab="ai"        data-i18n="nav.ai"><i class="fa-solid fa-robot tab-icon"></i><span>AI</span></a>
+    <a href="#design"    data-tab="design"    data-i18n="nav.design"><i class="fa-solid fa-paintbrush tab-icon"></i><span>Design</span></a>
+    <a href="#video"     data-tab="video"     data-i18n="nav.video"><i class="fa-solid fa-video tab-icon"></i><span>Video</span></a>
+    <a href="#seo"       data-tab="seo"       data-i18n="nav.seo"><i class="fa-solid fa-magnifying-glass-chart tab-icon"></i><span>SEO</span></a>
+    <a href="#cms"       data-tab="cms"       data-i18n="nav.cms"><i class="fa-solid fa-folder-tree tab-icon"></i><span>CMS</span></a>
+    <a href="#web"       data-tab="web"       data-i18n="nav.web"><i class="fa-solid fa-globe tab-icon"></i><span>Web</span></a>
+    <a href="#analytics" data-tab="analytics" data-i18n="nav.analytics"><i class="fa-solid fa-chart-column tab-icon"></i><span>Analytics</span></a>
+    <a href="#settings"  data-tab="settings"  data-i18n="nav.settings"><i class="fa-solid fa-gear tab-icon"></i><span>Settings</span></a>
   </nav>
 </header>
 
@@ -312,7 +328,7 @@ html[dir="rtl"] .tabs{ direction:rtl; }
       "cms":{"title":"إدارة المحتوى","title_ph":"العنوان","body_ph":"اكتب شيئًا...","save":"حفظ المنشور","your_posts":"منشوراتك"},
       "web":{"title":"نشر الويب 🌐","lead":"أدوات النشر والتشغيل قادمة قريبًا.","connect":"ربط النطاق"},
       "analytics":{"title":"التحليلات","total":"إجمالي الأحداث","views7":"مشاهدات 7 أيام","most_viewed":"أكثر تبويب مشاهدة","reset":"إعادة تعيين التحليلات"},
-      "settings":{"title":"الإعدادات","lead":"خصّص تفضيلات تطبيقك.","app_prefs":"تفضيلات التطبيق","push":"إشعارات الدفع","autosave":"الحفظ التلقائي","darkmode":"الوضع الليلي","lang":"اللغة الافتراضية","pi_head":"إعدادات شبكة Pi","wallet":"عنوان المحفظة","automint":"صك NFTs تلقائيًا","scnotify":"تنبيهات العقود الذكية","sec_priv":"الأمان والخصوصية","2fa":"المصادقة الثنائية","change_pass":"تغيير كلمة المرور","delete":"حذف الحساب","export":"تصدير البيانات"},
+      "settings":{"title":"الإعدادات","lead":"خصّص تفضيلات تطبيقك.","app_prefs":"تفضيلات التطبيق","push":"إشعارات الدفع","autosave":"الحفظ التلقائي","darkmode":"الوضع الليلي","lang":"اللغة الافتراضية","pi_head":"إعدادات شبكة Pi","wallet":"عنوان المحفظة","automint":"سكّ NFTs تلقائيًا","scnotify":"تنبيهات العقود الذكية","sec_priv":"الأمان والخصوصية","2fa":"المصادقة الثنائية","change_pass":"تغيير كلمة المرور","delete":"حذف الحساب","export":"تصدير البيانات"},
       "footer":{"privacy":"سياسة الخصوصية","terms":"شروط الخدمة","support":"تحتاج مساعدة؟ راسلنا","copyright":"© {year} SmartContent — مطوّر لأجل شبكة Pi."}
     }
   };
@@ -480,7 +496,7 @@ html[dir="rtl"] .tabs{ direction:rtl; }
     }
   }
 
-  /* Footer year fallback (in case i18n not yet applied) */
+  /* Footer year fallback */
   function updateFooterYear(){
     const el=$("#copyright");
     if(el && el.textContent.includes("{year}")){
