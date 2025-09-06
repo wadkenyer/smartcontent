@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>SmartContent · Pi Network</title>
 
-<!-- Icons CDN (اختياري للأيقونات الجميلة) -->
+<!-- Icons CDN -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
@@ -77,7 +77,7 @@ a:hover { opacity: .9; }
 
 .container{ max-width:980px; margin:0 auto; padding:20px; }
 .card{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; margin:16px 0; }
-.card-head{ font-weight:700; margin-bottom:6px; }
+.card-head{ font-weight:700; margin-bottom:6px; display:flex; align-items:center; gap:8px; }
 .row{ display:block; margin:12px 0; }
 .chip{ background:var(--chip); border:1px solid var(--line); padding:6px 10px; border-radius:999px; }
 .primary{ background:var(--accent); color:#fff; border:0; padding:10px 14px; border-radius:10px; cursor:pointer; }
@@ -106,7 +106,7 @@ label{ display:block; margin-bottom:6px; font-weight:600; }
 .smallmuted{ color:var(--muted); font-size:.95rem; }
 
 .footer{ margin:28px 0 18px; text-align:center; color:var(--muted); }
-.footer a{ color:var(--accent); }
+.footer a{ color:var(--accent); display:inline-flex; align-items:center; gap:6px; }
 
 /* RTL تحسين بسيط */
 html[dir="rtl"] .tabs{ direction:rtl; }
@@ -151,7 +151,7 @@ html[dir="rtl"] .tabs{ direction:rtl; }
   <!-- Home -->
   <section id="home" class="tab-pane active">
     <div class="card">
-      <h2 class="card-head" data-i18n="home.headline">Welcome back, Creator 🚀</h2>
+      <h2 class="card-head"><i class="fa-solid fa-house"></i><span data-i18n="home.headline">Welcome back, Creator 🚀</span></h2>
       <p class="smallmuted" data-i18n="home.lead">Your AI-powered Web3 content suite on the Pi Network.</p>
       <div class="row" style="display:flex; gap:8px; flex-wrap:wrap;">
         <span class="chip" data-i18n="home.privacy">Privacy-first</span>
@@ -168,7 +168,7 @@ html[dir="rtl"] .tabs{ direction:rtl; }
   <!-- Editor -->
   <section id="editor" class="tab-pane">
     <div class="card">
-      <h2 class="card-head" data-i18n="editor.title">Editor</h2>
+      <h2 class="card-head"><i class="fa-solid fa-pen-to-square"></i><span data-i18n="editor.title">Editor</span></h2>
       <p class="smallmuted" data-i18n="editor.lead">Write distraction-free with autosave & version history.</p>
       <h3 data-i18n="editor.quick">Quick Draft</h3>
       <p class="smallmuted" data-i18n="editor.quick_sub">Start a new note right away:</p>
@@ -180,7 +180,7 @@ html[dir="rtl"] .tabs{ direction:rtl; }
   <!-- AI -->
   <section id="ai" class="tab-pane">
     <div class="card">
-      <h2 class="card-head" data-i18n="ai.title">AI Tools</h2>
+      <h2 class="card-head"><i class="fa-solid fa-robot"></i><span data-i18n="ai.title">AI Tools</span></h2>
       <p class="smallmuted" data-i18n="ai.lead">Generate posts, scripts, and summaries.</p>
     </div>
   </section>
@@ -188,7 +188,7 @@ html[dir="rtl"] .tabs{ direction:rtl; }
   <!-- Design -->
   <section id="design" class="tab-pane">
     <div class="card">
-      <h2 class="card-head" data-i18n="design.title">Design</h2>
+      <h2 class="card-head"><i class="fa-solid fa-paintbrush"></i><span data-i18n="design.title">Design</span></h2>
       <p class="smallmuted" data-i18n="design.lead">Create social thumbnails and banners.</p>
     </div>
   </section>
@@ -196,7 +196,7 @@ html[dir="rtl"] .tabs{ direction:rtl; }
   <!-- Video -->
   <section id="video" class="tab-pane">
     <div class="card">
-      <h2 class="card-head" data-i18n="video.title">Video</h2>
+      <h2 class="card-head"><i class="fa-solid fa-video"></i><span data-i18n="video.title">Video</span></h2>
       <p class="smallmuted" data-i18n="video.lead">Record, caption, and publish shorts with TTS/voice-over.</p>
     </div>
   </section>
@@ -204,7 +204,7 @@ html[dir="rtl"] .tabs{ direction:rtl; }
   <!-- SEO -->
   <section id="seo" class="tab-pane">
     <div class="card">
-      <h2 class="card-head" data-i18n="seo.title">SEO</h2>
+      <h2 class="card-head"><i class="fa-solid fa-magnifying-glass-chart"></i><span data-i18n="seo.title">SEO</span></h2>
       <p class="smallmuted" data-i18n="seo.lead">Optimize your articles and pages for search engines.</p>
     </div>
   </section>
@@ -212,7 +212,7 @@ html[dir="rtl"] .tabs{ direction:rtl; }
   <!-- CMS -->
   <section id="cms" class="tab-pane">
     <div class="card">
-      <h2 class="card-head" data-i18n="cms.title">CMS</h2>
+      <h2 class="card-head"><i class="fa-solid fa-folder-tree"></i><span data-i18n="cms.title">CMS</span></h2>
       <input id="postTitle" data-i18n-attr="placeholder:cms.title_ph" placeholder="Title" />
       <div class="row">
         <textarea rows="6" data-i18n-attr="placeholder:cms.body_ph" placeholder="Write something..."></textarea>
@@ -225,7 +225,7 @@ html[dir="rtl"] .tabs{ direction:rtl; }
   <!-- Web -->
   <section id="web" class="tab-pane">
     <div class="card">
-      <h2 class="card-head" data-i18n="web.title">Web Publishing 🌐</h2>
+      <h2 class="card-head"><i class="fa-solid fa-globe"></i><span data-i18n="web.title">Web Publishing 🌐</span></h2>
       <p class="smallmuted" data-i18n="web.lead">Publishing & deployment tools coming soon.</p>
       <button class="chip" data-i18n="web.connect">Connect Domain</button>
     </div>
@@ -234,26 +234,26 @@ html[dir="rtl"] .tabs{ direction:rtl; }
   <!-- Analytics -->
   <section id="analytics" class="tab-pane">
     <div class="card">
-      <h2 class="card-head" data-i18n="analytics.title">Analytics</h2>
+      <h2 class="card-head"><i class="fa-solid fa-chart-column"></i><span data-i18n="analytics.title">Analytics</span></h2>
       <div class="row">
-        <span class="chip" data-i18n="analytics.total">Total Events</span>
-        <span class="chip" data-i18n="analytics.views7">7-day Views</span>
-        <span class="chip" data-i18n="analytics.most_viewed">Most Viewed Tab</span>
+        <span class="chip"><i class="fa-regular fa-circle-dot"></i> <span data-i18n="analytics.total">Total Events</span></span>
+        <span class="chip"><i class="fa-regular fa-eye"></i> <span data-i18n="analytics.views7">7-day Views</span></span>
+        <span class="chip"><i class="fa-solid fa-star"></i> <span data-i18n="analytics.most_viewed">Most Viewed Tab</span></span>
       </div>
-      <button class="chip" data-i18n="analytics.reset">Reset Analytics</button>
+      <button class="chip"><i class="fa-solid fa-rotate-right"></i> <span data-i18n="analytics.reset">Reset Analytics</span></button>
     </div>
   </section>
 
   <!-- Settings -->
   <section id="settings" class="tab-pane">
     <div class="card">
-      <h2 class="card-head" data-i18n="settings.title">Settings</h2>
+      <h2 class="card-head"><i class="fa-solid fa-gear"></i><span data-i18n="settings.title">Settings</span></h2>
       <p class="smallmuted" data-i18n="settings.lead">Customize your app preferences.</p>
 
       <h3 data-i18n="settings.app_prefs">App Preferences</h3>
-      <label class="checkbox"><input type="checkbox" id="pushToggle" /> <span data-i18n="settings.push">Push Notifications</span></label>
-      <label class="checkbox"><input type="checkbox" id="autosaveToggle" /> <span data-i18n="settings.autosave">Auto-save Drafts</span></label>
-      <label class="checkbox"><input type="checkbox" id="darkModeToggle" /> <span data-i18n="settings.darkmode">Dark Mode</span></label>
+      <label class="checkbox"><input type="checkbox" id="pushToggle" /> <span><i class="fa-regular fa-bell"></i> <span data-i18n="settings.push">Push Notifications</span></span></label>
+      <label class="checkbox"><input type="checkbox" id="autosaveToggle" /> <span><i class="fa-regular fa-floppy-disk"></i> <span data-i18n="settings.autosave">Auto-save Drafts</span></span></label>
+      <label class="checkbox"><input type="checkbox" id="darkModeToggle" /> <span><i class="fa-solid fa-moon"></i> <span data-i18n="settings.darkmode">Dark Mode</span></span></label>
 
       <div class="row">
         <label for="langSelect" data-i18n="settings.lang">Default Language</label>
@@ -265,25 +265,25 @@ html[dir="rtl"] .tabs{ direction:rtl; }
     </div>
 
     <div class="card">
-      <h3 data-i18n="settings.pi_head">Pi Network Settings</h3>
+      <h3><i class="fa-solid fa-wallet"></i> <span data-i18n="settings.pi_head">Pi Network Settings</span></h3>
       <div class="row">
         <label for="walletInput" data-i18n="settings.wallet">Wallet Address</label>
         <div style="display:flex; gap:10px; align-items:center;">
-          <button id="copyWalletBtn" class="chip" title="Copy">📋</button>
+          <button id="copyWalletBtn" class="chip" title="Copy"><i class="fa-regular fa-copy"></i></button>
           <input id="walletInput" placeholder="...0x" />
         </div>
       </div>
-      <label class="checkbox"><input type="checkbox" id="autoMintToggle" /> <span data-i18n="settings.automint">Auto-mint NFTs</span></label>
-      <label class="checkbox"><input type="checkbox" id="scNotifyToggle" /> <span data-i18n="settings.scnotify">Smart Contract Notifications</span></label>
+      <label class="checkbox"><input type="checkbox" id="autoMintToggle" /> <span><i class="fa-solid fa-cubes-stacked"></i> <span data-i18n="settings.automint">Auto-mint NFTs</span></span></label>
+      <label class="checkbox"><input type="checkbox" id="scNotifyToggle" /> <span><i class="fa-solid fa-bell-concierge"></i> <span data-i18n="settings.scnotify">Smart Contract Notifications</span></span></label>
     </div>
 
     <div class="card">
-      <h3 data-i18n="settings.sec_priv">Security & Privacy</h3>
+      <h3><i class="fa-solid fa-shield-halved"></i> <span data-i18n="settings.sec_priv">Security & Privacy</span></h3>
       <div class="row" style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button class="chip" disabled data-i18n="settings.2fa">Two-Factor Authentication</button>
-        <button class="chip" disabled data-i18n="settings.change_pass">Change Password</button>
-        <button class="chip" disabled data-i18n="settings.delete">Delete Account</button>
-        <button class="chip" disabled data-i18n="settings.export">Data Export</button>
+        <button class="chip" disabled><i class="fa-solid fa-user-shield"></i> <span data-i18n="settings.2fa">Two-Factor Authentication</span></button>
+        <button class="chip" disabled><i class="fa-solid fa-key"></i> <span data-i18n="settings.change_pass">Change Password</span></button>
+        <button class="chip" disabled><i class="fa-regular fa-trash-can"></i> <span data-i18n="settings.delete">Delete Account</span></button>
+        <button class="chip" disabled><i class="fa-solid fa-file-export"></i> <span data-i18n="settings.export">Data Export</span></button>
       </div>
     </div>
   </section>
@@ -291,9 +291,9 @@ html[dir="rtl"] .tabs{ direction:rtl; }
 </main>
 
 <footer class="footer container">
-  <a href="#" data-i18n="footer.privacy">Privacy Policy</a> ·
-  <a href="#" data-i18n="footer.terms">Terms of Service</a> ·
-  <a href="#" data-i18n="footer.support">Need help? Email us</a>
+  <a href="privacy.html" target="_blank" rel="noopener"><i class="fa-solid fa-shield-halved"></i><span data-i18n="footer.privacy">Privacy Policy</span></a> ·
+  <a href="terms.html" target="_blank" rel="noopener"><i class="fa-solid fa-file-contract"></i><span data-i18n="footer.terms">Terms of Service</span></a> ·
+  <a href="mailto:smartcontent.app.help@gmail.com"><i class="fa-regular fa-envelope"></i><span data-i18n="footer.support">Need help? Email us</span></a>
   <div id="copyright">© {year} SmartContent — Built for Pi Network.</div>
 </footer>
 
@@ -464,8 +464,8 @@ html[dir="rtl"] .tabs{ direction:rtl; }
     elCopy?.addEventListener("click", async ()=>{
       try{
         await navigator.clipboard.writeText((elWallet?.value||"").trim());
-        elCopy.textContent="✅";
-        setTimeout(()=> elCopy.textContent="📋",1200);
+        elCopy.innerHTML = '<i class="fa-solid fa-check"></i>';
+        setTimeout(()=> elCopy.innerHTML = '<i class="fa-regular fa-copy"></i>',1200);
       }catch{}
     });
   }
@@ -512,13 +512,5 @@ html[dir="rtl"] .tabs{ direction:rtl; }
   });
 })();
 </script>
-<footer class="footer">
-  <div class="footer-links">
-    <a data-i18n="footer.privacy" href="privacy.html" target="_blank" rel="noopener"></a> ·
-    <a data-i18n="footer.terms"   href="terms.html"   target="_blank" rel="noopener"></a> ·
-    <a data-i18n="footer.help"    href="mailto:smartcontent.app.help@gmail.com"></a>
-  </div>
-  <p id="copyright" data-i18n="footer.copy">© {year} SmartContent — Built for Pi Network.</p>
-</footer>
 </body>
-</html>
+  </html>
