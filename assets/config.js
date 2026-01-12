@@ -25,6 +25,7 @@ window.addEventListener("load", () => {
       Pi.init({
         version: "2.0",
         sandbox: !!window.SC_CONFIG.sandbox,
+        appId: "smartcontent-2b297f7c5fa42ff7"
       });
       console.log("[Pi SDK] initialized (sandbox:", !!window.SC_CONFIG.sandbox, ")");
     } else {
