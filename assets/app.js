@@ -58,3 +58,51 @@ function renderPiUser() {
     btn.onclick = piLogin; // ربط الزر بالدالة الحقيقية
   }
 }
+/* ===== دالة دفع Pi مقابل خدمة AI ===== */
+
+async function payForAiService(amount, metadata) {
+  try {
+    const payment = await Pi.createPayment({
+      amount: amount, // مثال: 0.001
+      memo: "Generating AI Content: " + metadata, // يظهر للمستخدم في محفظته
+      metadata: { serviceType: "AI_Generation" }, 
+    }, {
+      // هذه الدوال الأربع إلزامية لإتمام العملية بنجاح:
+      onReadyForServerApproval: (paymentId) => {
+        console.log("Payment ID created:", paymentId);
+        // هنا يجب إبلاغ خادمك (Backend) بالـ paymentId ليعتمده
+        // إذا لم يكن لديك backend حالياً، يمكنك محاكاة ذلك في مرحلة الـ Sandbox
+      },
+      onReadyForServerCompletion: (paymentId, txid) => {
+        console.log("Transaction ID on Chain:", txid);
+        // تم الدفع بنجاح على البلوكشين!
+      },
+      onCancel: (paymentId) => { console.log("User cancelled payment"); },
+      onError: (error, payment) => { console.error("Payment error", error); },
+    });
+    
+    return payment; // إذا نجحت العملية
+  } catch (err) {
+    console.error("Payment failed", err);
+    return null;
+  }
+}
+
+/* ===== مثال لاستخدامها عند الضغط على زر "توليد محتوى" ===== */
+async function handleGenerateClick() {
+  const user = get(S.piUser, null);
+  
+  if (!user) {
+    alert("يرجى تسجيل الدخول باستخدام Pi أولاً!");
+    return;
+  }
+
+  // طلب دفع مبلغ بسيط قبل بدء المعالجة
+  const success = await payForAiService(0.001, "Article Generator");
+  
+  if (success) {
+    // هنا تضع كود الذكاء الاصطناعي الخاص بك (OpenAI API أو غيرها)
+    alert("تم الدفع بنجاح! جاري توليد المحتوى...");
+    // generateContent(); 
+  }
+}
