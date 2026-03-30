@@ -105,4 +105,5 @@ async function handleGenerateClick() {
     alert("تم الدفع بنجاح! جاري توليد المحتوى...");
     // generateContent(); 
   }
-}
+}const msg = window.SC_I18N.getLang() === "ar" ? "تم تسجيل الدخول" : "Login Success";
+alert(msg);
