@@ -203,11 +203,29 @@ html[dir="rtl"] .tabs{ direction:rtl; }
 
   <!-- SEO -->
   <section id="seo" class="tab-pane">
-    <div class="card">
-      <h2 class="card-head"><i class="fa-solid fa-magnifying-glass-chart"></i><span data-i18n="seo.title">SEO</span></h2>
-      <p class="smallmuted" data-i18n="seo.lead">Optimize your articles and pages for search engines.</p>
+  <div class="card">
+    <h2 class="card-head"><i class="fa-solid fa-magnifying-glass-chart"></i><span data-i18n="seo.title">SEO Analyzer</span></h2>
+    <p class="smallmuted" data-i18n="seo.lead">Analyze your content for search engine optimization.</p>
+    
+    <div class="row">
+      <label data-i18n="seo.target_kw">Target Keyword</label>
+      <input type="text" id="seo-keyword" placeholder="e.g. Pi Network" />
     </div>
-  </section>
+
+    <div class="row">
+      <label data-i18n="seo.content_label">Content to Analyze</label>
+      <textarea id="seo-content" rows="6" placeholder="Paste your article here..."></textarea>
+    </div>
+
+    <button class="primary" onclick="analyzeSEO()"><i class="fa-solid fa-wand-magic-sparkles"></i> <span data-i18n="seo.analyze_btn">Analyze SEO</span></button>
+
+    <div id="seo-results" class="card" style="display:none; border-left: 4px solid var(--accent);">
+      <h3 id="seo-score" style="margin-top:0;">Score: 0/100</h3>
+      <ul id="seo-tips" style="padding-inline-start: 20px; font-size: 0.9rem;">
+        </ul>
+    </div>
+  </div>
+</section>
 
   <!-- CMS -->
   <section id="cms" class="tab-pane">
