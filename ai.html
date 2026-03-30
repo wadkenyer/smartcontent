@@ -3,27 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SmartContent – AI</title>
+  <title data-i18n="ai.title">SmartContent – AI</title>
   <link rel="stylesheet" href="assets/style.css?v=2.1.0">
 </head>
 <body>
-  <div class="wrap">
-    <p><a href="./index.html">← Back</a></p>
-    <h2>🤖 AI Tools</h2>
+  <div class="container">
+    <p><a href="./index.html" style="font-weight: 600;">← <span data-i18n="nav.home">Back</span></a></p>
+    
+    <h2 data-i18n="ai.title">🤖 AI Tools</h2>
+    <p class="muted" data-i18n="ai.lead">Generate posts, scripts, and summaries.</p>
+
     <div class="card">
-      <label>Prompt</label>
-      <textarea id="prompt" rows="5" placeholder="Write a 100-word post about Pi Network…"></textarea>
-      <div style="height:10px"></div>
-      <button onclick="fake()" style="padding:10px 12px;border-radius:10px;border:1px solid #e7e8ee;background:#6c4df6;color:#fff">Generate (demo)</button>
-      <p class="muted">*Demo only — hook this to your AI backend later.*</p>
-      <div id="out" class="card" style="margin-top:10px"></div>
+      <div class="card-head" data-i18n="ai.topic_ph">Topic / Prompt</div>
+      
+      <textarea id="ai-topic" rows="5" 
+                data-i18n-attr="placeholder:ai.topic_ph" 
+                placeholder="Write something..."></textarea>
+      
+      <div style="height:15px"></div>
+      
+      <button id="generateBtn" class="primary" style="width: 100%;">
+        <span data-i18n="ai.gen">Generate Post</span> (0.001 Pi)
+      </button>
+      
+      <p class="footer" style="font-size: 0.8rem; margin-top: 10px;">
+        * <span data-i18n="home.payments">Pi Payments</span> required.
+      </p>
+
+      <div id="ai-result" class="ai-output" style="display: none; margin-top:20px;">
+        </div>
     </div>
   </div>
-  <script>
-    function fake(){
-      const p=document.getElementById('prompt').value||'your topic';
-      document.getElementById('out').textContent = `Sample output for: ${p}\n\n(Connect to your AI endpoint here.)`;
-    }
+
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <script src="assets/config.js"></script>
+  <script src="assets/i18n.js"></script> <script src="assets/app.js"></script> <script>
+    // كود إضافي لإظهار منطقة النتيجة عند الضغط
+    document.getElementById('generateBtn').addEventListener('click', () => {
+      const resultArea = document.getElementById('ai-result');
+      resultArea.style.display = 'block';
+    });
   </script>
 </body>
 </html>
