@@ -3,6 +3,7 @@
     "home": "Home",
     "editor": "Editor",
     "ai": "AI",
+    "design": "Design",
     "seo": "SEO",
     "cms": "CMS",
     "web": "Web",
@@ -29,6 +30,12 @@
     "lead": "Generate posts, scripts, and summaries.",
     "topic_ph": "Topic (e.g. Web3 Tips)",
     "gen": "Generate Post"
+  },
+  "design": {
+    "yt": "YouTube Thumbnail",
+    "post": "Post Banner",
+    "logo": "Logo Generator",
+    "cover": "Cover Image"
   },
   "cms": {
     "title_ph": "Title",
