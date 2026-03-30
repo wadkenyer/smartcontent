@@ -1,88 +1,147 @@
 /* ========== Theme tokens ========== */
-:root{
-  /* light */
-  --bg:#f6f7fb;
-  --card:#ffffff;
-
-  /* طلبت تغميق النصوص */
-  --text:#0a0a0a;   /* أغمق لقراءة أوضح */
-  --muted:#444;     /* نص ثانوي أوضح */
-
-  --brand:#6f4af7;
-  --chip:#e2e8f0;
-  --accent:#7c3aed;
-  --line:#e5e7eb;
-  --ink:#0b0d1f; /* لون نص حقول الإدخال */
+:root {
+  /* Light Theme */
+  --bg: #f6f7fb;
+  --card: #ffffff;
+  --text: #0a0a0a;  /* نصوص واضحة جداً */
+  --muted: #555555;
+  --brand: #6f4af7;
+  --accent: #7c3aed; /* اللون البنفسجي لـ Pi */
+  --line: #e5e7eb;
+  --ink: #0b0d1f;
+  --success: #10b981;
+  --error: #ef4444;
 }
 
-:root[data-theme="dark"]{
-  --bg:#0b0b10;
-  --card:#111425;
-  --text:#e4e7f1;
-  --muted:#aab0c0;
-
-  --brand:#6f4af7;
-  --chip:#23233a;
-  --accent:#23c3a9;
-  --line:#23263d;
-  --ink:#d0d0ff;
+:root[data-theme="dark"] {
+  /* Dark Theme */
+  --bg: #0b0b10;
+  --card: #111425;
+  --text: #e4e7f1;
+  --muted: #aab0c0;
+  --brand: #6f4af7;
+  --accent: #8b5cf6;
+  --line: #23263d;
+  --ink: #d0d0ff;
 }
 
-/* ========== Reset + smooth transitions ========== */
-html,body,.card,.tabs [data-tab], .chip, .primary, input, select, textarea, .footer {
-  transition: background-color .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease, opacity .25s ease;
-}
+/* ========== Global Reset ========== */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; scroll-behavior: smooth; }
 
-html, body { margin:0; padding:0; }
-body{
-  background: linear-gradient(180deg, var(--bg), var(--card));
+body {
+  background: var(--bg);
   color: var(--text);
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
 }
 
-a { color: var(--accent); text-decoration: none; }
-a:hover { opacity: .9; }
-
-/* ========== Header / Tabs / Layout ========== */
-.topbar{
-  position: sticky; top:0; z-index:1000;
-  background: color-mix(in oklab, var(--card) 85%, transparent);
-  backdrop-filter: blur(10px);
-  border-bottom:1px solid var(--line);
-}
-.brand{ display:flex; align-items:center; gap:12px; padding:14px 18px; }
-
-.tabs{ display:flex; gap:10px; flex-wrap:wrap; padding:10px 16px; }
-.tabs [data-tab]{
-  display:inline-block;
-  background: color-mix(in oklab, var(--card) 60%, #141a2b);
-  border:1px solid var(--line);
-  color:var(--text);
-  padding:9px 12px;
-  border-radius:10px;
-  font-weight:600;
-}
-.tabs [data-tab].active{ outline:2px solid var(--accent); }
-
-.container{ max-width:980px; margin:0 auto; padding:20px; }
-.card{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; margin:16px 0; }
-.card-head{ font-weight:700; margin-bottom:6px; }
-.row{ display:block; margin:12px 0; }
-.chip{ background:var(--chip); border:1px solid var(--line); padding:6px 10px; border-radius:999px; }
-.primary{ background:var(--accent); color:#fff; border:0; padding:10px 14px; border-radius:10px; cursor:pointer; }
-.primary:disabled{ opacity:.6; cursor:not-allowed; }
-
-input,select,textarea{
-  background:var(--bg);
-  color:var(--ink);
-  border:1px solid var(--line);
-  border-radius:10px;
-  padding:10px 12px;
+/* ========== Pi Network User Badge ========== */
+.user-badge {
+  background: var(--brand);
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 10px rgba(111, 74, 247, 0.2);
 }
 
-.footer{ margin:28px 0 18px; text-align:center; color:var(--muted); }
-.footer a{ color:var(--accent); }
+/* ========== AI Result Area (تحسين عرض النتيجة) ========== */
+.ai-output {
+  background: color-mix(in srgb, var(--accent) 5%, var(--card));
+  border: 1px dashed var(--accent);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 15px;
+  white-space: pre-wrap; /* للحفاظ على تنسيق النص المولد */
+  font-size: 1rem;
+  color: var(--text);
+  position: relative;
+  animation: fadeIn 0.5s ease-in;
+}
 
-/* RTL تحسين بسيط */
-html[dir="rtl"] .tabs{ direction:rtl; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== Form Elements ========== */
+input, select, textarea {
+  width: 100%;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input:focus, textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+/* ========== Buttons ========== */
+.primary {
+  background: var(--accent);
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.1s, background 0.2s;
+}
+
+.primary:hover { background: color-mix(in srgb, var(--accent) 85%, black); }
+.primary:active { transform: scale(0.98); }
+.primary:disabled { background: var(--line); color: var(--muted); cursor: not-allowed; }
+
+/* ========== Sidebar / Tabs Improvement ========== */
+.tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 10px 0;
+  scrollbar-width: none; /* إخفاء شريط التمرير */
+}
+
+.tabs [data-tab] {
+  white-space: nowrap;
+  background: var(--card);
+  border: 1px solid var(--line);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.tabs [data-tab].active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* ========== Footer ========== */
+.footer {
+  margin-top: 50px;
+  padding: 20px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* RTL Support */
+html[dir="rtl"] body { text-align: right; }
+html[dir="rtl"] .user-badge { flex-direction: row-reverse; }
