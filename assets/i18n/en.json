@@ -15,7 +15,9 @@
     "lead": "Your AI-powered Web3 content suite on the Pi Network.",
     "privacy": "Privacy-first",
     "payments": "Pi Payments",
-    "sdk": "Pi SDK Ready"
+    "sdk": "Pi SDK Ready",
+    "open_editor": "Open Editor",
+    "try_ai": "Try AI"
   },
   "editor": {
     "title": "Editor",
@@ -36,6 +38,13 @@
     "post": "Post Banner",
     "logo": "Logo Generator",
     "cover": "Cover Image"
+  },
+  "seo": {
+    "title": "SEO Analyzer",
+    "lead": "Optimize your content for search engines.",
+    "target_kw": "Target Keyword",
+    "content_label": "Content to Analyze",
+    "analyze_btn": "Analyze SEO"
   },
   "cms": {
     "title_ph": "Title",
@@ -60,6 +69,12 @@
     "wallet": "Wallet Address",
     "automint": "Auto-mint NFTs",
     "scnotify": "Smart Contract Notifications"
+  },
+  "pi": {
+    "login_success": "Login successful, welcome @{username}",
+    "login_failed": "Login failed, please try again",
+    "payment_done": "Thank you! 0.001 Pi received successfully",
+    "need_pi_browser": "Please open the app inside Pi Browser to access all features"
   },
   "footer": {
     "privacy": "Privacy Policy",
