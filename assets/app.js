@@ -107,3 +107,35 @@ async function handleGenerateClick() {
   }
 }const msg = window.SC_I18N.getLang() === "ar" ? "تم تسجيل الدخول" : "Login Success";
 alert(msg);
+document.addEventListener("DOMContentLoaded", () => {
+    const genBtn = document.getElementById("generateBtn");
+    
+    if (genBtn) {
+        genBtn.addEventListener("click", async () => {
+            // 1. تحقق من تسجيل الدخول
+            const user = JSON.parse(localStorage.getItem("sc_pi_user"));
+            if (!user) {
+                alert(window.SC_I18N.getLang() === "ar" ? "سجل دخولك أولاً!" : "Login first!");
+                return;
+            }
+
+            // 2. طلب دفع مبلغ رمزي (0.001 Pi) لفتح ميزة الـ AI
+            // ملاحظة: يمكنك جعلها مجانية حالياً للاختبار بوضع sandbox: true
+            const payment = await payForAiService(0.001, "AI Post Generation");
+
+            if (payment) {
+                // 3. هنا يتم استدعاء الـ AI (سنقوم بربطه بـ API في الخطوة القادمة)
+                console.log("Payment Success! Starting AI...");
+                generateAIContent();
+            }
+        });
+    }
+});
+
+async function generateAIContent() {
+    // كود استدعاء المحتوى (سيظهر هنا النص المولد)
+    const resultArea = document.querySelector("#ai-result");
+    resultArea.innerHTML = "Generating... / جاري التوليد...";
+    
+    // سنقوم بربط هذا الجزء بـ API حقيقي لاحقاً
+}
