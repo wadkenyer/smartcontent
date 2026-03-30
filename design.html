@@ -3,20 +3,110 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SmartContent – Design</title>
+  <title data-i18n="nav.design">SmartContent – Design</title>
   <link rel="stylesheet" href="assets/style.css?v=2.1.0">
+  <style>
+    /* تنسيق إضافي لشبكة التصميم */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .tile {
+      background: var(--card);
+      border: 1px solid var(--line);
+      padding: 20px;
+      border-radius: 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .tile:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent);
+    }
+    .tile i { font-size: 24px; display: block; margin-bottom: 10px; }
+    .tile strong { display: block; color: var(--text); }
+  </style>
 </head>
 <body>
-  <div class="wrap">
-    <p><a href="./index.html">← Back</a></p>
-    <h2>🎨 Design</h2>
+  <div class="container">
+    <p><a href="./index.html" style="font-weight: 600;">← <span data-i18n="nav.home">Back</span></a></p>
+    
+    <h2 data-i18n="nav.design">🎨 Design Tools</h2>
+    <p class="muted">أنشئ تصاميم احترافية لمنصاتك بضغطة زر.</p>
+
     <div class="grid">
-      <div class="tile"><strong>YT Thumbnail</strong><p class="muted">1280×720 quick template.</p></div>
-      <div class="tile"><strong>Post Banner</strong><p class="muted">Square/portrait presets.</p></div>
-      <div class="tile"><strong>Logo Stub</strong><p class="muted">Simple symbol generator.</p></div>
-      <div class="tile"><strong>Cover Image</strong><p class="muted">Blog/Twitter covers.</p></div>
+      <div class="tile" onclick="selectTemplate('YouTube Thumbnail')">
+        <span>🖼️</span>
+        <strong data-i18n="design.yt">YT Thumbnail</strong>
+        <p class="muted" style="font-size: 11px;">1280×720</p>
+      </div>
+
+      <div class="tile" onclick="selectTemplate('Post Banner')">
+        <span>📱</span>
+        <strong data-i18n="design.post">Post Banner</strong>
+        <p class="muted" style="font-size: 11px;">Square / Portrait</p>
+      </div>
+
+      <div class="tile" onclick="selectTemplate('Logo Generator')">
+        <span>💎</span>
+        <strong data-i18n="design.logo">Logo Stub</strong>
+        <p class="muted" style="font-size: 11px;">Simple Symbols</p>
+      </div>
+
+      <div class="tile" onclick="selectTemplate('Cover Image')">
+        <span>📰</span>
+        <strong data-i18n="design.cover">Cover Image</strong>
+        <p class="muted" style="font-size: 11px;">Blog/Twitter</p>
+      </div>
     </div>
-    <p class="muted" style="margin-top:10px">*Demo only — connect to your generator or canvas library لاحقًا.*</p>
+
+    <div id="design-editor" class="card" style="margin-top: 30px; display: none;">
+      <h3 id="selected-type">Selected Template</h3>
+      <input type="text" id="img-prompt" placeholder="Describe your image... صف مظهر الصورة هنا" style="margin-bottom: 15px;">
+      
+      <button id="generateImgBtn" class="primary" style="width: 100%;">
+        <span data-i18n="ai.gen">Generate Image</span> (0.005 Pi)
+      </button>
+
+      <div id="ai-result" class="ai-output" style="margin-top: 20px; text-align: center; min-height: 100px;">
+        <p class="muted">Image will appear here / ستظهر الصورة هنا</p>
+      </div>
+    </div>
+
+    <p class="footer">* Pi Network Payment required for AI generation.</p>
   </div>
+
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <script src="assets/config.js"></script>
+  <script src="assets/i18n.js"></script>
+  <script src="assets/app.js"></script>
+
+  <script>
+    // وظيفة لاختيار النوع وفتح المحرر
+    function selectTemplate(type) {
+        document.getElementById('design-editor').style.display = 'block';
+        document.getElementById('selected-type').innerText = type;
+        // سكرول تلقائي للمحرر
+        window.scrollTo({ top: document.getElementById('design-editor').offsetTop, behavior: 'smooth' });
+    }
+
+    // ربط زر التوليد بدالة الدفع في app.js
+    document.getElementById('generateImgBtn').addEventListener('click', async () => {
+        const prompt = document.getElementById('img-prompt').value;
+        if(!prompt) return alert("Please describe the image first!");
+
+        // طلب دفع 0.005 Pi لتوليد صورة (سعر أعلى من النص)
+        const payment = await createPiPayment(0.005, "AI Image Generation: " + document.getElementById('selected-type').innerText);
+        
+        if(payment) {
+            const resultArea = document.getElementById('ai-result');
+            resultArea.innerHTML = "<p>🎨 Generating your masterpiece... جاري الرسم...</p>";
+            // هنا يمكنك ربط API توليد الصور مثل OpenAI DALL-E
+        }
+    });
+  </script>
 </body>
 </html>
