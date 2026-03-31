@@ -1,1 +1,57 @@
-<!DOCTYPE html> <html lang="ar" dir="rtl"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1" /> <title>SmartContent – أدوات الذكاء الاصطناعي</title> <link rel="stylesheet" href="assets/style.css?v=2.2"> </head> <body> <div class="container"> <p><a href="./index.html">← العودة للرئيسية</a></p> <h2>🤖 أدوات الذكاء الاصطناعي</h2> <p>توليد منشورات ومحتوى باستخدام Gemini</p> <div class="card"> <div class="card-head">الموضوع</div> <textarea id="ai-topic" rows="5" placeholder="اكتب موضوعك هنا... (مثال: فوائد شبكة Pi)"></textarea> <button id="generateBtn" style="width:100%; padding:15px; margin-top:15px; background:#00cc66; color:white; border:none; border-radius:8px; font-size:1.1rem;"> توليد المنشور الآن </button> <div id="ai-result" style="margin-top:20px; padding:15px; background:#1a2a22; color:#0f0; border-radius:8px; display:none;"> </div> </div> </div> <!-- Pi SDK --> <script src="https://sdk.minepi.com/pi-sdk.js"></script> <script src="assets/app.js"></script> <script> console.log("🚀 ai.html تم تحميله"); // تهيئة Pi Pi.init({ version: "2.0", sandbox: true }) .then(() => console.log("✅ Pi SDK جاهز")) .catch(err => console.error("❌ Pi SDK خطأ:", err)); // دالة التوليد البسيطة جداً function handleAiGeneration() { const topic = document.getElementById("ai-topic").value.trim(); const result = document.getElementById("ai-result"); if (!topic) { alert("اكتب موضوعاً أولاً!"); return; } console.log("✅ تم الضغط على الزر - الموضوع:", topic); result.style.display = "block"; result.innerHTML = ` <strong>تم الضغط بنجاح!</strong><br><br> الموضوع: ${topic}<br><br> <small>هذا اختبار بسيط. لو ظهرت هذه الرسالة = الزر يعمل الآن.</small> `; } // ربط الزر document.addEventListener("DOMContentLoaded", () => { const btn = document.getElementById("generateBtn"); if (btn) { btn.addEventListener("click", handleAiGeneration); console.log("✅ الزر مربوط بنجاح"); } }); </script> </body> </html>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>أدوات الذكاء الاصطناعي - SmartContent</title>
+  <link rel="stylesheet" href="assets/style.css?v=2.3">
+</head>
+<body>
+  <div class="container">
+    <p><a href="./index.html">← العودة للرئيسية</a></p>
+    
+    <h2>🤖 أدوات الذكاء الاصطناعي</h2>
+    <p>Gemini - توليد منشورات ومحتوى</p>
+
+    <textarea id="ai-topic" rows="4" style="width:100%; padding:12px; margin:10px 0;" 
+              placeholder="اكتب موضوعك هنا... (مثال: فوائد شبكة Pi Network)"></textarea>
+
+    <button id="generateBtn" style="width:100%; padding:16px; background:#00cc66; color:white; border:none; border-radius:8px; font-size:1.1rem;">
+      توليد المنشور الآن
+    </button>
+
+    <div id="ai-result" style="margin-top:20px; padding:15px; background:#1a2a22; color:#0f0; border-radius:8px; display:none; white-space:pre-wrap;">
+    </div>
+  </div>
+
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <script>
+    console.log("🚀 صفحة AI تم تحميلها");
+
+    // تهيئة Pi SDK
+    Pi.init({ version: "2.0", sandbox: true })
+      .then(() => console.log("✅ Pi SDK جاهز"))
+      .catch(e => console.error("❌ Pi SDK خطأ:", e));
+
+    // دالة الزر
+    function handleAiGeneration() {
+      const input = document.getElementById("ai-topic").value.trim();
+      const resultDiv = document.getElementById("ai-result");
+
+      if (!input) {
+        alert("اكتب موضوعاً أولاً!");
+        return;
+      }
+
+      console.log("✅ تم الضغط على الزر - الموضوع:", input);
+
+      resultDiv.style.display = "block";
+      resultDiv.innerHTML = "✅ نجح الضغط!\n\nالموضوع الذي كتبته:\n" + input + "\n\n(هذا اختبار بسيط جداً. لو ظهرت هذه الرسالة = الزر يعمل)";
+    }
+
+    // ربط الزر
+    document.getElementById("generateBtn").addEventListener("click", handleAiGeneration);
+    console.log("✅ الزر مربوط بنجاح");
+  </script>
+</body>
+</html>
