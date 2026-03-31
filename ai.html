@@ -4,38 +4,37 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title data-i18n="ai.title">SmartContent – أدوات الذكاء الاصطناعي</title>
-  <link rel="stylesheet" href="assets/style.css?v=2.1.0">
+  <link rel="stylesheet" href="assets/style.css?v=2.1.1">
 </head>
 <body>
   <div class="container">
-    <p><a href="./index.html" style="font-weight: 600;">← <span data-i18n="nav.home">العودة للرئيسية</span></a></p>
+    <p><a href="./index.html" style="font-weight: 600;">← العودة للرئيسية</a></p>
     
-    <h2 data-i18n="ai.title">🤖 أدوات الذكاء الاصطناعي</h2>
-    <p class="muted" data-i18n="ai.lead">توليد منشورات، سكريبتات، وملخصات باستخدام Gemini</p>
+    <h2>🤖 أدوات الذكاء الاصطناعي</h2>
+    <p class="muted">توليد منشورات، سكريبتات، وملخصات باستخدام Gemini</p>
 
     <div class="card">
-      <div class="card-head" data-i18n="ai.topic_ph">الموضوع / الطلب</div>
+      <div class="card-head">الموضوع / الطلب</div>
       
       <textarea id="ai-topic" rows="6" 
-                data-i18n-attr="placeholder:ai.topic_ph" 
-                placeholder="اكتب الموضوع الذي تريد توليد محتوى عنه..."></textarea>
+                placeholder="اكتب الموضوع الذي تريد توليد محتوى عنه (مثال: نصيحة عن الاستثمار في Pi Network)"></textarea>
       
       <div style="height:15px"></div>
       
-      <button id="generateBtn" class="primary" style="width: 100%;">
-        <span data-i18n="ai.gen">توليد المنشور</span> (0.001 Pi)
+      <button id="generateBtn" class="primary" style="width: 100%; padding: 14px; font-size: 1.1rem;">
+        توليد المنشور (0.001 Pi)
       </button>
       
-      <p class="footer" style="font-size: 0.8rem; margin-top: 10px;">
-        * يتطلب الدفع باستخدام <span data-i18n="home.payments">Pi Payments</span>
+      <p style="font-size: 0.8rem; margin-top: 10px; color: #888;">
+        * يتطلب دفع بسيط باستخدام Pi Payments
       </p>
 
-      <div id="ai-result" class="ai-output" style="display: none; margin-top:20px; padding:15px; border-radius:8px;">
+      <div id="ai-result" style="display: none; margin-top:20px; padding:15px; background:#1e3a2f; border-radius:8px; color:#fff;">
       </div>
     </div>
   </div>
 
-  <!-- === الملفات والسكريبتات الأساسية === -->
+  <!-- Pi SDK وملفات التطبيق -->
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
   <script src="assets/config.js"></script>
   <script src="assets/i18n.js"></script>
@@ -45,28 +44,47 @@
     // تهيئة Pi SDK
     async function initPiSDK() {
       try {
-        await Pi.init({ 
-          version: "2.0", 
-          sandbox: true   // ← غيّر إلى false عند النشر النهائي
-        });
+        await Pi.init({ version: "2.0", sandbox: true });
         console.log("✅ Pi SDK تم تهيئته بنجاح");
       } catch (err) {
-        console.error("❌ فشل تهيئة Pi SDK:", err);
-        alert("يرجى فتح التطبيق داخل متصفح Pi Browser");
+        console.error("❌ فشل Pi SDK:", err);
       }
     }
 
-    // ربط الزر بدالة التوليد
+    // دالة توليد مبسطة للاختبار (بدون دفع مؤقتاً)
+    async function handleAiGeneration() {
+      const topicInput = document.getElementById("ai-topic");
+      const resultArea = document.getElementById("ai-result");
+
+      if (!topicInput || !topicInput.value.trim()) {
+        alert("يرجى كتابة موضوع أولاً!");
+        return;
+      }
+
+      console.log("🚀 تم الضغط على زر التوليد - الموضوع:", topicInput.value);
+
+      resultArea.style.display = "block";
+      resultArea.innerHTML = `
+        <strong>✅ تم الضغط بنجاح!</strong><br><br>
+        جاري توليد محتوى عن:<br>
+        <em>${topicInput.value}</em><br><br>
+        <small>هذا اختبار للتأكد من عمل الزر.<br>
+        سنضيف الدفع + Gemini الحقيقي في الخطوة التالية.</small>
+      `;
+
+      console.log("✅ تم عرض النتيجة بنجاح");
+    }
+
+    // ربط الزر عند تحميل الصفحة
     document.addEventListener('DOMContentLoaded', () => {
       initPiSDK();
 
-      const generateBtn = document.getElementById('generateBtn');
-      
-      if (generateBtn) {
-        generateBtn.addEventListener('click', handleAiGeneration);
-        console.log("✅ زر التوليد مربوط بنجاح بدالة handleAiGeneration");
+      const btn = document.getElementById('generateBtn');
+      if (btn) {
+        btn.addEventListener('click', handleAiGeneration);
+        console.log("✅ زر التوليد مربوط بنجاح");
       } else {
-        console.error("❌ لم يتم العثور على زر generateBtn");
+        console.error("❌ لم يتم العثور على الزر");
       }
     });
   </script>
