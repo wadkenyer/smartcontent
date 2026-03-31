@@ -1,47 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title data-i18n="ai.title">SmartContent – AI</title>
+  <title data-i18n="ai.title">SmartContent – أدوات الذكاء الاصطناعي</title>
   <link rel="stylesheet" href="assets/style.css?v=2.1.0">
 </head>
 <body>
   <div class="container">
-    <p><a href="./index.html" style="font-weight: 600;">← <span data-i18n="nav.home">Back</span></a></p>
+    <p><a href="./index.html" style="font-weight: 600;">← <span data-i18n="nav.home">العودة للرئيسية</span></a></p>
     
-    <h2 data-i18n="ai.title">🤖 AI Tools</h2>
-    <p class="muted" data-i18n="ai.lead">Generate posts, scripts, and summaries.</p>
+    <h2 data-i18n="ai.title">🤖 أدوات الذكاء الاصطناعي</h2>
+    <p class="muted" data-i18n="ai.lead">توليد منشورات، سكريبتات، وملخصات باستخدام Gemini</p>
 
     <div class="card">
-      <div class="card-head" data-i18n="ai.topic_ph">Topic / Prompt</div>
+      <div class="card-head" data-i18n="ai.topic_ph">الموضوع / الطلب</div>
       
-      <textarea id="ai-topic" rows="5" 
+      <textarea id="ai-topic" rows="6" 
                 data-i18n-attr="placeholder:ai.topic_ph" 
-                placeholder="Write something..."></textarea>
+                placeholder="اكتب الموضوع الذي تريد توليد محتوى عنه..."></textarea>
       
       <div style="height:15px"></div>
       
       <button id="generateBtn" class="primary" style="width: 100%;">
-        <span data-i18n="ai.gen">Generate Post</span> (0.001 Pi)
+        <span data-i18n="ai.gen">توليد المنشور</span> (0.001 Pi)
       </button>
       
       <p class="footer" style="font-size: 0.8rem; margin-top: 10px;">
-        * <span data-i18n="home.payments">Pi Payments</span> required.
+        * يتطلب الدفع باستخدام <span data-i18n="home.payments">Pi Payments</span>
       </p>
 
-      <div id="ai-result" class="ai-output" style="display: none; margin-top:20px;">
-        </div>
+      <div id="ai-result" class="ai-output" style="display: none; margin-top:20px; padding:15px; border-radius:8px;">
+      </div>
     </div>
   </div>
 
+  <!-- === الملفات والسكريبتات الأساسية === -->
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
   <script src="assets/config.js"></script>
-  <script src="assets/i18n.js"></script> <script src="assets/app.js"></script> <script>
-    // كود إضافي لإظهار منطقة النتيجة عند الضغط
-    document.getElementById('generateBtn').addEventListener('click', () => {
-      const resultArea = document.getElementById('ai-result');
-      resultArea.style.display = 'block';
+  <script src="assets/i18n.js"></script>
+  <script src="assets/app.js"></script>
+
+  <script>
+    // تهيئة Pi SDK
+    async function initPiSDK() {
+      try {
+        await Pi.init({ 
+          version: "2.0", 
+          sandbox: true   // ← غيّر إلى false عند النشر النهائي
+        });
+        console.log("✅ Pi SDK تم تهيئته بنجاح");
+      } catch (err) {
+        console.error("❌ فشل تهيئة Pi SDK:", err);
+        alert("يرجى فتح التطبيق داخل متصفح Pi Browser");
+      }
+    }
+
+    // ربط الزر بدالة التوليد
+    document.addEventListener('DOMContentLoaded', () => {
+      initPiSDK();
+
+      const generateBtn = document.getElementById('generateBtn');
+      
+      if (generateBtn) {
+        generateBtn.addEventListener('click', handleAiGeneration);
+        console.log("✅ زر التوليد مربوط بنجاح بدالة handleAiGeneration");
+      } else {
+        console.error("❌ لم يتم العثور على زر generateBtn");
+      }
     });
   </script>
 </body>
