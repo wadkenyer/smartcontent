@@ -6,44 +6,88 @@
     <title>SmartContent • Pi Network</title>
     <script src="https://sdk.minepi.com/pi-sdk.js"></script>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f4; }
-        .container { max-width: 1200px; margin: auto; padding: 20px; }
-        button { padding: 12px 24px; margin: 10px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; }
-        #connect-btn { background: #4f46e5; color: white; }
-        #welcome { font-size: 24px; margin: 20px 0; }
-        .locked { display: none; background: #fff; padding: 15px; margin: 10px 0; border-radius: 8px; }
-        .pi-feature { background: #e0f2fe; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        h1 { text-align: center; color: #4f46e5; }
+        button {
+            padding: 14px 28px;
+            margin: 10px 5px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        #connect-btn {
+            background: #4f46e5;
+            color: white;
+            font-weight: bold;
+        }
+        #connect-btn:hover { background: #4338ca; }
+        .pi-feature {
+            background: #e0f2fe;
+            border: 1px solid #67e8f9;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+        .locked { display: none; }
+        #result {
+            background: #f0fdf4;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            white-space: pre-wrap;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h1>SmartContent ⚡</h1>
-    <p>منصتك الذكية لإنشاء المحتوى على Pi Network</p>
+    <p style="text-align:center; font-size:18px;">منصتك الذكية لإنشاء المحتوى على شبكة Pi</p>
 
-    <!-- رسالة الترحيب -->
-    <div id="welcome">مرحباً بك، Creator 🚀</div>
+    <div id="welcome" style="text-align:center; font-size:24px; margin:20px 0;">
+        مرحباً بك، Creator 🚀
+    </div>
 
-    <!-- زر الاتصال بـ Pi -->
     <button id="connect-btn" onclick="connectWithPi()">
         🔗 Connect with Pi Wallet
     </button>
 
-    <!-- المميزات المقفلة (تظهر بعد الاتصال) -->
+    <!-- المميزات بعد الاتصال -->
     <div id="features" class="locked">
-        <h2>المميزات المتاحة بعد الاتصال</h2>
+        <h2>المميزات المتاحة</h2>
         
-        <button class="pi-feature" onclick="makePiPayment(0.5, 'Quick Draft Save')">حفظ Draft (0.5 Pi)</button>
-        <button class="pi-feature" onclick="makePiPayment(1, 'AI Content Generation')">توليد محتوى بالذكاء الاصطناعي (1 Pi)</button>
-        <button class="pi-feature" onclick="makePiPayment(2, 'Premium Design')">تصميم احترافي (2 Pi)</button>
-        
-        <button onclick="savePost()">حفظ المنشور (مجاني بعد الاتصال)</button>
+        <button class="pi-feature" onclick="makePiPayment(0.5, 'حفظ Draft')">حفظ Draft (0.5 Pi)</button>
+        <button class="pi-feature" onclick="makePiPayment(1, 'AI Content Generation')">توليد محتوى AI (1 Pi)</button>
+        <button class="pi-feature" onclick="makePiPayment(2, 'تصميم احترافي')">تصميم احترافي (2 Pi)</button>
     </div>
 
-    <div class="locked pi-feature">
-        <h3>AI Tools</h3>
-        <textarea id="prompt" placeholder="اكتب وصف المحتوى اللي عايز تولده..."></textarea><br>
-        <button onclick="generateAI()">Generate with AI</button>
+    <div id="ai-section" class="locked">
+        <h3>أداة الذكاء الاصطناعي</h3>
+        <textarea id="prompt" placeholder="اكتب وصف المحتوى الذي تريد توليده بالعربية..."></textarea>
+        <button onclick="generateAI()" style="background:#10b981; color:white;">🚀 Generate with AI</button>
+        <div id="result"></div>
     </div>
 </div>
 
@@ -56,11 +100,9 @@ async function initPi() {
     try {
         await window.Pi.init({
             version: "2.0",
-            sandbox: true        // ← غيّره إلى false بعد قبول التطبيق من Pi
+            sandbox: true   // غيّره إلى false بعد قبول التطبيق من Pi
         });
-        console.log("✅ Pi SDK تم تهيئته بنجاح");
-
-        // إظهار زر الاتصال
+        console.log("✅ Pi SDK جاهز");
         document.getElementById("connect-btn").style.display = "inline-block";
     } catch (error) {
         console.error("❌ خطأ في Pi SDK:", error);
@@ -71,86 +113,92 @@ async function initPi() {
 async function connectWithPi() {
     try {
         const scopes = ["payments", "username"];
-
         const auth = await window.Pi.authenticate(scopes, onIncompletePaymentFound);
-
+        
         currentUser = auth.user;
-        console.log("👤 المستخدم:", currentUser);
-
-        // تحديث الواجهة
-        document.getElementById("welcome").innerHTML = 
-            `مرحباً، ${currentUser.username || currentUser.uid} 👋`;
-
-        // إظهار المميزات
+        
+        document.getElementById("welcome").innerHTML = `مرحباً، ${currentUser.username || 'Creator'} 👋`;
         document.getElementById("features").style.display = "block";
+        document.getElementById("ai-section").style.display = "block";
         document.getElementById("connect-btn").style.display = "none";
 
-        alert(`✅ تم الاتصال بنجاح!\nاسم المستخدم: ${currentUser.username || "غير متوفر"}`);
-
+        alert(`✅ تم الاتصال بنجاح!\nاسم المستخدم: ${currentUser.username}`);
     } catch (error) {
-        console.error("❌ خطأ في الاتصال:", error);
-        alert("فشل الاتصال. تأكد من فتح الموقع داخل Pi Browser.");
+        console.error(error);
+        alert("❌ فشل الاتصال\nتأكد من فتح الموقع داخل Pi Browser");
     }
 }
 
 // معالجة الدفعات غير المكتملة
 function onIncompletePaymentFound(payment) {
-    console.log("⚠️ دفعة غير مكتملة:", payment);
+    console.log("دفعة معلقة:", payment);
     return window.Pi.createPayment(payment);
 }
 
 // دالة الدفع
-async function makePiPayment(amount = 1, memo = "SmartContent Feature") {
+async function makePiPayment(amount, memo) {
     if (!currentUser) {
-        alert("يرجى الاتصال بمحفظة Pi أولاً");
-        return;
+        return alert("يرجى الاتصال بمحفظة Pi أولاً");
     }
 
     try {
-        const paymentData = {
+        const payment = await window.Pi.createPayment({
             amount: amount,
             memo: memo,
-            metadata: {
-                app: "SmartContent",
-                feature: memo,
-                user: currentUser.uid
-            }
-        };
+            metadata: { app: "SmartContent", user: currentUser.uid }
+        });
 
-        const payment = await window.Pi.createPayment(paymentData);
-        console.log("✅ تم الدفع بنجاح:", payment);
-        alert(`✅ تم الدفع ${amount} Pi بنجاح!\nالمذكرة: ${memo}`);
-        
-        // هنا يمكنك استدعاء الميزة بعد الدفع
-        if (memo.includes("AI")) generateAI();
-
+        console.log("✅ تم الدفع:", payment);
+        alert(`✅ تم دفع ${amount} Pi بنجاح!\n${memo}`);
+        return payment;
     } catch (error) {
-        console.error("❌ خطأ في الدفع:", error);
-        alert("فشل عملية الدفع. حاول مرة أخرى.");
+        console.error("خطأ في الدفع:", error);
+        alert("❌ فشلت عملية الدفع");
     }
 }
 
-// مثال: حفظ منشور
-function savePost() {
-    if (!currentUser) {
-        alert("يرجى الاتصال بـ Pi أولاً");
-        return;
-    }
-    alert("✅ تم حفظ المنشور بنجاح على Pi Network!");
-}
-
-// مثال: توليد AI (بعد الدفع)
+// توليد المحتوى بالـ AI
 async function generateAI() {
-    const prompt = document.getElementById("prompt").value;
-    if (!prompt) {
-        alert("اكتب وصف المحتوى أولاً");
+    const promptText = document.getElementById("prompt").value.trim();
+    if (!promptText) return alert("اكتب وصف المحتوى أولاً");
+
+    const resultDiv = document.getElementById("result");
+    resultDiv.innerHTML = "⏳ جاري الدفع ثم التوليد...";
+
+    // طلب دفع أولاً
+    const payment = await makePiPayment(0.5, "AI Generation - SmartContent");
+
+    if (!payment) {
+        resultDiv.innerHTML = "فشل الدفع. حاول مرة أخرى.";
         return;
     }
-    alert(`جاري توليد المحتوى باستخدام Gemini...\nالوصف: ${prompt}`);
-    // هنا يمكنك إضافة fetch إلى /api/generate-ai لاحقاً
+
+    resultDiv.innerHTML = "⏳ جاري توليد المحتوى باستخدام Gemini...";
+
+    try {
+        const response = await fetch("/api/generate-ai", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                prompt: promptText,
+                lang: "ar",
+                paymentId: payment.identifier || ""
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.text || data.content) {
+            resultDiv.innerHTML = `<strong>النتيجة:</strong><br>${data.text || data.content}`;
+        } else {
+            resultDiv.innerHTML = "لم يتم استلام نتيجة. تحقق من Vercel Logs.";
+        }
+    } catch (err) {
+        console.error(err);
+        resultDiv.innerHTML = "❌ خطأ في الاتصال بالخادم. تأكد من إعداد GEMINI_API_KEY في Vercel.";
+    }
 }
 
-// تشغيل التهيئة عند تحميل الصفحة
 window.onload = initPi;
 </script>
 
