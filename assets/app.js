@@ -1,112 +1,131 @@
-/* ===== تحديث نظام المدفوعات مع Pi SDK ===== */
-async function createPiPayment(amount, memo) {
+// =============================================
+// SmartContent - assets/app.js (نسخة محسنة 2026)
+// =============================================
+
+let currentUser = null;
+
+// تهيئة Pi SDK (يُستدعى من ai.html)
+async function initPiSDK() {
   try {
-    return new Promise((resolve, reject) => {
-      Pi.createPayment({
-        amount: amount,
-        memo: memo,
-        metadata: { service: "AI_Generation", version: "1.0" }
-      }, {
-        onReadyForServerApproval: async (paymentId) => {
-          console.log("✅ Ready for Server Approval:", paymentId);
-          try {
-            await fetch('/api/pi-backend', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ action: 'approve', paymentId })
-            });
-          } catch (e) {
-            console.error("Approval fetch failed", e);
-          }
-        },
-
-        onReadyForServerCompletion: async (paymentId, txid) => {
-          console.log("✅ Ready for Server Completion:", txid);
-          try {
-            await fetch('/api/pi-backend', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ action: 'complete', paymentId, txid })
-            });
-          } catch (e) {
-            console.error("Completion fetch failed", e);
-          }
-        },
-
-        onCancel: (paymentId) => {
-          console.log("❌ Payment Cancelled:", paymentId);
-          resolve(null);
-        },
-
-        onError: (err) => {
-          console.error("❌ Payment Error:", err);
-          reject(err);
-        }
-      });
+    await Pi.init({ 
+      version: "2.0", 
+      sandbox: true   // غيّر إلى false عند الإنتاج النهائي
     });
+    console.log("✅ Pi SDK تم تهيئته بنجاح");
+  } catch (err) {
+    console.error("❌ فشل تهيئة Pi SDK:", err);
+  }
+}
+
+// دالة الدفع المحسنة (هذه هي النسخة الصحيحة)
+async function makePiPayment(amount, memo) {
+  if (!currentUser) {
+    return alert("يرجى تسجيل الدخول بـ Pi أولاً");
+  }
+
+  try {
+    const payment = await window.Pi.createPayment({
+      amount: amount,
+      memo: memo,
+      metadata: { 
+        app: "SmartContent",
+        service: "AI_Generation",
+        version: "1.0"
+      }
+    }, {
+      onReadyForServerApproval: async (paymentId) => {
+        console.log("🔄 جاري الموافقة على الدفع - Payment ID:", paymentId);
+        
+        try {
+          const res = await fetch('/api/pi-backend', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'approve', paymentId: paymentId })
+          });
+
+          if (res.ok) {
+            console.log("✅ تمت الموافقة من السيرفر");
+          } else {
+            console.error("❌ فشل الموافقة من السيرفر");
+          }
+        } catch (err) {
+          console.error("خطأ في الاتصال أثناء الموافقة:", err);
+        }
+      },
+
+      onReadyForServerCompletion: async (paymentId, txid) => {
+        console.log("🔄 جاري إتمام الدفع - TXID:", txid);
+        
+        try {
+          const res = await fetch('/api/pi-backend', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+              action: 'complete', 
+              paymentId: paymentId, 
+              txid: txid 
+            })
+          });
+
+          if (res.ok) {
+            console.log("✅ تم إتمام الدفع بنجاح على السيرفر");
+          }
+        } catch (err) {
+          console.error("خطأ في الاتصال أثناء الإتمام:", err);
+        }
+      },
+
+      onCancel: (paymentId) => {
+        console.log("❌ تم إلغاء الدفع:", paymentId);
+        alert("تم إلغاء عملية الدفع");
+      },
+
+      onError: (error) => {
+        console.error("❌ Payment Error:", error);
+        alert("حدث خطأ أثناء الدفع: " + (error.message || "غير معروف"));
+      }
+    });
+
+    console.log("✅ تم إنشاء طلب الدفع بنجاح:", payment);
+    return payment;
+
   } catch (e) {
-    console.error("Payment Flow Failed", e);
+    console.error("فشل بدء الدفع:", e);
+    alert("فشل بدء عملية الدفع. تأكد من فتح التطبيق داخل Pi Browser.");
     return null;
   }
 }
 
-/* ===== محرك الذكاء الاصطناعي المحسن ===== */
+// دالة توليد المحتوى بعد الدفع (مؤقتاً بسيطة)
 async function handleAiGeneration() {
-  const user = get(S.piUser, null);   // تأكد أن get و S.piUser موجودين
-  const lang = window.SC_I18N ? window.SC_I18N.getLang() : "ar";
-  const topicInput = document.getElementById("ai-topic");   // استخدم getElementById بدل jQuery إذا أمكن
+  const topicInput = document.getElementById("ai-topic");
   const resultArea = document.getElementById("ai-result");
 
-  if (!user) {
-    alert(lang === "ar" ? "سجل دخولك أولاً عبر Pi!" : "Login via Pi first!");
-    return;
-  }
-
   if (!topicInput || !topicInput.value.trim()) {
-    alert(lang === "ar" ? "أدخل موضوعاً!" : "Enter a topic!");
+    alert("يرجى كتابة الموضوع أولاً!");
     return;
   }
 
-  resultArea.innerHTML = lang === "ar" ? "⏳ جاري بدء عملية الدفع..." : "⏳ Starting secure payment...";
+  resultArea.style.display = "block";
+  resultArea.innerHTML = "⏳ جاري بدء عملية الدفع...";
 
-  try {
-    const payment = await createPiPayment(0.01, "AI Content Creation - SmartContent");
+  // بدء الدفع (مثال: 1 Pi)
+  const payment = await makePiPayment(1, "توليد محتوى بالذكاء الاصطناعي - SmartContent");
 
-    if (!payment) {
-      resultArea.innerHTML = lang === "ar" ? "❌ تم إلغاء الدفع" : "❌ Payment cancelled";
-      return;
-    }
-
-    resultArea.innerHTML = lang === "ar" ? "⏳ جاري التوليد بأمان عبر Gemini..." : "⏳ Securely generating with Gemini...";
-
-    const response = await fetch("/api/generate-ai", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ 
-        prompt: topicInput.value.trim(),
-        lang: lang,
-        paymentId: payment.identifier || payment.id || payment.paymentId   // حسب ما يرجعه Pi
-      })
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
-
-    const data = await response.json();
-
-    if (data.text) {
-      resultArea.innerHTML = `<div class="ai-output card p-4 bg-white dark:bg-gray-800 rounded-lg">${data.text.replace(/\n/g, '<br>')}</div>`;
-    } else if (data.error) {
-      throw new Error(data.error);
-    } else {
-      throw new Error("Empty response from AI");
-    }
-
-  } catch (err) {
-    console.error("AI Generation Error:", err);
-    resultArea.innerHTML = lang === "ar" 
-      ? `❌ خطأ: ${err.message || "فشل في التوليد"}` 
-      : `❌ Error: ${err.message || "Generation failed"}`;
+  if (payment) {
+    resultArea.innerHTML = `
+      ✅ تم بدء الدفع بنجاح!<br><br>
+      الموضوع: ${topicInput.value}<br><br>
+      <small>سيتم إضافة Gemini API قريباً بعد نجاح الدفع...</small>
+    `;
+  } else {
+    resultArea.innerHTML = "❌ فشل الدفع أو تم إلغاؤه";
   }
 }
+
+// جعل الدوال متاحة عالمياً
+window.initPiSDK = initPiSDK;
+window.makePiPayment = makePiPayment;
+window.handleAiGeneration = handleAiGeneration;
+
+console.log("✅ app.js تم تحميله بنجاح - الدوال جاهزة");
